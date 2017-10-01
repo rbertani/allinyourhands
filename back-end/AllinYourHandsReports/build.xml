@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="AllInYourHandsReports" default="main" basedir=".">
+	
+	<!-- Propriedades -->
+	<property file="./aiyh-reports.properties"/>
+    <property name="lib.dir" value="${basedir}/lib"/>
+	<property name="jar.dir" value="${basedir}/dist"/>
+	<property name="build.dir" value="${basedir}/bin"/>
+	<property name="config.dir" value="${basedir}/conf"/>
+	<property name="src.dir" value="${basedir}/ejbModule"/>
+	<property name="package.name" value="ricardombertani"/>
+	<property name="ext.dir" value="${java.home}/jre/lib/ext"/>
+	
+	<!-- Class Path -->
+    <path id="project.classpath">
+    	<pathelement location="${src.dir}"/>
+    	<pathelement location="${lib.dir}/**"/>
+    	<fileset dir="${lib.dir}">
+    		<include name="*.jar"/>
+    	</fileset>
+    	
+    	
+    </path>
+
+	<!-- Cria os diretórios -->
+	<target name="init">
+        <mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.dir}/lib"/>
+    	<mkdir dir="${jar.dir}"/>
+    </target>
+
+	<!-- Remove arquivos gerados -->
+	<target name="clean">
+        <delete dir="${build.dir}"/>
+    	<delete dir="${jar.dir}"/>
+    </target>
+
+	<!-- Compilação (Construção) -->
+	<target name="build" depends="init">
+        <javac destdir="${build.dir}"
+        	   debug="on"
+        	   deprecation="off"
+               optimize="on"
+               source="1.5"
+               target="1.6"        	
+        	   classpathref="project.classpath">
+            <src path="${src.dir}"/>
+        </javac>
+    </target>
+
+	<!-- Empacotamento -->
+	<target name="jar" depends="clean,build">
+		<path id="class.path">
+		  <fileset dir="${build.dir}/lib/..">
+		    <include name="lib/**/*.jar"/>
+		  </fileset>
+		</path>
+		<pathconvert property="class-path" dirsep="/" pathsep=" " refid="class.path">
+			<map from="${build.dir}/lib" to="lib" />
+		</pathconvert>
+		<jar jarfile="${jar.dir}/allinyourhands-reports.jar">
+			<fileset dir="${src.dir}" includes="META-INF/**"/>
+			<fileset dir="${build.dir}" includes="${package.name}/**"/>
+		</jar>
+	</target>
+	<target name="main" depends="jar">
+		<copy todir="${jboss.home}/server/default/deploy">
+			<fileset dir="${jar.dir}" includes="allinyourhands-reports.jar"/>
+		</copy>
+	</target>  
+
+	<!-- Java Doc -->
+	<target name="java-docs">
+		<javadoc
+			destdir="${javadocd.dir}/api/message-sender"
+			classpathref="project.classpath"
+			author="true"
+			version="true"
+			use="true"
+			windowtitle="DiNO Message Sender API">
+			<packageset dir="${src.dir}" defaultexcludes="yes">
+				<include name="${package.name}/**" />
+			</packageset>
+			<doctitle><![CDATA[<h1>DiNO Message Sender API</h1>]]></doctitle>
+			<bottom><![CDATA[<i>Copyright &#169; 2005 PT Inovação, SA. All Rights Reserved.</i>]]></bottom>
+			<tag name="todo" scope="all" description="To do:" />
+			<link href="http://developer.java.sun.com/developer/products/xml/docs/api/"/>
+		</javadoc>	
+	</target>
+	
+	<!-- Teste de SMS -->
+	<target name="SMSExample">
+       <java classname="examples.SMSSenderExample">
+	      <classpath refid="project.classpath"/>
+	   </java>
+	</target>
+	
+	<!-- Teste de MMS -->
+	<target name="MMSExample">
+	   <java classname="examples.MMSExample">
+	      <classpath refid="project.classpath"/>
+	   </java>
+	</target>
+	
+	<!-- Teste de Wap Push -->
+	<target name="WapPushExample">
+	   <java classname="examples.SenderExample">
+	      <classpath refid="project.classpath"/>
+	   </java>
+	</target>
+</project>

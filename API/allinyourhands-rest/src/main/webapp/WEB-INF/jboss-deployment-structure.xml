@@ -1,0 +1,12 @@
+<jboss-deployment-structure>
+    <deployment>
+        <dependencies>
+            <module name="org.jboss.resteasy.resteasy-yaml-provider" services="import"/>
+            <module name="common.json"/>    
+            <module name="common.resteasy"/>         
+            <module name="allinyourhands.xstream"/>           
+            <module name="allinyourhands.data"/>
+            <module name="deployment.AllInYourHandsCore-1.0.jar"/>
+        </dependencies>
+    </deployment>
+</jboss-deployment-structure>

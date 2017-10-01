@@ -1,0 +1,60 @@
+
+<div class="container">
+ 
+	  <h3>Check out the weather forecast never was so easy. Simple select your location below and search</h3>		
+	  <hr style="background: #bebebe; margin: 10px 0;">
+
+					<article class="blog-article">													 
+									  
+									  <form>
+										<label for="select-choice-mini" class="select">Select Country</label>	
+										<div class="ui-select ui-btn-inline ui-mini">
+										  <div class="ui-btn ui-icon-carat-d ui-btn-icon-right ui-corner-all ui-shadow" id="select-choice-mini-button">
+											<span id="countrySpanWeather">Country</span>	
+											<select ng-model="selectedCountryNameAndID" ng-options="country.name for country in countries"   ng-change="getStates(selectedCountryNameAndID.geonameId+'|'+selectedCountryNameAndID.name)" name="select-choice-mini1" id="select-choice-mini1" data-mini="true" data-inline="true" >
+												  <option value="standard">Country</option>
+												  <!--option ng-repeat="country in countries" value="{{country.geonameId+'|'+country.name}}" >{{country.name}}</option-->     
+											</select>
+										  </div>
+										</div>										
+										<br/>										
+										<label for="select-choice-mini" class="select">Select State</label>	
+										<div class="ui-select ui-btn-inline ui-mini">
+										 <div class="ui-btn ui-icon-carat-d ui-btn-icon-right ui-corner-all ui-shadow" id="select-choice-mini-button">
+											<span id="stateSpanWeather">State</span>	
+											<select  ng-model="stateObj" ng-options="state.name for state in states"  ng-change="updateFinalAddress(stateObj.name)" name="select-choice-mini2" id="select-choice-mini2" data-mini="true" data-inline="true" >
+											  <option value="standard">State</option>
+											  <!--option ng-repeat="state in states" value="{{state.name}}">{{state.name}}</option-->     
+											</select>
+										  </div>
+										</div>										  
+										<p style="padding-left: 5px;">Type the street name(optional)</p>										
+										<div class="col-md-12 col-sm-12 col-xs-12 form-group" style="padding-left: 5px;" id="contact-name">											
+											<input type="text" name="text-basic" id="weatherStreetNameID" value="" class="form-control name-contact" placeholder="street name" ng-model="streetName" />
+										</div> 
+										<br />									
+										<div class="col-md-12 col-sm-12 col-xs-12 form-group" style="margin-bottom: 0;">
+											<button type="submit" class="ui-link ui-btn ui-btn-inline ui-shadow ui-corner-all ui-mini" style="margin-left: 40%;" ng-click="getWeather()">Weather Forecast</button>
+										</div>
+									  </form>
+					</article>	
+									
+                                    
+					<div id="weatherField" >									  
+									  
+									  <center style="margin-left:5px;margin-top:15px;"  ng-show="weatherReady">
+										<img src="{{weather_forecast_image}}" alt="Weather - All In Your Hands"  ng-show="weatherReady" />
+										<h3>     &nbsp; {{ (weather.temperature - 273) + 'C° /' + (weather.temperature - 241) + 'F°' }} </h3>
+										<p>Max.  &nbsp; {{ (weather.temp__max - 273) + 'C° /' + (weather.temp__max - 241) + 'F°' }} </p>
+										<p>Min.  &nbsp; {{ (weather.temp__min - 273) + 'C° /' + (weather.temp__min - 241) + 'F°' }} </p>
+										<br/>
+										<p>{{weather.weatherDescription}}</p>
+										<br/>
+										<a ng-click="getWeatherForecast()" style="cursor:pointer;">See the weather forecast for the next 6 days</a>
+									  </center>
+									  <center ng-show="weatherError">
+										  <h3>Unfortunately, an error has happened! Please, try again in some minutes</h3>
+									  </center>
+					</div>
+			
+	</div>

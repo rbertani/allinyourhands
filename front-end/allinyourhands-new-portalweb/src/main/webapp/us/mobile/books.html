@@ -1,0 +1,29 @@
+ <div class="container">
+		           						
+			
+				<article class="blog-article" ng-repeat="book in books" >
+				
+				 <a href="#books" ng-click="openBook( book.id, book.volumeInfo.imageLink.extraLarge, book.volumeInfo.title, book.volumeInfo.authors, book.webReaderLink, book.accessViewStatus)" style="cursor:pointer;">
+					<div class="blog-featured-image blog-image-center">
+						<div style="display: inline-block; max-width: 100%;">
+						     <img src="{{book.volumeInfo.imageLink.extraLarge}}" alt="Book" width="275" height="275"  style="max-height: 275px; max-width: 275px;"   />
+												
+						</div>
+					</div>
+					
+					<h3 class="blog-article-title">{{book.volumeInfo.title}}</h3>
+					
+					<p>{{book.volumeInfo.autors}}</p>
+					
+					<hr style="background: #bebebe; margin: 30px 0;">
+				  </a>
+				</article>
+				<div style="text-align: center;" ng-show="books.length > 0">
+					<a ng-click="getBooksPreviousPage()" class="ui-link ui-btn ui-icon-arrow-l ui-btn-icon-left ui-btn-inline ui-shadow ui-mini" href="#books" data-corners="false" data-role="button" data-mini="true" data-icon="arrow-l" data-iconpos="left" data-inline="true">Previous</a>
+					<a ng-click="getBooksNextPage()" class="ui-link ui-btn ui-icon-arrow-r ui-btn-icon-right ui-btn-inline ui-shadow ui-mini" href="#books" data-corners="false" data-role="button" data-mini="true" data-icon="arrow-r" data-iconpos="right" data-inline="true">Next</a>
+				</div>
+
+				<div ng-include src="'mobile/googleAds.html'" ></div>
+					
+		</div>
+		

@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="pt" ng-app="root">
+
+    <head>
+
+        <title>Tudo em Suas Mãos</title>
+
+        <meta charset="UTF-8" />
+		<meta name="ROBOTS" content="INDEX, FOLLOW">
+        <meta name="description" content="Portal de Entretenimento com conteúdos de música, vídeo, livros, lugares próximos, previsão do tempo e chat"/>
+		<meta name="keywords" content="site de busca, site, busca, buscador, encontra fácil, encontra facil, um só lugar, um so lugar, Tudo em suas mãos, tudo em suas mãos, tudo em suas maos, tudo em, suas mãos,suas maos, mãos, maos, All In Your Hands,all in your hands,hands, Música, Music, Songs,Top 10 Songs,top 10, Vídeos, Videos, Livros, Books, places, Places, Lugares, lugares, Previsão do tempo, Weather  Forecast, Bate Papo, Chat, divertido, fácil, prático, easy, funny, Youtube, Grooveshark, Google Books, pizzaria, bar, restaurante, parque, busca, ricardo bertani,entretenimento,entertainment, app, application, aplicativo, download, streaming,multifuncional, divertido, rápido, videos do youtube, aplicativo gratuito, app gratuito, android"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link  rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="../css/simple-line-icons.min.css">
+        <link rel="stylesheet" href="../css/animate.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/prettyPhoto.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/colors/color_2.css" id="colors-style" />
+        <link rel="stylesheet" type="text/css" href="../css/main.css">
+        <script type="text/javascript" src="../js/modernizr.custom.js"></script>
+		<script src="../js/aiyh_scripts.js"></script>
+  
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			ga('create', 'UA-59301185-1', 'auto');
+			ga('send', 'pageview');
+		</script>
+
+        <!-- Facebook Conversion Code for Acessos All in Your Hands -->
+        <script>(function() {
+        var _fbq = window._fbq || (window._fbq = []);
+        if (!_fbq.loaded) {
+        var fbds = document.createElement('script');
+        fbds.async = true;
+        fbds.src = '//connect.facebook.net/en_US/fbds.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(fbds, s);
+        _fbq.loaded = true;
+        }
+        })();
+        window._fbq = window._fbq || [];
+        window._fbq.push(['track', '6031097311718', {'value':'0.01','currency':'BRL'}]);
+        </script>
+        <noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=6031097311718&amp;cd[value]=0.01&amp;cd[currency]=BRL&amp;noscript=1" /></noscript>
+
+
+        <!-- CSS | Google Fonts -->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,700' rel='stylesheet' type='text/css'>
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.png">
+
+        <!--[if IE 7]>
+    <link rel="stylesheet" type="text/css" href="css/icons/font-awesome-ie7.min.css"/>
+<![endif]-->
+
+    </head>
+
+    <body ng-controller="aiyhMainController">
+
+        <!--[if lt IE 7]>
+                <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Laoding page  -->
+        <!--div class="preloader">
+            <div class="spinner">
+                <div class="dot1"></div>
+                <div class="dot2"></div>
+            </div>
+        </div-->
+        <!-- End Laoding page  -->
+
+        <!-- #wrappers -->
+        <div id="wrappers">
+
+            <!-- #header -->
+            <header id="header">
+
+                <div class="menu_closed" id="menu_closed" title="Close Menu" data-toggle="tooltip">
+                    <i class="fa fa-times"></i>
+                </div>
+
+                <div class="logo">
+                    <a href="http://tudoemsuasmaos.com.br"><img src="../images/logoAiyh.png" width="122" height="122" alt="Logo"></a>
+                </div>
+
+                <h4 class="tagline">Bem-Vindo ao Portal de Conteúdos :)</h4>
+
+
+                <!-- .navigation -->	
+                <nav class="navigation">
+                    <ul class="list-unstyled">
+
+                        <li class="profile active">
+                            <a href="index.php#profile" class="profile link_menu"><i class="fa fa-user icon_menus"></i><span class="nav-label">Home</span></a>
+                        </li>
+                        <li ng-show="audioActive" class="service">
+                            <a href="index.php#songs" class="service link_menu"><i class="fa fa-music icon_menus"></i> <span class="nav-label">Músicas</span></a>
+                        </li>
+                        <li ng-show="booksActive" class="resume">
+                            <a href="index.php#books" class="resume link_menu"><i class="fa fa-book icon_menus"></i> <span class="nav-label">Livros</span></a>
+                        </li>
+                        <li ng-show="videosActive" class="portfolio">
+                            <a href="index.php#videos" class="portfolio link_menu"><i class="fa fa-video-camera icon_menus"></i> <span class="nav-label">Vídeos</span></a>
+                        </li>
+						<li ng-show="placesActive" class="blog">
+                            <a href="index.php#lugares" class="blog link_menu"><i class="fa fa-glass icon_menu"></i> <span class="nav-label">Lugares</span></a>
+                        </li>
+                        <li ng-show="weatherActive" class="contact">
+                            <a href="index.php#clima" class="contact link_menu"><i class="fa fa-sun-o icon_menus"></i> <span class="nav-label">Clima</span></a>
+                        </li>
+						 <li ng-show="chatActive" class="contact">
+                            <a href="index.php#chat" class="contact link_menu"><i class="fa fa-weixin icon_menus"></i> <span class="nav-label">Chat</span></a>
+                        </li>
+
+                    </ul>
+                </nav>
+                <!-- End .navigation -->	
+
+                <!-- #header_social_ul -->	
+                <div class="social-ul" id="header_social_ul">
+                    <ul>
+                        <li class="social-twitter"><a href="http://twitter.com/intent/tweet?status=Contents Portal: http://tudoemsuasmaos.com.br" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        <li class="social-facebook"><a href="http://www.facebook.com/sharer/sharer.php?u=http://tudoemsuasmaos.com.br&title=Content Portal" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        <li class="social-google"><a href="https://plus.google.com/share?url=http://tudoemsuasmaos.com.br" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+                        <li class="social-linkedin"><a href="http://www.linkedin.com/shareArticle?mini=true&url=http://tudoemsuasmaos.com.br&title=Contents Portal&source=tudoemsuasmaos.com.br" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                       
+                    </ul>
+                </div>
+                <!-- End #header_social_ul -->	
+
+                <!-- .copyright -->	
+                <div class="copyright">
+                    <p style="margin-bottom:0;">© 2015. <a href="#">Ricardo M. Bertani</a></p>		
+                </div>
+                <!-- End.copyright -->	
+
+            </header>
+            <!-- End #header -->
+
+           
+
+            <!-- #main -->
+            <div id="main">
+
+                <!-- #profile -->
+                <section id="profile" class="layers page_current">
+
+                    <!-- .page_content -->
+                    <div class="page_content">
+
+                        <!-- .block-header -->
+                        <div class="block-header">
+
+                            <!-- .my_profile -->
+                            <div class="row no-marg my_profile">
+                               
+                                <!-- .info_profile -->
+                                <div class="col-xs-12 col-md-12 no-padd info_profile">
+
+                                    <!-- .bg_desc -->
+                                    <div class="bg_desc clearfix">
+                                        <div class="inner-text" style="text-align: left;">
+										    <center>
+												<h2>Tudo em suas Mãos</h2>
+												<small class="myjob">O mais novo portal de conteúdos da Internet</small>
+											</center>
+											
+                                            <div class="feature-desc">
+                                                <p>Imagine um buscador capaz de lhe oferecer os mais diversos tipos de conteúdos e permitir que você os acesse com apenas 1 ou 2 cliques. Basta escolher o tipo de mídia ao lado e se divertir ;-) </p>
+												
+											</div> 
+											<br/>
+											
+                                           
+                                        </div>
+                                    </div>
+                                    <!-- End .bg_desc -->
+
+                                    <!-- .bg_info -->
+                                    <div class="bg_info clearfix" style="text-align:center;margin-bottom: 40px;">									    
+                                        <div class="inner-text">										   
+                                            <ul>											    
+                                                <li class="user_name"><strong><i class="fa fa-user"></i>Autor</strong>  Ricardo M Bertani</li>                                                
+                                                <li><strong><i class="fa fa-envelope"></i>Contato</strong>  ricardombertani@gmail.com</li>
+                                                <li><strong><i class="fa fa-globe"></i>Portfolio</strong>  <a href="http://ricardombertani.wordpress.com" target="_blank">ricardombertani.wordpress.com</a></li>                                               
+                                                <li><strong><i class="fa fa-android"></i>Aplicativo</strong>  <a href="https://play.google.com/store/apps/details?id=com.practicality.allinyourhandsandroid" target="_blank">Google Play</a></li>
+                                                <li><strong><i class="fa fa-users"></i>Parceiros</strong>  <a href="http://www.topdivulganet.com/" target="_blank">Top Divulga Net</a></li>                
+											</ul>										   
+                                        </div>										
+                                    </div>
+                                    <!-- End .bg_info -->
+									<div ng-include src="'../adsGoogle.html'" ></div>
+                                  			
+
+                                </div>
+                                <!-- End .info_profile -->
+
+                            </div>
+                            <!-- End .my_profile -->
+
+                        </div>
+                        <!-- End .block-header -->
+						
+						<div id="contacts">
+ 
+							<div id="tabs" class="tab_close" title="" data-toggle="tooltip" data-original-title="Deixe sua opinião">
+                                <i class="fa fa-envelope"></i>
+                            </div>
+
+                            <div id="tabs_resp" class="tab_close" title="" data-toggle="tooltip" data-original-title="Deixe sua opinião">
+                                <i class="fa fa-envelope"></i>
+                            </div>
+							
+                            <div id="contentContact" class="two">
+
+                                <div class="contact_closed" id="contact_closed" title="Close Contact" data-toggle="tooltip">
+                                    <i class="fa fa-times"></i>
+                                </div>
+
+                                <div class="innerpadding">
+
+                                    
+                                    <div class="separte-content">                                       
+                                        <h2>Sua opinião é muito importante</h2>
+
+                                        <div id="contact-status"></div>
+
+                                        <form action="#" id="contactform" class="contact-form">                  
+
+                                            <div class="row form-group">
+
+                                                <div class="col-md-12 col-sm-12 col-xs-12 form-group" id="contact-name">
+                                                    <i class="fa fa-user icon-contact"></i>
+                                                    <input type="text" name="name" class="form-control name-contact" style="margin-top: 0;" placeholder="Nome..." ng-model="emailNameClient"/>
+                                                </div>          
+
+                                                <div class="col-md-12 col-sm-12 col-xs-12 form-group" id="contact-email">
+                                                    <i class="fa fa-envelope icon-contact"></i>
+                                                    <input type="text" name="email" class="form-control email-contact" placeholder="email..." ng-model="emailEmailClient" />
+                                                </div> 	
+                                               
+                                                <div class="col-md-12 col-sm-12 col-xs-12 form-group" id="contact-message">
+                                                    <i class="fa fa-comments icon-contact"></i>
+                                                    <textarea name="message" cols="90" rows="10" class="form-control message-contact" id="inputError" placeholder="Sua mensagem..." ng-model="emailMessage"></textarea>
+                                                </div> 
+
+                                                <div class="col-md-12 col-sm-12 col-xs-12 form-group" style="margin-bottom: 0;">
+                                                    <button type="submit" class="btn btn-block btn-cta btn-cta-contact-2" ng-click="sendMail()">Enviar<i class="fa fa-angle-right"></i></button>
+                                                </div>   
+
+                                            </div><!--//row-->
+
+                                        </form><!--//contact-form-->
+
+                                        <!-- End Send a Message -->
+
+                                    </div>
+
+
+                                    <div class="collapser">
+
+                                        <p>Se preferir envie um e-mail para: </p>
+
+                                        <ul class="info_contact">                                           
+                                            <li><span><i class="fa fa-envelope"></i></span> ricardombertani@gmail.com</li>                                            
+                                        </ul>
+
+
+                                    </div>
+
+
+                                </div>
+
+                                <!-- end .innerpadding -->
+
+                            </div>
+                            <!-- end #contentContact -->
+
+                        </div>
+
+                    </div>
+                    <!-- End .page_content -->
+
+                </section>
+                <!-- End #about -->
+
+                <!-- #songs -->
+				<section ng-show="audioActive" id="songs" class="layers">
+					
+					<!-- .page_content -->
+                    <div class="page_content">
+					  
+					  
+						<div class="container-fluid no-marg">
+						
+							
+							<div class="row row_responsive" style="margin-bottom: -20px; margin-top: -20px;">
+								
+								
+								<div class="col-lg-11 section_general">
+						
+									<header class="section-header">
+									 <h3 class="section-title">Músicas</h3>
+									 <p>Que tal encontrar sua música preferida ? </p>
+									 <div class="border-divider"></div>
+									 <p>Lembrando que neste caso não podemos oferecer o conteúdo completo, pois respeitamos os direitos autorais...Mas oferecemos o link da música completa no Spotify ;-) </p>
+									</header>
+								</div>
+							</div>
+												  
+							<div class="row row_responsive" style="margin-bottom: -20px; margin-top: -20px;">
+							   <center>
+									<form style="margin-top: 40px;">
+										<input type="text" placeholder="Que Música ou Artista você procura ?" class="form-control input-lg" 
+											name="search" ng-model="songName" style="width: 70%;" required autofocus/>
+										
+										<div class="row service_intro section_separate" style="margin-top: 10px;">
+											<a href="#" ng-click="getSongsByQuery()" class="btn btn_service_intro">Buscar</a>
+										</div>							
+									</form>
+								</center>
+							</div>
+						
+						</div>
+					    
+                        
+                        <div id="portfolios2" class="portfolios" >
+
+                          <center>
+                            <div class="grid-wrap" tabindex="1" id="songsResultArea">
+
+								<header class="section-header" style="margin-bottom: -60px;">									
+									 <p>Abaixo você confere as Músicas que as outras pessoas estão curtindo</p>										
+								</header>
+                                
+                                <!--ul id="genre-filter" class="clearfix">
+                                    <li class="label_filter">Filtro</li>
+                                    <li><span class="filter active" data-filter="logo posters photography webdesign">Todos</span></li>
+                                    <li><span class="filter" data-filter="logo">+ Recentes</span></li>
+                                    <li><span class="filter" data-filter="posters">+ Buscados</span></li>                                  
+                                </ul-->
+                                
+                                
+                                <div class="grid" id="portfoliolist2" ng-hide="songSearchStarted">
+
+
+                                    <div class="view view-first portfolio photography" data-cat="photography" ng-repeat="recommendedContent in recommendedSongs | limitTo:6"   >
+										
+										<a href="#songs"  ng-click="playAction(recommendedContent.id,recommendedContent.name,recommendedContent.artist,recommendedContent.image)" style="cursor:pointer;">	
+											<img ng-show="{{recommendedContent.image == ''}}" src="../images/2.png" alt="img01" width="349" height="232" style="max-height: 232px; max-width: 349px;">
+											<img ng-show="{{recommendedContent.image != '' }}" src="{{recommendedContent.image}}" alt="img01" width="349" height="232" style="max-height: 232px; max-width: 349px;">
+
+											<div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
+												<h4>{{recommendedContent.name}}</h4>
+												<p><span class="cat-portfolio">{{recommendedContent.artist}}</span></p>
+
+												<div class="portf_detail">
+													
+												</div>
+
+											</div>
+										</a>
+
+                                    </div>
+
+                                </div>
+								
+								<div class="grid" id="portfoliolist2" ng-show="songSearchStarted">
+								
+                                    <div class="view view-first portfolio photography" data-cat="photography" ng-repeat="song in songs"   >
+
+										<a href="#songs" ng-click="playAction(song.id+'+'+song.url,song.name,song.artistName,song.imagePreview)" style="cursor:pointer;" >
+											<img ng-show="{{song.imagePreview == ''}}" src="../images/2.png" alt="img01" width="349" height="232" style="max-height: 232px; max-width: 349px;">
+											<img ng-show="{{(song.imagePreview != '../images/play_icon1.png') && (song.imagePreview != '')}}" src="{{song.imagePreview}}" alt="img01" width="349" height="232" style="max-height: 232px; max-width: 349px;">
+
+											<div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
+												<h4>{{song.name}}</h4>
+												<p><span class="cat-portfolio">{{song.artistName}}</span></p>
+
+												<div class="portf_detail">
+													
+												</div>
+
+											</div>
+										</a>
+
+                                    </div>
+
+                                </div>
+								
+								<div class="col-md-12 nextprev" ng-show="songSearchStarted">
+                                  <br/>
+								  
+								  <button class="btn btn-default btn-lg" ng-click="getSongsPreviousPage()" ng-hide="songsByArtistMode"><span class="glyphicon glyphicon-chevron-left"></span></button>
+								  
+								  <button class="btn btn-default btn-lg" ng-click="getSongsNextPage()" ng-hide="songsByArtistMode"><span class="glyphicon glyphicon-chevron-right"></span></button>
+								</div>
+                                <div ng-include src="'../adsGoogle.html'" ></div>
+
+								
+                            </div>
+						  </center>
+
+                        </div>
+
+                    </div>
+                    <!-- .page_content -->
+					
+				</section>
+				<!-- End #service -->
+				
+				<!-- #Books -->
+				<section ng-show="booksActive" id="books" class="layers">
+					
+                    <!-- .page_content -->
+                    <div class="page_content">
+					
+					    <!-- .container-fluid -->
+						<div class="container-fluid no-marg">
+						
+							<!-- .row -->
+							<div class="row row_responsive" style="margin-bottom: -20px; margin-top: -20px;">
+								
+								<!-- .section_general -->
+								<div class="col-lg-11 section_general">
+						
+									<header class="section-header">
+									 <h3 class="section-title">Livros</h3>
+									 <p>Ler é sonhar com olhos abertos. Busque-os.</p>
+										<div class="border-divider"></div>
+									</header>
+								</div>
+							</div>
+												  
+							<div class="row row_responsive" style="margin-bottom: -20px; margin-top: -20px;">
+							   <center>
+									<form style="margin-top: 40px;">
+										<input type="text" placeholder="Procure um Livro por palavra-chave" class="form-control input-lg" 
+											name="search" ng-model="booksKeyword" style="width: 70%;" required autofocus/>
+										
+										<div class="row service_intro section_separate" style="margin-top: 10px;">
+											<button type="submit" ng-click="getBooks()" class="btn btn_service_intro">Buscar</button>
+										</div>							
+									</form>
+								</center>
+							</div>
+						
+						</div>
+					    
+                        <!-- .portfolios -->
+                        <div id="portfolios" class="portfolios" >
+							
+							<center>
+								<!-- .grid-wrap -->
+								<div id="booksResultArea" tabindex="1" class="grid-wrap">
+								
+									<header class="section-header" style="margin-bottom: -60px;">									
+									 <p>Confira abaixo o que as pessoas estão lendo</p>										
+									</header>
+
+									<!-- #filters -->
+									<!--ul id="genre-filter" class="clearfix">
+										<li class="label_filter">Filtro</li>
+										<li><span class="filter active" data-filter="logo posters photography webdesign">Todos</span></li>
+										<li><span class="filter" data-filter="logo">+ Recentes</span></li>
+										<li><span class="filter" data-filter="posters">+ Buscados</span></li>                                  
+									</ul-->
+									<!-- /#filters -->
+									
+									<div class="grid" id="portfoliolist3" ng-hide="bookSearchStarted">
+
+
+										<div class="view view-first portfolio posters webdesign" data-cat="posters webdesign" ng-repeat="recommendedContent in recommendedBooks | limitTo:6" >
+
+											<a href="#books" ng-click="openSuggestedBook(recommendedContent.id, recommendedContent.name,recommendedContent.type,recommendedContent.artist,recommendedContent.extraInformation, recommendedContent.image)" style="cursor:pointer;">
+												<img src="{{recommendedContent.image}}" alt="img01" width="349"  style="max-height: 232px; max-width: 349px;"  />
+                                             
+												<div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
+													<h4>{{recommendedContent.name}}</h4>
+													<p><span class="cat-portfolio">{{recommendedContent.artist}}</span></p>
+													<div class="portf_detail">
+																																	
+													</div>
+
+												</div>
+											</a>
+										</div>
+
+									</div>
+									
+									<div class="grid" id="portfoliolist3" ng-show="bookSearchStarted">
+
+
+										<div class="view view-first portfolio posters webdesign" data-cat="posters webdesign" ng-repeat="book in books"  >
+                                            
+											<a href="#books" ng-click="openBook( book.id, book.volumeInfo.imageLink.extraLarge, book.volumeInfo.title, book.volumeInfo.authors, book.webReaderLink, book.accessViewStatus)" style="cursor:pointer;">
+												<img src="{{book.volumeInfo.imageLink.extraLarge}}" alt="img01" width="349"  style="max-height: 232px; max-width: 349px;"  />
+
+												<div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
+													<h4>{{book.volumeInfo.title}}</h4>
+													<p><span class="cat-portfolio">{{book.volumeInfo.description}}</span></p>
+													<div class="portf_detail">
+																									 
+														
+													</div>
+
+												</div>
+											</a>
+
+										</div>
+
+									</div>
+									
+									<div class="col-md-12 nextprev" ng-show="bookSearchStarted">
+									  <br/>
+									  <button class="btn btn-default btn-lg" ng-click="getBooksPreviousPage()"><span class="glyphicon glyphicon-chevron-left"></span></button>
+
+									  <button class="btn btn-default btn-lg" ng-click="getBooksNextPage()"><span class="glyphicon glyphicon-chevron-right"></span></button>
+
+									</div>
+
+								</div><!-- /grid-wrap -->
+							</center>
+							
+                        </div><!-- /portfolios -->	
+
+                    </div>
+                    <!-- .page_content -->
+
+
+				</section>
+				<!-- End #resume -->
+
+                <!-- #Vídeos -->
+                <section ng-show="videosActive" id="videos" class="layers">
+                    
+					
+                    <!-- .page_content -->
+                    <div class="page_content">
+					
+					    <!-- .container-fluid -->
+						<div class="container-fluid no-marg">
+						
+							<!-- .row -->
+							<div class="row row_responsive" style="margin-bottom: -20px; margin-top: -20px;">
+								
+								<!-- .section_general -->
+								<div class="col-lg-11 section_general">
+						
+									<header class="section-header">
+									 <h3 class="section-title">Vídeos</h3>
+									 <p>Assista o que quiser. Experimente.</p>
+										<div class="border-divider"></div>
+									</header>
+								</div>
+							</div>
+												  
+							<div class="row row_responsive" style="margin-bottom: -20px; margin-top: -20px;">
+							   <center>
+									<form style="margin-top: 40px;">
+										<input type="text" placeholder="Procurando por algum vídeo específico ?" class="form-control input-lg" 
+											name="search" ng-model="videoQuery" style="width: 70%;" />
+										
+										<div class="row service_intro section_separate" style="margin-top: 10px;">
+											<button type="submit" ng-click="getVideosByQuery()" class="btn btn_service_intro">Buscar</button>
+										</div>							
+									</form>
+								</center>
+							</div>
+						
+						</div>
+					    
+                        <!-- .portfolios -->
+                        <div id="portfolios" class="portfolios">
+
+							<center>
+								<!-- .grid-wrap -->
+								<div id="videosResultArea" tabindex="1" class="grid-wrap">
+
+									<header class="section-header" style="margin-bottom: -60px;">									
+									 <p>Quer saber o que as pessoas estão assistindo? Confira abaixo</p>										
+									</header>
+									<!-- #filters -->
+									<!--ul id="genre-filter" class="clearfix">
+										<li class="label_filter">Filtro</li>
+										<li><span class="filter active" data-filter="logo posters photography webdesign">Todos</span></li>
+										<li><span class="filter" data-filter="logo">+ Recentes</span></li>
+										<li><span class="filter" data-filter="posters">+ Buscados</span></li>                                  
+									</ul-->
+									<!-- /#filters -->
+									
+									<div class="grid" id="portfoliolist2" ng-hide="videoSearchStarted">
+
+
+										<div class="view view-first portfolio posters webdesign" data-cat="posters webdesign" ng-repeat="recommendedContent in recommendedVideos | limitTo:6"   >
+
+											<a href="#videos"  ng-click="playVideo(recommendedContent.id,recommendedContent.image,recommendedContent.title)" style="cursor:pointer;">
+												<img src="{{recommendedContent.image}}" alt="img01" width="349"  style="max-height: 232px; max-width: 349px;"  />
+
+												<div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
+													<h4>{{recommendedContent.name}}</h4>
+													<p><span class="cat-portfolio">{{recommendedContent.description}}</span></p>
+													<div class="portf_detail">
+																																	
+													</div>
+
+												</div>
+											</a>
+										</div>
+
+									</div>
+									
+									<div class="grid" id="portfoliolist2" ng-show="videoSearchStarted">
+
+
+										<div class="view view-first portfolio posters webdesign" data-cat="posters webdesign" ng-repeat="video in videos" >
+                                            
+											<a href="#videos"  ng-click="playVideo(video.id,video.previewImage,video.title)" style="cursor:pointer;">
+												<img src="{{video.previewImage}}" alt="img01" width="349"  style="max-height: 232px; max-width: 349px;"  />
+
+												<div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
+													<h4>{{video.title}}</h4>
+													<p><span class="cat-portfolio">{{video.description}}</span></p>
+													<div class="portf_detail">
+																									 
+														
+													</div>
+
+												</div>
+											</a>
+
+										</div>
+
+									</div>
+									
+									<div class="col-md-12 nextprev" ng-show="videoSearchStarted">
+									    <br/>
+										<button class="btn btn-default btn-lg" ng-click="getVideosPreviousPage()"><span class="glyphicon glyphicon-chevron-left"></span></button>
+
+										<button class="btn btn-default btn-lg" ng-click="getVideosNextPage()"><span class="glyphicon glyphicon-chevron-right"></span></button>
+									</div>
+                                    <div ng-include src="'../adsGoogle.html'" ></div>
+
+								</div><!-- /grid-wrap -->
+							</center>
+
+                        </div><!-- /portfolios -->	
+
+                    </div>
+                    <!-- .page_content -->
+
+
+
+                </section>
+                <!-- End #portfolio -->
+
+                				
+				
+				<!-- #Lugares -->
+				<section id="lugares" ng-show="placesActive" class="layers blog-content-grid">
+					 <!-- .page_content -->
+                    <div class="page_content">
+					
+					    <!-- .container-fluid -->
+						<div class="container-fluid no-marg">
+						
+							<!-- .row -->
+							<div class="row row_responsive" style="margin-bottom: -20px; margin-top: -20px;">
+								
+								<!-- .section_general -->
+								<div class="col-lg-11 section_general">
+						
+									<header class="section-header">
+									 <h3 class="section-title">Lugares</h3>
+									 <p>Descubra lugares próximos a você</p>
+										<div class="border-divider"></div>
+									</header>
+								</div>
+							</div>
+												  
+							<!--div class="row row_responsive" style="margin-bottom: -20px; margin-top: -20px;">
+							   <center>
+									<form style="margin-top: 40px;">
+										<input type="text" placeholder="O que você procura ?" class="form-control input-lg" 
+											name="search" ng-model="videoQuery" style="width: 70%;" required autofocus/>
+										
+										<div class="row service_intro section_separate" style="margin-top: 10px;">
+											<button type="submit" ng-click="getVideosByQuery()" class="btn btn_service_intro">Buscar</button>
+										</div>							
+									</form>
+								</center>
+							</div-->
+							<div class="row row_responsive" style="margin-bottom: -20px; margin-top: -20px;">
+								<div class="col-md-8 col-md-offset-2 search">
+
+								  <form>
+									<div class="col-md-6" style="margin-top: -60px;">
+										<p>Selecionar País</p>
+										<select class="form-control input-lg" ng-model="countryIDandName" ng-change="getStates()" required >
+										  <option value="">País</option>
+										  <option ng-repeat="country in countries" value="{{country.geonameId+'|'+country.name}}">{{country.name}}</option>     
+										</select>
+										<br/>
+										<p>Selecionar Estado</p>
+										<select class="form-control input-lg" ng-model="stateName" ng-change="updateFinalAddress()" required >
+										  <option value="">Estado</option>
+										  <option ng-repeat="state in states" value="{{state.name}}">{{state.name}}</option>     
+										</select>
+									 </div>
+									  
+									 <div class="col-md-6" style="margin-top: -60px;">
+										<p>Digite o Nome da Rua (opcional)</p>
+										<input type="text" class="form-control input-lg" placeholder="Nome da Rua" ng-model="streetName" />
+										<br/>										
+										<p>Escolha o Tipo de Lugar (opcional)</p>  
+										<select class="form-control input-lg" ng-model="placeType">          
+										  <option value="Food">Comida</option>  
+										  <option value="Drinks">Bebidas</option>    
+										  <option value="Coffee">Cafés</option>      
+										  <option value="Stores">Lojas</option>    
+										  <option value="Outdoors">Lugares Abertos</option> 
+										  <option value="Historic Places">Locais Historicos</option>
+										  <option value="Special">Seleção Especial</option>      
+										</select>
+									  
+									  </div>									  
+									  <center>
+										  <div class="row service_intro section_separate" style="margin-top: 20px;">
+										    <br/><br/>
+											<button type="submit" class="btn btn_service_intro" ng-click="getPlaces_()">Buscar</button>
+										  </div>
+									  </center>
+								  </form>
+								</div>
+							</div>
+						
+						</div>
+					    
+                        <!-- .portfolios -->
+                        <div id="portfolios" class="portfolios" >
+
+							<center>
+								<!-- .grid-wrap -->
+								<div id="placesResultArea" tabindex="1" class="grid-wrap">
+								
+									<header class="section-header" style="margin-bottom: -60px;" ng-hide="placesSearchStarted">									
+									 <p>Infelizmente não posso contar os lugares que outras pessoas estão buscando, mas logo espero poder mostrar...Enquanto isso, que tal buscar algum lugar próximo de você usando a busca acima ?</p>										
+									</header>
+
+									<!-- #filters -->
+									<!--ul id="genre-filter" class="clearfix">
+										<li class="label_filter">Filtro</li>
+										<li><span class="filter active" data-filter="logo posters photography webdesign">Todos</span></li>
+										<li><span class="filter" data-filter="logo">+ Recentes</span></li>
+										<li><span class="filter" data-filter="posters">+ Buscados</span></li>                                  
+									</ul-->
+									<!-- /#filters -->
+																											
+									<div class="grid" id="portfoliolist4">
+
+
+										<div class="view view-first portfolio photography posters" data-cat="photography" ng-repeat="place in places"  >
+                                            
+											<a href="#places" ng-click="howGetThereAction(place.name,place.address,place.distance)" style="cursor:pointer;">
+												<img src="../images/4.jpg" alt="img01" width="349"  style="max-height: 232px; max-width: 349px;"  />
+
+												<div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
+													<h4>{{place.name}}</h4>
+													<p><span class="cat-portfolio"><i class="fa fa-home"></i>{{place.address}}</span></p>
+													<p ng-hide="{{place.phone == ''}}" ><span class="cat-portfolio"><i class="fa fa-phone"></i></span>{{place.phone}}</p>													
+													<p ng-show="{{place.isOpen}}">Está aberto agora ? Sim </p>
+													<p ng-hide="{{place.isOpen}}">Está aberto agora ? Não </p>
+													
+
+												</div>
+											</a>
+
+										</div>
+
+									</div>
+									<div class="col-md-12 nextprev" ng-show="placesSearchStarted">
+									  <br/>
+									  <button class="btn btn-default btn-lg" ng-click="getPlacesPreviousPage()"><span class="glyphicon glyphicon-chevron-left"></span></button>
+
+									  <button class="btn btn-default btn-lg" ng-click="getPlacesNextPage()"><span class="glyphicon glyphicon-chevron-right"></span></button>
+									  
+									</div>
+
+								</div><!-- /grid-wrap -->
+							</center>
+
+                        </div><!-- /portfolios -->	
+
+                    </div>
+                    <!-- .page_content -->
+				</section>
+				<!-- End #Lugares -->
+				
+				<!-- #Clima -->
+				<section id="clima" ng-show="weatherActive" class="layers blog-content-grid">
+					 <!-- .page_content -->
+                    <div class="page_content">
+					
+					    <!-- .container-fluid -->
+						<div class="container-fluid no-marg">
+						
+							<!-- .row -->
+							<div class="row row_responsive" style="margin-bottom: -20px; margin-top: -20px;">
+								
+								<!-- .section_general -->
+								<div class="col-lg-11 section_general">
+						
+									<header class="section-header">
+									 <h3 class="section-title">Previsão do Tempo</h3>
+									 <p>Veja a previsão em todo o mundo</p>
+										<div class="border-divider"></div>
+									</header>
+								</div>
+							</div>
+												  
+							
+							<div class="row row_responsive" style="margin-bottom: -20px; margin-top: -20px;">
+								<div class="col-md-8 col-md-offset-2 search">
+
+									<div class="col-md-6">
+									  <header class="section-header" style="margin-bottom: -70px;" >	
+										<p>Verificar a previsão nunca foi tão fácil, escolha o seu local e busque</p>      
+									  </header>
+									  <br />
+									  <form>
+										<p>Selecionar País</p>
+										<select class="form-control input-lg" ng-model="countryIDandName" ng-change="getStates()" required>
+											<option value="">País</option>
+											<option ng-repeat="country in countries" value="{{country.geonameId+'|'+country.name}}">{{country.name}}</option>     
+										</select>
+
+										<p>Selecionar Estado</p>
+										<select class="form-control input-lg" ng-model="stateName" ng-change="updateFinalAddress()" required>
+											<option value="">Estado</option>
+											<option ng-repeat="state in states" value="{{state.name}}">{{state.name}}</option>     
+										</select>
+									  
+									  
+										<p>Digite o Nome da Rua (opcional)</p>
+										<input type="text" class="form-control input-lg" placeholder="Nome da Rua" ng-model="streetName" />
+										<br />
+										<br />
+										<button type="submit" class="btn btn-info btn-block btn-lg" ng-click="getWeather()">Ver previsão</button>
+									  </form>
+									  <br />
+									</div>
+
+									<div class="col-md-6">									  
+									  
+									  <center style="margin-left:20px;margin-top:15px;"  ng-show="weatherReady">
+										<img src="{{weather_forecast_image}}" alt="Weather - All In Your Hands"  ng-show="weatherReady" />
+										<h3>     &nbsp; {{ (weather.temperature - 273) + 'C° /' + (weather.temperature - 241) + 'F°' }} </h3>
+										<p>Max.  &nbsp; {{ (weather.temp__max - 273) + 'C° /' + (weather.temp__max - 241) + 'F°' }} </p>
+										<p>Min.  &nbsp; {{ (weather.temp__min - 273) + 'C° /' + (weather.temp__min - 241) + 'F°' }} </p>
+										<br/>
+										<p>{{weather.weatherDescription}}</p>
+										<br/>
+										<a ng-click="getWeatherForecast()" style="cursor:pointer;">Ver a previsão para os próximos 6 dias</a>
+									  </center>
+									  <center style="margin-left:20px;margin-top:15px;"  ng-show="weatherError">
+										  <h3>Infelizmente, ocorreu um erro na previsÃ£o do tempo! Por favor, tente novamente em alguns minutos</h3>
+									  </center>
+									</div>
+								  </div>
+							</div>
+						
+						</div>
+					                           
+
+                    </div>
+                    <!-- .page_content -->
+				</section>
+				<!-- End #Clima -->
+				
+				<!-- #Chat -->
+				<section id="chat" ng-show="chatActive" class="layers blog-content-grid">
+					 <!-- .page_content -->
+                    <div class="page_content">
+					
+					    <!-- .container-fluid -->
+						<div class="container-fluid no-marg">
+						
+							<!-- .row -->
+							<div class="row row_responsive" style="margin-bottom: -20px; margin-top: -20px;">
+								
+								<!-- .section_general -->
+								<div class="col-lg-11 section_general">
+						
+									<header class="section-header">
+									 <h3 class="section-title">Bate-Papo</h3>
+									 <p>Conheça nosso incrível bate-papo</p>
+										<div class="border-divider"></div>
+									</header>
+								</div>
+							</div>
+												  
+							
+							<div class="row row_responsive" style="margin-bottom: -20px; margin-top: -20px;">
+								<div class="col-md-10 col-md-offset-1 chatarea">
+
+									<div class="container">
+									  
+									 <div ng-show="userLogged">
+
+									  <h4>Bem Vindo ao nosso Chat,  <b>{{data.username}}</b> :)</h4> 
+									  <div class="col-md-8 pre-scrollable chatbox">
+									    <br/>
+										<h4>Olha o papo que está rolando abaixo...</h4>
+										<hr>
+										
+										<center>
+										<p ng-repeat="message in messages.slice().reverse() track by $index" class="bg-success"><b>{{mySplit(message,0)}}</b> {{mySplit(message,1)}} </p>
+										</center> 
+									  </div>
+									  
+									  <div class="col-md-3 col-md-offset-1 pre-scrollable chatbox hidden-xs hidden-sm">
+										<h4>Usuarios : {{listSize(users)}}</h4>
+										<hr>
+										  <div>
+											<p ng-repeat="user in users"><span class="glyphicon glyphicon-user"></span>&nbsp; {{user}}</p>  
+										   
+										  </div>
+										
+									  </div> 
+									  
+									  <div class="row sendbox">
+										<div class="container">
+										
+										  <br /> 
+										  <form ng-submit="publish()">
+											<div class="col-md-10" style="margin-top: 30px;">
+											  <div class="col-md-8">
+											  <input style="width: 70%;" type="text" placeholder="escreva sua mensagem" class="form-control input-lg" ng-model="newMessage"/>    
+											  </div>
+											  <div class="col-md-2" style="margin-left: -10px;">
+												<button class="btn btn_service_intro" type="submit"><span class="glyphicon glyphicon-send"></span>&nbsp;Enviar</button>
+											  </div>											  
+											 
+											</div>
+											<div class="col-md-4" style="margin-top: 30px;">
+											
+												<button class="btn btn_service_intro" style="background-color: red;float: right;" ng-click="userLogoff()"><span class="glyphicon glyphicon-off">&nbsp;Sair</span></button>
+											 
+											</div>											
+										  </form>
+										  										  
+											
+										</div>
+									  </div>
+											
+
+									 </div>
+									 <div ng-hide="userLogged"> 
+
+										  
+										  <div class="col-md-6">
+										     <header class="section-header" style="margin-bottom: -70px;" >	
+												<p>Aqui você jamais está sozinho...Quer conversar com alguém de qualquer lugar do planeta? Acesse o nosso chat</p>      
+											 </header>
+											  <input type="text" placeholder="Seu nome de usuário" class="form-control input-lg" ng-model="selectedUserName"/>
+											  
+											  <div class="row service_intro section_separate">
+												<button style="margin-top: 30px;" class="btn btn_service_intro" ng-click="join()" type="submit"><span class="glyphicon glyphicon-off">&nbsp;Entrar</span></button>
+											  </div>
+										   </div>
+
+                                           <div ng-include src="'../adsGoogle.html'" ></div>
+											 
+									 </div>
+
+									</div>
+							    </div>
+						    </div>
+						</div>
+					                           
+
+                    </div>
+                    <!-- .page_content -->
+				</section>
+				<!-- End #Chat -->
+				
+
+               
+
+            </div>
+            <!-- End #main -->
+        </div>
+        <!-- End #wrappers -->
+		
+		<!--modal for video-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+        <h4 class="modal-title" id="myModalLabel">Assistir Video</h4>
+      </div>
+      <div class="modal-body">
+        <center>
+          <iframe  width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen="true"></iframe>
+          
+                    
+        </center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--modal for places-->
+
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+        <center><h4 class="modal-title" id="myModalLabel"></h4></center>
+      </div>
+      <div class="modal-body">
+        <center>
+                 <p id="placeTitleArea"></p>
+                 <center>
+                    <img class="img-responsive img-centered" alt="">
+                 </center>    
+                 <p id="distanceTextArea"></p>   
+                 <br/>                      
+                 <p id="roteToDestinyArea"></p>
+                 <br/>                 
+                 <br/>                                           
+                 <div id="streetViewHtmlCodeArea">                    
+                 </div>              
+            </center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--modal for songs-->
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+        <h4 class="modal-title" id="myModalLabel">Ouvir a Música</h4>
+      </div>
+      <div class="modal-body songbtns">
+        <center>
+          <img  width="100%" height="100%" ></img>           
+          <h3>00:00</h3>         
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{songPlayerPercentValue}}%;">  
+              <span id="percentageArea" class="sr-only">0%</span>          
+            </div>
+          </div>
+          <button ng-hide="showPauseButton" class="btn btn-warning" ng-click="pausePlayAction()"><span class="glyphicon glyphicon-play"></span></button>
+          <button ng-show="showPauseButton" class="btn btn-warning" ng-click="pausePlayAction()"><span class="glyphicon glyphicon-pause"></span></button>        
+          <button class="btn btn-warning" ng-click="stopAction()"><span class="glyphicon glyphicon-stop"></span></button>
+          <br/>
+		  <p>Para ouvir completo clique abaixo</p>
+		  <iframe  width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
+		  <br/>
+          <a href="https://www.spotify.com" target="_blank"><span style="font-size: 14px;color: blue;">Powered by Spotify</span></a>
+        </center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--modal for weather forecast nex6 days-->
+<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+        <h4 class="modal-title" id="myModalLabel">Weather Forecast</h4>
+      </div>
+      <div class="modal-body songbtns">
+        <center>
+                 <center>
+                    <img class="img-responsive img-centered" alt="">
+                 </center>   
+                 <p id="weatherForecastTextArea"></p>             
+                         
+        </center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myModal7" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+        <h3 class="modal-title" id="myModalLabel"><i class="fa fa-thumbs-down"></i> <span>Resultado Não Encontrado :-(</span></h3>
+      </div>
+      <div class="modal-body songbtns">
+        <center>
+                 
+                 <h4 id="ResultsNotFoundText"></h4>             
+                         
+        </center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+        <!-- jquery | jQuery 1.11.0 -->
+        <!-- Credits: http://jquery.com -->
+        <script type="text/javascript" src="../js/jquery.min.js"></script>
+
+        <!-- Js | jquery.ui.effect.js -->
+        <!-- Credits: https://jqueryui.com/effect -->
+        <script type="text/javascript" src="../js/jquery.ui.effect.min.js"></script>
+
+        <!-- Js | bootstrap -->
+        <!-- Credits: http://getbootstrap.com -->
+        <script type="text/javascript" src="../js/bootstrap.min.js"></script> 
+
+        <!-- Js | nicescroll.js -->
+        <!-- Credits: http://areaaperta.com/nicescroll -->
+        <!--script type="text/javascript" src="../js/jquery.nicescroll.min.js"></script-->
+
+        <!-- jquery | portfolio -->
+        <!-- Credits: http://www.mixitup.io -->
+        <script type="text/javascript" src="../js/jquery.mixitup.min.js"></script> 
+
+        <!-- jquery | prettyPhoto -->
+        <!-- Credits: http://www.no-margin-for-errors.com/ -->
+        <script type="text/javascript" src="../js/jquery.prettyPhoto.js"></script>
+
+        <!-- Js | gmaps -->
+        <!-- Credits: http://maps.google.com/maps/api/js?sensor=true-->
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+        <script type="text/javascript" src="../js/gmaps.min.js"></script>
+
+        <!-- Js | Js -->
+        <!-- Credits: http://themeforest.net/user/FlexyCodes -->
+        <script type="text/javascript" src="../js/utils.js"></script>
+		
+		<script src="http://cdn.pubnub.com/pubnub.min.js"></script>
+		<script src="https://cdn.pubnub.com/pubnub-crypto.min.js"></script>
+		<script src="../js/angular.min.js"></script>
+		<script src="../js/angular-resource.min.js"></script>
+		<script src="../js/angular-route.min.js"></script>  
+		<script src="../js/angular-cookies.min.js"></script> 
+		<script src="../js/pubnub-angular.js"></script>
+		<script src="../js/buzz.min.js"></script>
+		<script src="../js/angular-growl-notifications.min.js"></script>
+		<script src="../js/xlat.js"></script>
+		<script src="../js/controllersv2.js"></script>
+		<script src="../js/servicesv2.js"></script>
+
+
+    </body>
+</html>

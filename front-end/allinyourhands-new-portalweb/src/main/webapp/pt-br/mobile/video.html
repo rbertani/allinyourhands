@@ -1,0 +1,51 @@
+	
+		<div class="container">
+		     		
+				<!--article class="video-article"  ng-repeat="video in videos" >
+				    <a href="#videos"  ng-click="playVideo(video.id,video.previewImage,video.title)" style="cursor:pointer;">
+						
+						<div class="video-thumbnail">
+						  
+							<div class="video-thumbnail-inner">							
+									<img src="{{video.previewImage}}" alt="Video Image" width="470" height="290"  style="max-height: 470px; max-width: 290px;" />							
+							</div>
+						  
+						</div>
+						
+						<h3 class="video-article-title">{{video.title}}</h3>
+						<hr style="background: #bebebe; margin: 30px 0;">
+					</a>
+				  
+				</article>
+				<div style="text-align: center;" ng-show="videos.length > 0">
+					<a ng-click="getVideosPreviousPage()" class="ui-link ui-btn ui-icon-arrow-l ui-btn-icon-left ui-btn-inline ui-shadow ui-mini" href="#videos" data-corners="false" data-role="button" data-mini="true" data-icon="arrow-l" data-iconpos="left" data-inline="true">Anteriores</a>
+					<a ng-click="getVideosNextPage()" class="ui-link ui-btn ui-icon-arrow-r ui-btn-icon-right ui-btn-inline ui-shadow ui-mini" href="#videos" data-corners="false" data-role="button" data-mini="true" data-icon="arrow-r" data-iconpos="right" data-inline="true">Proximos</a>
+				</div>
+
+				<div ng-include src="'mobile/googleAds.html'" ></div-->
+				
+				<article class="blog-article" ng-repeat="video in videos" >
+				
+				 <a href="#videos" ng-click="playVideo(video.id,video.previewImage,video.title)" style="cursor:pointer;" >
+					<div class="blog-featured-image blog-image-center">
+						<div style="max-width: 100%;">
+						     <img src="{{video.previewImage}}" alt="img01" width="275" height="275" style="max-height: 275px; max-width: 275px;">
+								
+						</div>
+					</div>
+					
+					<h3 class="blog-article-title">{{video.title}}</h3>
+					
+					
+					<hr style="background: #bebebe; margin: 30px 0;">
+				  </a>
+				</article>
+				<div style="text-align: center;" ng-show="videos.length > 0">
+					<a ng-click="getVideosPreviousPage()" class="ui-link ui-btn ui-icon-arrow-l ui-btn-icon-left ui-btn-inline ui-shadow ui-mini" href="#videos" data-corners="false" data-role="button" data-mini="true" data-icon="arrow-l" data-iconpos="left" data-inline="true">Anteriores</a>
+					<a ng-click="getVideosNextPage()" class="ui-link ui-btn ui-icon-arrow-r ui-btn-icon-right ui-btn-inline ui-shadow ui-mini" href="#videos" data-corners="false" data-role="button" data-mini="true" data-icon="arrow-r" data-iconpos="right" data-inline="true">Proximos</a>
+				</div>
+
+				<div ng-include src="'mobile/googleAds.html'" ></div>
+			
+			
+		</div>

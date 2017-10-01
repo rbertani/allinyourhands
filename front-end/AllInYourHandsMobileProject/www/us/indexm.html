@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="us" ng-app="root">
+<head>
+    <meta charset="UTF-8">
+	<meta name="ROBOTS" content="INDEX, FOLLOW">
+    <meta name="description" content="Portal de Entretenimento com conteúdos de música, vídeo, livros, lugares próximos, previsão do tempo e chat"/>
+    <meta name="keywords" content="Tudo em suas mãos, tudo em suas mãos, tudo em suas maos, tudo em, suas mãos,suas maos, mãos, maos, All In Your Hands,all in your hands,hands, Música, Music, Songs,Top 10 Songs,top 10, Vídeos, Videos, Livros, Books, places, Places, Lugares, lugares, Previsão do tempo, Weather  Forecast, Bate Papo, Chat, divertido, fácil, prático, easy, funny, Youtube, Grooveshark, Google Books, pizzaria, bar, restaurante, parque, busca, ricardo bertani,entretenimento,entertainment, app, application, aplicativo, download, streaming,multifuncional, divertido, rápido, videos do youtube, aplicativo gratuito, app gratuito, android"/>
+	<title>All In Your Hands</title>
+	<!-- rgb(4, 135, 204) -->
+	<!-- Run in full-screen mode. -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<!-- Make the status bar black with white text. -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	 <!-- Icons -->
+
+	<!-- iOS 7 iPad (retina) -->
+	<link href="../images/apple/apple-touch-icon-152x152.png"
+		  sizes="152x152"
+		  rel="apple-touch-icon">
+
+	<!-- iOS 6 iPad (retina) -->
+	<link href="../images/apple/apple-touch-icon-144x144.png"
+		  sizes="144x144"
+		  rel="apple-touch-icon">
+
+	<!-- iOS 7 iPhone (retina) -->
+	<link href="../images/apple/apple-touch-icon-120x120.png"
+		  sizes="120x120"
+		  rel="apple-touch-icon">
+
+	<!-- iOS 6 iPhone (retina) -->
+	<link href="../images/apple/apple-touch-icon-114x114.png"
+		  sizes="114x114"
+		  rel="apple-touch-icon">
+
+	<!-- iOS 7 iPad -->
+	<link href="../images/apple/apple-touch-icon-76x76.png"
+		  sizes="76x76"
+		  rel="apple-touch-icon">
+
+	<!-- iOS 6 iPad -->
+	<link href="../images/apple/apple-touch-icon-72x72.png"
+		  sizes="72x72"
+		  rel="apple-touch-icon">
+
+	<!-- iOS 6 iPhone -->
+	<link href="../images/apple/apple-touch-icon-57x57.png"
+		  sizes="57x57"
+		  rel="apple-touch-icon">
+
+	<!-- Startup images -->
+
+	<!-- iOS 6 & 7 iPad (retina, portrait) -->
+	<link href="../images/apple/apple-touch-startup-image-1536x2008.png"
+		  media="(device-width: 768px) and (device-height: 1024px)
+			 and (orientation: portrait)
+			 and (-webkit-device-pixel-ratio: 2)"
+		  rel="apple-touch-startup-image">
+
+	<!-- iOS 6 & 7 iPad (retina, landscape) -->
+	<link href="../images/apple/apple-touch-startup-image-1496x2048.png"
+		  media="(device-width: 768px) and (device-height: 1024px)
+			 and (orientation: landscape)
+			 and (-webkit-device-pixel-ratio: 2)"
+		  rel="apple-touch-startup-image">
+
+	<!-- iOS 6 iPad (portrait) -->
+	<link href="../images/apple/apple-touch-startup-image-768x1004.png"
+		  media="(device-width: 768px) and (device-height: 1024px)
+			 and (orientation: portrait)
+			 and (-webkit-device-pixel-ratio: 1)"
+		  rel="apple-touch-startup-image">
+
+	<!-- iOS 6 iPad (landscape) -->
+	<link href="../images/apple/apple-touch-startup-image-748x1024.png"
+		  media="(device-width: 768px) and (device-height: 1024px)
+			 and (orientation: landscape)
+			 and (-webkit-device-pixel-ratio: 1)"
+		  rel="apple-touch-startup-image">
+
+	<!-- iOS 6 & 7 iPhone 5 -->
+	<link href="../images/apple/apple-touch-startup-image-640x1096.png"
+		  media="(device-width: 320px) and (device-height: 568px)
+			 and (-webkit-device-pixel-ratio: 2)"
+		  rel="apple-touch-startup-image">
+
+	<!-- iOS 6 & 7 iPhone (retina) -->
+	<link href="../images/apple/apple-touch-startup-image-640x920.png"
+		  media="(device-width: 320px) and (device-height: 480px)
+			 and (-webkit-device-pixel-ratio: 2)"
+		  rel="apple-touch-startup-image">
+
+	<!-- iOS 6 iPhone -->
+	<link href="../images/apple/apple-touch-startup-image-320x460.png"
+		  media="(device-width: 320px) and (device-height: 480px)
+			 and (-webkit-device-pixel-ratio: 1)"
+		  rel="apple-touch-startup-image">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css" />
+	<link rel="stylesheet" href="../css/jquery.mobile-1.4.5.css">
+	<link rel="stylesheet" href="../css/style.css" />
+	<link rel="stylesheet" href="../css/owl.carousel.css">
+	<link rel="stylesheet" href="../css/owl.theme.css">
+	<link rel="stylesheet" href="../css/photoswipe.css">
+	<link rel="stylesheet" href="../css/addtohomescreen.css">
+	<link rel="shortcut icon" type="image/x-icon" href="../images/favicon.png">
+		
+	<script defer type="text/javascript" src="../js/klass.min.js"></script>
+	<script src="../js/jquery-1.11.1.min.js"></script>	
+	
+	<!--script>
+    $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+	</script-->
+	<script src="../js/jquery.mobile-1.4.5.js"></script>
+	
+	<script defer type="text/javascript" src="../js/jstorage.js"></script>
+	<script defer type="text/javascript" src="../js/owl.carousel.min.js"></script>
+	<script defer type="text/javascript" src="../js/code.photoswipe.jquery-3.0.5.min.js"></script>
+	<script defer type="text/javascript" src="../js/jquery.validate.min.js"></script>
+	<script defer src="../js/custom.js"></script>
+	<script type="application/javascript" src="../js/addtohomescreen.min.js"></script>
+	<script type="text/javascript">
+		addToHomescreen({
+			startDelay: 5,
+			skipFirstVisit: true
+		});
+		
+	</script>
+	
+	<script src="../js/aiyh_scripts.js"></script>	
+	<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			ga('create', 'UA-59301185-1', 'auto');
+			ga('send', 'pageview');
+	</script>
+		
+</head>
+<body ng-controller="aiyhMainController" ng-init="loadHomeScreen()">
+ <div data-role="page" id="home">
+	<div data-role="panel" data-position="left" data-theme="b" data-display="push" id="left_panel">
+		<ul data-role="listview" data-inset="false" data-theme="b">
+			<li><div style="text-align: center;"><a href="http://allinyourhandsweb.com"><img src="../images/logoAiyh.png" alt="Logo"></a></div></li>
+			<li><a data-transition="slide" href="#home" ng-click="startMenuBar('Home')"><i class="fa fa-user icon_menus"></i><span style="margin-left: 10px;" class="nav-label">Home</span></a></li>			
+			<li id="menu_songs" class="countable" ng-show="audioActive"><a data-count="1" data-transition="slide" ng-click="startMenuBar('Songs')" href="#songs"><i class="fa fa-music icon_menus"></i><span class="nav-label"><span>Songs</span></a></li>
+			<li id="menu_books" class="countable" ng-show="booksActive"><a data-count="1" data-transition="slide" ng-click="startMenuBar('Books')" href="#books"><i class="fa fa-book icon_menus"></i> <span class="nav-label"><span>Books</span></a></li>
+			<li id="menu_video" class="countable" ng-show="videosActive"><a data-count="2" data-transition="slide"  ng-click="startMenuBar('Videos')" href="#videos"><i class="fa fa-video-camera icon_menus"></i> <span class="nav-label"><span>Videos</span></a></li>
+			<li id="menu_places" class="countable" ng-show="placesActive"><a data-count="3" data-transition="slide"  ng-click="startMenuBar('Places')" href="#places"><i class="fa fa-glass icon_menus"></i> <span class="nav-label"> <span>Places</span></a></li>
+			<li id="menu_weather" class="countable" ng-show="weatherActive" ><a data-count="2" data-transition="slide"  ng-click="startMenuBar('Weather')" href="#weather"><i class="fa fa-sun-o icon_menus"></i> <span class="nav-label"> <span>Weather</span></a></li>
+			<li id="menu_chat" class="countable" ng-show="chatActive"><a data-count="3" data-transition="slide" ng-click="startMenuBar('Chat')" href="#chat"><i class="fa fa-weixin icon_menus"></i> <span class="nav-label"><span>Chat</span></a></li>
+			<li id="menu_contact" class="countable"><a data-count="0" data-transition="slide"  ng-click="startMenuBar('Contact')" href="#contact"><i class="fa fa-envelope-o icon_menus"></i><span class="nav-label"><span>Contact</span></a></li>
+			
+		</ul>
+		<div style="position: relative; top: 15px;">
+		  <center>
+		    <br/>
+			<p>Do you like? Share ;-)</p>			
+			<a href="http://twitter.com/intent/tweet?status=Contents Portal: http://allinyourhandsweb.com" target="_blank"><img src="../images/panel/twitter.png" alt="Twitter"></a>		
+			<a href="http://www.facebook.com/sharer/sharer.php?u=http://allinyourhandsweb.com&title=Content Portal" target="_blank"><img src="../images/panel/facebook.png" alt="Facebook"></a>
+			<a href="https://plus.google.com/share?url=http://allinyourhandsweb.com" target="_blank"><img src="../images/panel/google.png" alt="Google+"></a>			
+		  </center>
+		</div>
+	</div>
+	<div data-role="panel" data-theme="b" data-position="right" data-display="push" id="right_panel">
+		<div style="text-align: center;">
+			<h4 style="margin-top: 0px;">Share our app</h4>
+			<div class="panel-social-wrap">
+				<a class="facebook_share_link" title="Share link on Facebook" target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http://allinyourhandsweb.com&title=Content Portal" rel="nofollow">
+					<div class="panel-social panel-social-twitter accent-color">
+						<img src="../images/facebook.png" alt="Facebook">
+					</div>
+				</a>
+				<div class="panel-social-counter facebook_number"></div>
+			</div>
+			<div class="panel-social-wrap">
+				<a class="twitter_share_link" title="Share link on Twitter" target="_blank" href="http://twitter.com/intent/tweet?status=Contents Portal: http://allinyourhandsweb.com" rel="nofollow">
+					<div class="panel-social panel-social-facebook accent-color">
+						<img src="../images/twitter.png" alt="Twitter">
+					</div>
+				</a>
+				<div class="panel-social-counter twitter_number"></div>
+			</div>
+			<div class="panel-social-wrap">
+				<a class="google_share_link" title="Share link on Google+" target="_blank" href="https://plus.google.com/share?url=http://allinyourhandsweb.com" rel="nofollow">
+					<div class="panel-social panel-social-google accent-color">
+						<img src="../images/google.png" alt="Google+">
+					</div>
+				</a>
+				<div class="panel-social-counter google_number"></div>
+			</div>
+		</div>
+	</div>
+	<div id="header" data-role="header" data-position="fixed" data-theme="c">
+		<div class="header_wrapper">
+			<a style="border-left: none;" class="header_button" href="#left_panel" data-inline="true" data-role="button" data-corners="false" data-theme="c">
+				<img class="header-btn-image" style="width: 100%; height: 100%;" src="../images/menu.png" alt="Menu">
+				<span class="menu-btn-background"></span>
+				<span class="counter-header hidden accent-color" style="color: #ffffff;"></span>
+			</a>
+			<span class="page_title">{{mobilePageTitle}}</span>			
+			<a style="float: right;" class="header_button" href="#right_panel" data-inline="true" data-role="button" data-corners="false" data-theme="c">
+				<img style="width: 100%; height: 100%;" src="../images/share.png" alt="Share">
+				<span class="btn-background share-btn-background"></span>
+			</a>
+			<div style="clear: both"></div>
+		</div>
+	</div><!-- /header -->
+	
+	<div class="ui-panel-wrapper">
+		<div class="ui-content" data-role="content" role="main">
+		
+		     <br/>
+			 <form ng-submit="getBooks()" ng-show="bookBarEnabled" >			   
+				
+				<div id="inputBooks"  class="ui-input-search ui-body-inherit" style="border: none; margin-left: 3%; margin-right: 3%;">
+				<input name="password" id="searchBooks" ng-model="booksKeyword"  placeholder="Search a Book using key words" value="" data-type="search" type="text" >
+				<a title="Clear text" href="#" tabindex="-1" aria-hidden="true" class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all ui-input-clear-hidden">Clear text</a>
+				</div>
+				
+				<div ng-hide="bookSearchStarted">
+					
+					<div ng-hide="isReadingTheBook">
+						<br/><br/>
+						<p>Check out below what the people are reading</p>
+						<br/>
+						<article class="blog-article" ng-repeat="recommendedContent in recommendedBooks | limitTo:6" >
+						
+						 <a href="#books" ng-click="openSuggestedBook(recommendedContent.id, recommendedContent.name,recommendedContent.type,recommendedContent.artist,recommendedContent.extraInformation, recommendedContent.image)" style="cursor:pointer;">
+							<div class="blog-featured-image blog-image-center">
+								<div style="display: inline-block; max-width: 100%;">
+									  <img src="{{recommendedContent.image}}" alt="img01" width="275" height="275"  style="max-height: 275px; max-width: 275px;"  />													
+								</div>
+							</div>
+							
+							<h3 class="blog-article-title">{{recommendedContent.name}}</h3>
+							
+							<p>{{recommendedContent.artist}}</p>
+							
+							<hr style="background: #bebebe; margin: 30px 0;" />
+						  </a>
+						</article>
+					</div>
+					<div id="recommendedBookReadingArea" ng-show="isReadingTheBook">						
+		        	</div>  
+
+				</div>
+								
+			 </form>   
+
+			 
+            
+			 <form  ng-submit="getVideosByQuery()" ng-show="videosBarEnabled">			   
+				<div id="inputVideos" class="ui-input-search ui-body-inherit" style="border: none; margin-left: 3%; margin-right: 3%;">
+					<input name="password" id="searchVideos" type="text" ng-model="videoQuery" data-type="search" placeholder="Are you looking for a specific video ?" value="" />
+					  <a title="Clear text" href="#" tabindex="-1" aria-hidden="true" class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all ui-input-clear-hidden">Clear text</a>
+				</div>	
+
+				<div ng-hide="videoSearchStarted">
+					<br/><br/>
+					<p>Do you want to know what the people are watching? See below</p>
+					<br/>
+					<article class="blog-article" ng-repeat="recommendedContent in recommendedVideos | limitTo:6">						
+						
+						   <a href="#videos"  ng-click="playVideo(recommendedContent.id,recommendedContent.image,recommendedContent.title)" style="cursor:pointer;">
+							
+							<div class="blog-featured-image blog-image-center">
+								<div style="max-width: 100%;">
+									 <img src="{{recommendedContent.image}}" alt="img01" width="275" height="275" style="max-height: 275px; max-width: 275px;">
+										
+								</div>
+							</div>	
+
+							<h3 class="blog-article-title">{{recommendedContent.name}}</h3>			
+					
+							<hr style="background: #bebebe; margin: 30px 0;">							
+							
+						   </a>						
+						
+					</article>
+				</div>				
+				
+			 </form>
+			 
+			  <form  ng-submit="getSongsByQuery()" ng-show="songsBarEnabled">			   
+				<div id="inputSongs" class="ui-input-search ui-body-inherit" style="border: none; margin-left: 3%; margin-right: 3%;">
+					<input name="password" id="searchSongs" type="text" ng-model="songName" data-type="search" placeholder="What do you want to listen to ?" value=""  />
+					  <a title="Clear text" href="#" tabindex="-1" aria-hidden="true" class="ui-input-clear ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all ui-input-clear-hidden">Clear text</a>
+				</div>				
+				
+				<div ng-hide="songSearchStarted">
+					<br/><br/>
+					<p>Below you confer the songs that the people are enjoying</p>
+					<p>We would like to remember you that in this case we can't offer you the full song...there is a copyright...But we offer you a link for the complete song in Spotify ;-)</p>
+					<br/>
+					<article class="blog-article" ng-repeat="recommendedContent in recommendedSongs | limitTo:6" >
+						<a href="#songs"  ng-click="playAction(recommendedContent.id,recommendedContent.name,recommendedContent.artist,recommendedContent.image)" style="cursor:pointer;">	
+							<div class="blog-featured-image blog-image-center">
+								<div style="display: inline-block; max-width: 100%;">
+									  <img ng-show="{{recommendedContent.image == ''}}" src="../images/2.png" alt="img01" width="275" height="275" style="max-height: 275px; max-width: 275px;">
+									  <img ng-show="{{recommendedContent.image != '' }}" src="{{recommendedContent.image}}" alt="img01" width="275" height="275" style="max-height: 275px; max-width: 275px;">
+																					
+								</div>
+							</div>
+							
+							<h3 class="blog-article-title">{{recommendedContent.name}}</h3>
+							
+							<p>{{recommendedContent.artist}}</p>
+							
+							<hr style="background: #bebebe; margin: 30px 0;" />
+						</a>
+					</article>
+				</div>
+			
+			 </form>
+			 
+			 <!--form  ng-show="placesBarEnabled" >	
+			
+  			 </form>
+			 
+			 <form  ng-show="weatherBarEnabled" >	
+			
+  			 </form>
+			 
+			 <form  ng-show="chatBarEnabled" >	
+			
+  			 </form>
+			 
+			  <form  ng-show="contactBarEnabled" >	
+			
+  			 </form-->
+			 
+			<div ng-include src="'mobile/songs.html'" ng-show="songsBarEnabled"></div>
+			<div ng-include src="'mobile/books.html'" ng-show="bookBarEnabled"></div>
+			<div ng-include src="'mobile/video.html'" ng-show="videosBarEnabled"></div>
+			<div ng-include src="'mobile/places.html'" ng-show="placesBarEnabled"></div>
+			<div ng-include src="'mobile/weather.html'" ng-show="weatherBarEnabled"></div>
+			<div ng-include src="'mobile/chat.html'" ng-show="chatBarEnabled"></div>
+			<div ng-include src="'mobile/contact.html'" ng-show="contactBarEnabled"></div>			
+			<div ng-include src="'mobile/home.html'" ng-show="homeBarEnabled"></div>
+			
+			<hr style="background: #bebebe; margin: 15px 0px;"></hr>
+			
+			<div ng-view></div>
+
+            
+			
+		</div>
+				
+			
+	</div>
+	
+			<!--modal for video-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Watch Video</h4>
+      </div>
+      <div class="modal-body">
+        <center>
+          <iframe  width="100%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen="true"></iframe>
+          
+                    
+        </center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--modal for places-->
+
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <center><h4 class="modal-title" id="myModalLabel"></h4></center>
+      </div>
+      <div class="modal-body">
+        <center>
+                 <p id="placeTitleArea"></p>
+                 <center>
+                    <img class="img-responsive img-centered" alt="">
+                 </center>    
+                 <p id="distanceTextArea"></p>   
+                 <br/>                      
+                 <p id="roteToDestinyArea"></p>
+                 <br/>                 
+                 <br/>                                           
+                 <div id="streetViewHtmlCodeArea">                    
+                 </div>              
+            </center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--modal for songs-->
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Ouvir a Música</h4>
+      </div>
+      <div class="modal-body songbtns">
+        <center>
+          <img  width="100%" height="100%" ></img>           
+          <h3>00:00</h3>         
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{songPlayerPercentValue}}%;">  
+              <span id="percentageArea" class="sr-only">0%</span>          
+            </div>
+          </div>
+          <button ng-hide="showPauseButton" class="btn btn-warning" ng-click="pausePlayAction()"><span class="glyphicon glyphicon-play"></span></button>
+          <button ng-show="showPauseButton" class="btn btn-warning" ng-click="pausePlayAction()"><span class="glyphicon glyphicon-pause"></span></button>        
+          <button class="btn btn-warning" ng-click="stopAction()"><span class="glyphicon glyphicon-stop"></span></button>
+          <br/>
+		  <h4>To listen full song click below</h4>
+		  <iframe  width="100%" height="80" frameborder="0" allowtransparency="true"></iframe>
+		  <br/>
+          <a href="https://www.spotify.com" target="_blank"><span style="font-size: 14px;color: blue;">Powered by Spotify</span></a>
+        </center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--modal for weather forecast nex6 days-->
+<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+        <h4 class="modal-title" id="myModalLabel">Weather Forecast</h4>
+      </div>
+      <div class="modal-body songbtns">
+        <center>
+                 <center>
+                    <img class="img-responsive img-centered" alt="">
+                 </center>   
+                 <p id="weatherForecastTextArea"></p>             
+                         
+        </center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="myModal7" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+        <h3 class="modal-title" id="myModalLabel"><i class="fa fa-thumbs-down"></i> <span>Result Not Found :-(</span></h3>
+      </div>
+      <div class="modal-body songbtns">
+        <center>
+                 
+                 <h4 id="ResultsNotFoundText"></h4>             
+                         
+        </center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</div><!-- /page -->	
+        <script type="text/javascript" src="../cordova.js"></script>
+        <!--script type="text/javascript" src="../js/aiyh_ads.js"></script-->
+        <script type="text/javascript" src="../js/bootstrap.min.js"></script> 	
+		<script type="text/javascript" src="../js/retina.min.js"></script>
+		<script src="../js/pubnub.min.js"></script>
+		<script src="../js/pubnub-crypto.min.js"></script>		
+		<script src="../js/angular.min.js"></script>
+		<script src="../js/angular-resource.min.js"></script>
+		<script src="../js/angular-route.min.js"></script>  
+		<script src="../js/angular-cookies.min.js"></script> 
+		<script src="../js/pubnub-angular.js"></script>
+		<script src="../js/buzz.min.js"></script>
+		<script src="../js/angular-growl-notifications.min.js"></script>
+		<script src="../js/xlat.js"></script>
+		<script src="../js/controllersMobile.js"></script>
+		<script src="../js/services.js"></script>
+	</body>
+</html>

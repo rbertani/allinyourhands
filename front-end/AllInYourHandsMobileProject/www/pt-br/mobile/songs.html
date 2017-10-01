@@ -1,0 +1,27 @@
+<div class="container">
+           				
+												
+				<article class="blog-article" ng-repeat="song in songs" >
+				
+				 <a href="#songs" ng-click="playAction(song.id+'+'+song.url,song.name,song.artistName,song.imagePreview)" style="cursor:pointer;" >
+					<div class="blog-featured-image blog-image-center">
+						<div style="display: inline-block; max-width: 100%;">
+						     <img ng-show="{{song.imagePreview == ''}}" src="http://tudoemsuasmaos.com.br/images/2.png" alt="img01" width="275" height="275" style="max-height: 275px; max-width: 275px;">
+							 <img ng-show="{{(song.imagePreview != 'http://tudoemsuasmaos.com.br/images/play_icon1.png') && (song.imagePreview != '')}}" src="{{song.imagePreview}}" alt="img01" width="275" height="275" style="max-height: 275px; max-width: 275px;">
+						     			
+						</div>
+					</div>
+					
+					<h3 class="blog-article-title">{{song.name}}</h3>
+					
+					<p>{{song.artistName}}</p>
+					
+					<hr style="background: #bebebe; margin: 30px 0;">
+				  </a>
+				</article>
+				<div style="text-align: center;" ng-show="songs.length > 0">
+					<a ng-click="getSongsPreviousPage()" class="ui-link ui-btn ui-icon-arrow-l ui-btn-icon-left ui-btn-inline ui-shadow ui-mini" href="#songs" data-corners="false" data-role="button" data-mini="true" data-icon="arrow-l" data-iconpos="left" data-inline="true">Anteriores</a>
+					<a ng-click="getSongsNextPage()" class="ui-link ui-btn ui-icon-arrow-r ui-btn-icon-right ui-btn-inline ui-shadow ui-mini" href="#songs" data-corners="false" data-role="button" data-mini="true" data-icon="arrow-r" data-iconpos="right" data-inline="true">Proximos</a>
+				</div>
+						
+		</div>

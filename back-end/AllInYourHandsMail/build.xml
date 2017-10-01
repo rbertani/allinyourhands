@@ -1,0 +1,193 @@
+<?xml version="1.0"?>
+
+<project name="AllInYourHandsMail" default="main" basedir=".">
+
+	<property file="./aiyh-mail.properties"/>
+	
+	<property name="Name" value="Chat Web"/>
+	<property name="version" value="1.0"/>
+	<property name="src.web.dir" value="${basedir}/src"/>
+	<property name="java.src.dir" value="${basedir}/src"/>
+	<property name="xml.dir" value="${basedir}/WebContent/WEB-INF"/>
+
+	<target name="init" >
+		<echo message="user.home = ${user.home}"/>
+		<echo message="java.home = ${java.home}"/>
+		<echo message="ant.home = ${ant.home}"/>
+		<echo message="jboss.home = ${jboss.home}"/>
+		<echo message="jboss.lib = ${jboss.lib}"/>
+		<echo message="webapp.dir = ${webapp.dir}"/>
+		<echo message="web-inf.dir = ${xml.dir}"/>		
+		<echo message="jboss.client = ${jboss.client}"/>               
+		<echo message="build.deploy.dir = ${build.deploy.dir}"/>      
+		<echo message="build.war.dir = ${build.war.dir}"/>            
+		<echo message="build.classes.dir = ${build.classes.dir}"/>   
+		<echo message="src.web.dir= ${src.web.dir}"/>                  
+		<echo message="dest.dir= ${dest.dir}"/>                  
+		<echo message="java.src.dir= ${java.src.dir}"/>   
+		<echo message="xml.dir=${xml.dir}"/>   
+		<echo message=""/>
+  
+		<available property="jdk1.3+" classname="java.lang.StrictMath" />
+	</target>
+
+   
+	<property name="jboss.lib" value="${jboss.home}/lib" />
+	<property name="jboss.client" value="${jboss.home}/client" />
+
+	<!-- Configuration used on JBoss 3 to run your server. There must be
+        a directory with the same name under "${jboss.home}/server" -->
+	<property name="jboss.configuration" value="default" />
+	<property name="jboss.deploy" value="${jboss.home}/server/${jboss.configuration}/deploy" />
+	<property name="src.dir" value="${basedir}/src"/>
+	<property name="java.src.dir" value="${src.dir}/main/java"/>
+	<property name="webapp.dir" value="${basedir}/WebContent"/>
+	<property name="resources.dir" value="${basedir}/WebContent/resources"/>
+	<property name="web-inf.dir" value="${webapp.dir}/WEB-INF"/>	
+	<property name="tlds.dir" value="${web-inf.dir}/tlds"/>	
+	<property name="lib.dir" value="${basedir}/lib"/>	
+	<property name="build.dir" value="${basedir}/build"/>
+	<property name="build.deploy.dir" value="${build.dir}/deploy"/>
+	<property name="build.classes.dir" value="${build.dir}/war/WEB-INF/classes"/>
+	<property name="build.war.dir" value="${build.dir}/war"/>
+	<property name="dest.dir" value="${build.war.dir}/WEB-INF/classes/"/>
+	<property name="package.name" value="pt/ptinovacao/dino/portal"/>
+			
+	<path id="base.path">
+		<fileset dir="${lib.dir}/">
+			<include name="*.jar"/>
+		</fileset>
+		
+		<fileset dir="${jboss.client}/">
+			<include name="*.jar"/>
+		</fileset>
+		
+		<pathelement location="${jboss.lib}/jboss-jmx.jar" />
+		<pathelement location="${jboss.home}/server/${jboss.configuration}/lib/jbosssx.jar" />
+		<pathelement location="${jboss.home}/server/${jboss.configuration}/lib/mail.jar" />
+		<pathelement location="${jboss.home}/server/${jboss.configuration}/lib/servlet-api.jar" />
+		<pathelement location="${jboss.home}/server/${jboss.configuration}/lib/jsp-api.jar" />		
+		<pathelement location="${jboss.home}/server/${jboss.configuration}/lib/javax.servlet.jar" />
+		<pathelement location="${jboss.home}/server/${jboss.configuration}/lib/javax.servlet.jsp.jar" />		
+		<pathelement location="${build.classes.dir}" />		
+	</path>
+
+	<!-- =================================================================== -->
+	<!-- Compiles the WEB source code                                        -->
+	<!-- =================================================================== -->
+   
+   <target name="compile-web" >
+   <!-- Pretty print jarpath-->
+    <pathconvert property="formatted-jarpath"
+                 pathsep="${line.separator}"
+                 refid="base.path" />
+    <echo message="jarpath = ${formatted-jarpath}" />
+    
+      <mkdir dir="${dest.dir}"/>
+      <mkdir dir="${basedir}/dist"/>
+      <javac
+         destdir="${dest.dir}"
+         debug="on"
+         deprecation="off"
+         optimize="on"
+         classpathref="base.path"
+		 source="1.5"
+		 target="1.6"
+      >
+         <src path="${java.src.dir}"/>
+      </javac>
+   </target>
+
+
+
+
+   <!-- =================================================================== -->
+   <!-- Creates the war archives                                            -->
+   <!-- =================================================================== -->
+   
+	<target name="war" depends="compile-web">
+		<mkdir dir="${build.deploy.dir}"/>
+		<war warfile="dist/aiyh-mail.war" webxml="${xml.dir}/web.xml"> 
+			<zipfileset dir="${webapp.dir}" includes="**/*.xhtml"/>	
+			<zipfileset dir="${webapp.dir}" includes="**/*.jsp"/>		
+			<zipfileset prefix="images" dir="${webapp.dir}/images" includes="**/*"/>
+			<zipfileset prefix="WEB-INF/classes" dir="${src.dir}" includes="*.properties" />
+			<!--zipfileset prefix="css" dir="${webapp.dir}/css" includes="**/*"/>
+			<zipfileset prefix="javascript" dir="${webapp.dir}/javascript" includes="**/*"/>
+			<zipfileset prefix="estatico" dir="${webapp.dir}/estatico" includes="**/*"/>
+			<zipfileset dir="${webapp.dir}" includes="mobile" />
+			<zipfileset dir="${webapp.dir}" includes="*.html" />
+			<zipfileset prefix="WEB-INF/classes" dir="${resources.dir}" includes="ApplicationResources.properties" />
+			<zipfileset prefix="WEB-INF/classes" dir="${resources.dir}" includes="compass.cfg.xml" /-->
+
+
+<!--			<lib dir="${shared.dir}">
+				<include name="${ejb.client.jar}"/>
+			</lib>
+-->
+			<lib dir="${lib.dir}">
+			    <include name="xstream*.jar"/>
+				<include name="allinyourhands*.jar"/>			
+				<include name="json*.jar"/>
+				
+			</lib>
+
+			<webinf dir="${web-inf.dir}">
+				<include name="**/*"/>
+			</webinf>
+			<classes dir="${dest.dir}">
+				
+			</classes>
+
+		</war>
+	</target>
+      
+
+
+	
+   <!-- =================================================================== -->
+   <!-- Deployment og the WEB application to the local JBOSS server         -->
+   <!-- =================================================================== -->
+   <target name="web" depends="war">
+      <copy todir="${jboss.deploy}">
+         <fileset dir="${build.deploy.dir}" includes="${portal.jar}">
+         </fileset>
+      </copy>
+   </target>   
+
+
+
+
+
+	<target name="client-jar" >
+		<mkdir dir="${shared.dir}"/>
+		<jar jarfile="${shared.dir}/${portal.client.jar}">
+			<fileset dir="${build.classes.dir}" includes="${package.name}/util/DinoPortalConstants.class,${package.name}/util/DiscoveryTreeManager.class"/>
+		</jar>
+	</target>
+
+	<target name="deploy-vivo" depends="clean,web"/>
+	
+   <!-- =================================================================== -->
+   <!-- Creates the binary structure                                        -->
+   <!-- =================================================================== -->
+   
+   <target name="main" depends="clean,init, deploy-vivo"><!--web-vivo,web-cyclelogic,client-jar"-->
+   </target>
+
+   <!-- =================================================================== -->
+   <!-- Cleans up the current build                                         -->
+   <!-- =================================================================== -->
+   
+   <target name="clean" depends="init">
+    <delete dir="${build.dir}"/>
+    <delete dir="${build.deploy.dir}"/>
+   	<delete file="${jboss.deploy}/${portal.jar}"/>
+   	<delete file="${jboss.deploy}/${cyclelogic.portal.war}"/>
+   	<delete file="${jboss.deploy}/${tim.portal.war}"/>
+   	<delete file="${jboss.deploy}/${vivo.cyclelogic.portal.war}"/>
+   	<delete file="${jboss.deploy}/${claro.portal.war}"/>
+   	<delete file="${jboss.deploy}/${oi.portal.war}"/>
+   </target>
+
+</project>

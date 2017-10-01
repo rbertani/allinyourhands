@@ -1,0 +1,83 @@
+
+<div class="container">
+			
+			<h3>Discover Places near of you</h3>		
+			<hr style="background: #bebebe; margin: 10px 0;">
+			<article class="blog-article">	
+						
+								  <form>		
+									    <label for="select-choice-mini" class="select">Select Country</label>	
+										<div class="ui-select ui-btn-inline ui-mini">
+										 <div class="ui-btn ui-icon-carat-d ui-btn-icon-right ui-corner-all ui-shadow" id="select-choice-mini-button">
+												<span id="countrySpanPlace">Country</span>	
+												<select ng-model="selectedCountryNameAndID" ng-options="country.name for country in countries"   ng-change="getStates(selectedCountryNameAndID.geonameId+'|'+selectedCountryNameAndID.name)" name="select-choice-mini1" id="select-choice-mini1" data-mini="true" data-inline="true" >
+												  <option value="standard">Country</option>
+												  <!--option ng-repeat="country in countries" value="{{country.geonameId+'|'+country.name}}" >{{country.name}}</option-->     
+												</select>
+										  </div>
+										</div>
+										<br/>										
+										<label for="select-choice-mini" class="select">Select State</label>	
+										<div class="ui-select ui-btn-inline ui-mini">
+										 <div class="ui-btn ui-icon-carat-d ui-btn-icon-right ui-corner-all ui-shadow" id="select-choice-mini-button">
+											<span id="stateSpanPlaces">State</span>	
+											<select  ng-model="stateObj" ng-options="state.name for state in states"  ng-change="updateFinalAddress(stateObj.name)" name="select-choice-mini2" id="select-choice-mini2" data-mini="true" data-inline="true" >
+											  <option value="standard">State</option>
+											  <!--option ng-repeat="state in states" value="{{state.name}}">{{state.name}}</option-->     
+											</select>
+										  </div>
+										</div>
+										<br/><br/>
+										
+										<p style="padding-left: 5px;">Type the street name (optional)</p>										
+										<div class="col-md-12 col-sm-12 col-xs-12 form-group" style="padding-left: 5px;" id="contact-name">												
+											<input type="text" name="text-basic" id="placeNameID" value="" class="form-control name-contact" placeholder="Street Name" ng-model="streetName" />
+										</div> 
+                                       										 
+										<br/>
+										<label for="select-choice-mini" class="select">Select the kind of place (optional)</label>										
+										<div class="ui-select ui-btn-inline ui-mini">
+										 <div class="ui-btn ui-icon-carat-d ui-btn-icon-right ui-corner-all ui-shadow" id="select-choice-mini-button">
+										    <span id="placeKindSpan">kind of Place</span>	
+											<select  ng-model="placeTypeObj" ng-options="placeType.name for placeType in placesTypes" ng-change="updateKindleOfPlace(placeTypeObj.name)" name="select-choice-mini3" id="select-choice-mini3" data-mini="true" data-inline="true" >          
+											  <option value="standard"></option>  											   
+											</select> 
+									 	 </div>
+										</div>
+										<div class="col-md-12 col-sm-12 col-xs-12 form-group" style="margin-bottom: 0;">
+											<button type="submit" class="ui-link ui-btn ui-btn-inline ui-shadow ui-corner-all ui-mini" style="margin-left: 40%;" ng-click="getPlaces_()">Search</button>
+										</div>
+																	 
+									  
+								  </form>														
+		   
+				</article>				
+				<hr style="background: #bebebe; margin: 10px 0;">
+				<p ng-hide="placesSearchStarted">Unfortunately I can't talk you the places that other people are searching, but soon I hope show you it...Meanwhile, how about search by some place near of you using the fields above ?</p>
+									
+			
+				<article class="blog-article" ng-repeat="place in places"  >
+				
+				 <a href="#places" ng-click="howGetThereAction(place.name,place.address,place.distance)" style="cursor:pointer;">
+					<div class="blog-featured-image blog-image-center">
+						<div style="display: inline-block; max-width: 100%;">
+						     <img src="http://allinyourhandsweb.com/images/4.jpg" alt="Place" width="275" height="275"  style="max-height: 275px; max-width: 275px;"   />
+												
+						</div>
+					</div>
+					
+					<h3 class="blog-article-title">{{place.name}}</h3>
+					
+					<p>{{place.address}}</p>
+					<p ng-hide="{{place.phone == ''}}" ><span class="cat-portfolio"><i class="fa fa-phone"></i></span>{{place.phone}}</p>													
+					<p ng-show="{{place.isOpen}}">Está aberto agora ? Sim </p>
+					<p ng-hide="{{place.isOpen}}">Está aberto agora ? Não </p>
+					<hr style="background: #bebebe; margin: 30px 0;">
+				  </a>
+				</article>
+				<div style="text-align: center;" ng-show="placesSearchStarted">
+					<a ng-click="getPlacesPreviousPage()" class="ui-link ui-btn ui-icon-arrow-l ui-btn-icon-left ui-btn-inline ui-shadow ui-mini" href="#places" data-corners="false" data-role="button" data-mini="true" data-icon="arrow-l" data-iconpos="left" data-inline="true">Previous</a>
+					<a ng-click="getPlacesNextPage()" class="ui-link ui-btn ui-icon-arrow-r ui-btn-icon-right ui-btn-inline ui-shadow ui-mini" href="#places" data-corners="false" data-role="button" data-mini="true" data-icon="arrow-r" data-iconpos="right" data-inline="true">Next</a>
+				</div>
+			
+	</div>

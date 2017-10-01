@@ -1,0 +1,63 @@
+
+
+<div class="container">
+									  								  
+    <div ng-show="userLogged">
+
+		<h4>Bem Vindo ao nosso Chat,  <b>{{data.username}}</b> :)</h4> 
+		<hr style="background: #bebebe; margin: 15px 0px;">
+		<br/>
+		<h4>Usuarios Online: {{listSize(users)}}</h4>										
+		<div>
+			<p ng-repeat="user in users"><span class="glyphicon glyphicon-user"></span>&nbsp; {{user}}</p> 										   
+		</div>
+		<br/>
+		<h3>Olha o papo que está rolando abaixo...</h3>
+		<br/>
+		<center>
+			<p ng-repeat="message in messages.slice().reverse() track by $index" class="bg-success"><b>{{mySplit(message,0)}}</b> {{mySplit(message,1)}} </p>
+		</center> 
+		<br/>
+		<form ng-submit="publish()">
+			<div class="col-md-12 col-sm-12 col-xs-12 form-group" id="contact-message">
+					<i class="fa fa-comments icon-contact"></i>
+					<textarea name="message" cols="90" rows="10" class="form-control message-contact" id="inputError" placeholder="escreva sua mensagem" ng-model="newMessage" ></textarea>
+			</div> 
+
+			<div class="col-md-12 col-sm-12 col-xs-12 form-group" style="margin-bottom: 0;">
+					<button type="submit" class="ui-link ui-btn ui-btn-inline ui-shadow ui-corner-all ui-mini" ><span class="glyphicon glyphicon-send"></span>&nbsp;Enviar</button>
+			</div> 
+        </form>
+		
+		 <div class="col-md-12 col-sm-12 col-xs-12 form-group" style="margin-bottom: 0;">
+                <button class="btn btn_service_intro" style="background-color: red;float: right;" ng-click="userLogoff()"><span class="glyphicon glyphicon-off">&nbsp;Sair</span></button>
+        </div> 
+			
+								  
+	 </div>
+	 <div ng-hide="userLogged"> 
+	 
+			<h3>Conheça nosso incrível bate-papo</h3>
+			<hr style="background: #bebebe; margin: 15px 0px;">
+
+			<h4>Aqui você jamais está sozinho...Quer conversar com alguém de qualquer lugar do planeta? Acesse o nosso chat</h3>
+			<form ng-submit="sendMail()" id="contactform" class="contact-form">                  
+
+				<div class="row form-group">
+						 <div class="col-md-12 col-sm-12 col-xs-12 form-group" id="contact-name">
+                            <i class="fa fa-user icon-contact"></i>
+                             <input name="text-basic" id="text-basic" value="" type="text" class="form-control name-contact"  placeholder="Seu nome de usuário" ng-model="selectedUserName" />
+                         </div>  
+
+						<div class="col-md-12 col-sm-12 col-xs-12 form-group" style="margin-bottom: 0;">
+                            <button type="submit" class="ui-link ui-btn ui-btn-inline ui-shadow ui-corner-all ui-mini"  ng-click="join()" type="submit"><span class="glyphicon glyphicon-off">&nbsp;Entrar</span></button>
+                        </div>
+				</div>
+			</form>
+										
+											 
+	  </div>
+
+							 
+
+</div>
