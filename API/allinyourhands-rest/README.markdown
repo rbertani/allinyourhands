@@ -8,5 +8,4 @@ This module contains the logic for expose the main services of the module "allin
  Important: the generated .war file must contain the "jboss-web.xml" file, for determine the correct access path of the API urls.
 
 
-*** FOR COMPLETE INFORMATION ABOUT THE SYSTEM AND FOR SEE IT RUNNING, PLEASE ACCESS THE "allinyourhands-core" MODULE URL:
-https://github.com/rbertani/allinyourhands-core
+*** FOR COMPLETE INFORMATION ABOUT THE SYSTEM AND TO SEE IT RUNNING, PLEASE ACCESS THE PROJECT HOMEPAGE: https://github.com/rbertani/allinyourhands

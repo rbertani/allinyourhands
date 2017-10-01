@@ -10,5 +10,4 @@ Suggested Contents Updater
  
  
  
- *** FOR COMPLETE INFORMATION ABOUT THE SYSTEM AND FOR SEE IT RUNNING, PLEASE ACCESS THE "allinyourhands-core" MODULE URL:
-https://github.com/rbertani/allinyourhands-core
+*** FOR COMPLETE INFORMATION ABOUT THE SYSTEM AND TO SEE IT RUNNING, PLEASE ACCESS THE PROJECT HOMEPAGE: https://github.com/rbertani/allinyourhands
