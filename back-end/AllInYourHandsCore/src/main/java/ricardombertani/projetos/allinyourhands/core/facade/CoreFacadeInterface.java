@@ -21,12 +21,12 @@ public interface CoreFacadeInterface {
 	
 	public String getArtistsByCategory(String audiocatNam, int artistsPagNumber, boolean isWebVersion);
 	
-	public String getStreamingURL( String streamSongId, String streamIpAdress,String streamSessionID);
+	/*public String getStreamingURL( String streamSongId, String streamIpAdress,String streamSessionID);
 	
 	public String markStreaming30sec( String streamSessionID, String streamKey, String streamServerID );
 	
 	public String markStreamingFinish( String streamSessionID, String streamSongId, String streamKey, String streamServerID);
-	
+	*/
 	public String getSongsByArtist(String query,int songByArtPagNumber, String lyricIndicator, boolean groovesharkEnabled);
 	
 	public String getSongCategories();
@@ -54,15 +54,15 @@ public interface CoreFacadeInterface {
 	public String getGoods(String countryCode, String query, String price_range,String goodsOffset);
 	
 	//Metodo generico referente ao chat
-	public String chatRoomGeneralRequest(String requestType, HashMap<String, String> parametersTable);
+	//public String chatRoomGeneralRequest(String requestType, HashMap<String, String> parametersTable);
 	
 	//Metodo referente a copa do mundo(alugueis)
-	public String worldCupRentsProposalGeneralRequest(String requestType, HashMap<String, String> parametersTable);
+	//public String worldCupRentsProposalGeneralRequest(String requestType, HashMap<String, String> parametersTable);
 	
 	/***  Demais Servicos***/
-	public String sendSMS(String smsDest, String smsMsg);
+	//public String sendSMS(String smsDest, String smsMsg);
 	
-	public String urlShortner(String longURL);
+	//public String urlShortner(String longURL);
 	
 	public String sendEmail(String subject, String message, String destMail);
 	

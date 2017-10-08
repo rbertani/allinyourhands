@@ -1,6 +1,7 @@
 package ricardombertani.projetos.allinyourhands.core.facade;
 
 import java.io.File;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -46,22 +47,7 @@ public class CoreFacade implements CoreFacadeInterface{
 	 
 	public String getAudioByQuery(String query, int songPagNumber, String lyricIndicator, boolean groovesharkEnabled) {
 		
-		/*if(groovesharkEnabled){
-			
-			int groovesharkOfficialApiSearchEnabled = Integer.parseInt(System.getProperty(AllInYourHandsConstants.PROPERTY_API_GROOVSHARK_OFFICIAL_AUDIOSEARCH_ENABLED));
-			if(groovesharkOfficialApiSearchEnabled == 1){ // usar m�todo de busca do grooveshark oficial				
 				
-				String response = ResponseFormater.formaterAudioOfficialGroveshark_response( RequestManager.requestAudioOfficialGroovesharkAPI(query, songPagNumber) , lyricIndicator);;
-				//System.out.println("\n-->Response: "+response);
-				return response;
-				
-			}else			
-				return ResponseFormater.formaterAudioAPI_response( RequestManager.requestAudioAPI(  query, songPagNumber ), lyricIndicator );
-			
-		}else{
-			return ResponseFormater.formaterAudioAPI2_response( RequestManager.requestAudioAPI2( query, songPagNumber ), lyricIndicator );
-		}*/
-		
 		return ResponseFormater.formaterAudioSpotify_response( RequestManager.requestAudioSpotifyAPI(query, songPagNumber) , lyricIndicator); 
 		
 	}
@@ -71,9 +57,9 @@ public class CoreFacade implements CoreFacadeInterface{
 		
 		return ResponseFormater.formaterTopArtistsByCategoryAPI_response( RequestManager.requestTopArtistsByCategoryAPI( audiocatNam, artistsPagNumber,isWebVersion ), isWebVersion );
 	}
-
+ 
 	 
-	public String getStreamingURL(String streamSongId, String streamIpAdress, String streamSessionID) {
+	/*public String getStreamingURL(String streamSongId, String streamIpAdress, String streamSessionID) {
 		
 		return ResponseFormater.formaterStreamingKeyURL_response( RequestManager.requestStreamKeyStreamServer(streamSongId,streamIpAdress,streamSessionID  ) );
 	}
@@ -88,7 +74,7 @@ public class CoreFacade implements CoreFacadeInterface{
 		
 		return RequestManager.requestMarkSongComplete(streamSessionID,streamSongId, streamKey, streamServerID);
 	}
-
+*/
 	
 	public String getSongsByArtist(String query, int songByArtPagNumber,String lyricIndicator, boolean groovesharkEnabled) {
 		
@@ -220,7 +206,7 @@ public class CoreFacade implements CoreFacadeInterface{
 	}
 
 	
-	public String chatRoomGeneralRequest(String requestType, HashMap<String, String> parametersTable) {
+	/*public String chatRoomGeneralRequest(String requestType, HashMap<String, String> parametersTable) {
 		
 		return  RequestManager.requestChatWeb(requestType, makeChatRoomProperties(requestType,parametersTable));
 	}
@@ -243,7 +229,7 @@ public class CoreFacade implements CoreFacadeInterface{
 	public String urlShortner(String longURL) {
 		
 		return ResponseFormater.formaterShortnerUrlAPI_response( RequestManager.requestShortenerUrlAPI(longURL) );
-	}
+	}*/
 
 	
 	public String sendEmail(String subject, String message, String destMail) {

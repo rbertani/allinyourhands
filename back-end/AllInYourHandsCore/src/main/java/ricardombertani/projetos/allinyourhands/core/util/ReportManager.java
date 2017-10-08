@@ -8,7 +8,7 @@ import java.io.PrintWriter;
 import org.apache.log4j.Logger;
 
 
-
+  
 public class ReportManager {
 
 	// variavel para os logs

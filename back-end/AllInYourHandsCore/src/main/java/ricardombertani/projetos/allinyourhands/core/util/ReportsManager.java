@@ -25,7 +25,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.mapper.MapperWrapper;
 
 public class ReportsManager {
-
+  
 	// variavel para os logs
 		private static Logger log = Logger.getLogger(ReportsManager.class.getName());
 

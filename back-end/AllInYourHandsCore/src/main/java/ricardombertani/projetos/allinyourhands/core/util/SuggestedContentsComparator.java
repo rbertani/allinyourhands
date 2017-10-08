@@ -10,6 +10,6 @@ public class SuggestedContentsComparator  implements Comparator<SuggestedContent
 		return o2.getCount() - o1.getCount();
 	}
  
-	
+	  
 
 }

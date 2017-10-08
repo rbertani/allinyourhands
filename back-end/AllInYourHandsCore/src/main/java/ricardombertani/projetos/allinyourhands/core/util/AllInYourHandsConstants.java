@@ -4,7 +4,7 @@ package ricardombertani.projetos.allinyourhands.core.util;
  * 
  * @author Ricardo M. Bertani
  *
- */                                                
+ */                                                  
 public class AllInYourHandsConstants {
                   
 	            
@@ -60,6 +60,8 @@ public class AllInYourHandsConstants {
 	final static public String PROPERTY_API_GROOVSHARK_KEY_SELECTOR = "ricardombertani.projetos.allinyourhands.api.groovshark.key.selector";
 	
 	final static public String PROPERTY_API_SPOTIFY_BASE_URL = "ricardombertani.projetos.allinyourhands.api.spotify.base.url";
+	final static public String PROPERTY_API_SPOTIFY_ACCESSTOKEN_BASE_URL = "ricardombertani.projetos.allinyourhands.api.spotify.accesstoken.base.url";
+	final static public String PROPERTY_API_SPOTIFY_ACCESSTOKEN_AUTH_CODE = "ricardombertani.projetos.allinyourhands.api.spotify.accesstoken.auth";
 	
 	final static public String PROPERTY_API_GROOVSHARKSTREAMING_ENABLED = "ricardombertani.projetos.allinyourhands.api.groovsharkstream.enabled";
 	

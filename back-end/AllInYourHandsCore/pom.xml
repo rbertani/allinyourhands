@@ -49,12 +49,14 @@
 			<optional>true</optional>
 		</dependency>
 
+		
+		<!-- https://mvnrepository.com/artifact/com.squareup.okhttp/okhttp -->
 		<dependency>
-			<groupId>ricardombertani.projetos</groupId>
-			<artifactId>allinyourhands-reports</artifactId>
-			<version>1.0</version>
-			<optional>true</optional>
+		    <groupId>com.squareup.okhttp</groupId>
+		    <artifactId>okhttp</artifactId>
+		    <version>2.7.5</version>
 		</dependency>
+		
 
 
 		<dependency>
@@ -89,7 +91,7 @@
 		      <configuration>
 		         <archive>
 		            <manifestEntries>
-		               <Dependencies>allinyourhands.data,common.json,allinyourhands.xstream</Dependencies>
+		               <Dependencies>allinyourhands.data,common.json,common.okhttp,allinyourhands.xstream</Dependencies>
 		            </manifestEntries>
 		            
 		         </archive>

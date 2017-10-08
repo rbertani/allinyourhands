@@ -128,7 +128,7 @@ public class AiyhServiceV2 {
 			
 		}
 		
-		@GET             // CORRIGIDA
+		/*@GET             // CORRIGIDA
 		@Path("/streaming/")
 		@Produces("text/json")
 		public String getStreamingURL(@QueryParam("songid") String streamSongId, @QueryParam("ipadress") String streamIpAdress, @QueryParam("sessionid") String streamSessionID){
@@ -156,7 +156,7 @@ public class AiyhServiceV2 {
 			JSONObject xmlJSONObj = XML.toJSONObject(  ServiceLocator.getInstance().getFacade().markStreamingFinish(streamSessionID, streamSongId, streamKey, streamServerID)  );
 			return xmlJSONObj.toString();
 			
-		}
+		}*/
 		
 		@GET               // CORRIGIDA
 		@Path("/videos")
@@ -312,7 +312,7 @@ public class AiyhServiceV2 {
 			
 		}
 		
-		@GET               // CORRIGIDA    
+		/*@GET               // CORRIGIDA    
 		@Path("/url/shortner")
 		@Produces("text/json")	
 		public String urlShortner(@QueryParam("longURL") String longURL){
@@ -320,7 +320,7 @@ public class AiyhServiceV2 {
 			JSONObject xmlJSONObj = XML.toJSONObject( "<short_url>" + ServiceLocator.getInstance().getFacade().urlShortner(longURL) + "</short_url>" );
 			return xmlJSONObj.toString();
 			
-		}
+		}*/
 		
 		@POST
 		@Path("/email/send")

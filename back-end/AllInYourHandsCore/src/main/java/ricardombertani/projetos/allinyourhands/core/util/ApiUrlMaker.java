@@ -243,7 +243,7 @@ public class ApiUrlMaker {
 		  return makeApiURL(baseURL, parameters).replaceAll("  ", " ").replaceAll(" ", "+");
 		
 	}
-	
+	  
 	public static String makeAudioApiURL(String text, int pageNumber){
 		  String baseURL =  System.getProperty(AllInYourHandsConstants.PROPERTY_API_GROOVSHARK_BASE_URL);  		  
 		  baseURL = baseURL.replaceAll("query", text);
@@ -282,8 +282,8 @@ public class ApiUrlMaker {
 		  return makeApiURL(baseURL, parameters).replaceAll("  ", " ").replaceAll(" ", "+"); 
 	}
 	
-	/*Método atual utilizado para montar a url da api do spotify*/
-	public static String makeAudioSpotifyApiURL(String text, int pageNumber){
+	/*Metodo atual utilizado para montar a url da api do spotify*/
+	public static String makeAudioSpotifyApiURL(String text, int pageNumber, String access_token){
 		  String baseURL =  System.getProperty(AllInYourHandsConstants.PROPERTY_API_SPOTIFY_BASE_URL);  		  
 		 		  		  
 		  // os parametros desta API 
@@ -293,6 +293,7 @@ public class ApiUrlMaker {
 		  parameters.setProperty("limit", String.valueOf( pageNumber*(Integer.parseInt(System.getProperty(AllInYourHandsConstants.PROPERTY_API_GROOVSHARK_RESULTSPERPAGE_LIMIT))) ) );
 		  parameters.setProperty("offset", String.valueOf(pageNumber) );
 		  parameters.setProperty("type","track");
+		  parameters.setProperty("access_token", access_token);
 		  
 		  return makeApiURL(baseURL, parameters).replaceAll("  ", " ").replaceAll(" ", "+"); 
 	}

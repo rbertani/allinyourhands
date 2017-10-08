@@ -35,7 +35,7 @@ public class SuggestedContentsManager {
 		   
 		   log.debug("\n-->Saving Suggested Content on Cache File...");
 		
-		   		   
+		     		   
 		   if( isValidXmlContent(currentSuggestedContent) ){ // verify if this xml content is valid
 		   
 			    log.debug("\n--->THIS CONTENT IS VALID, IT WILL BE CONSIDERED AND SAVED!");

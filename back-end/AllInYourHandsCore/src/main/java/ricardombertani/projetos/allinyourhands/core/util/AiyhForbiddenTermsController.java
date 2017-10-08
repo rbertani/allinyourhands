@@ -12,7 +12,7 @@ public class AiyhForbiddenTermsController {
 
 	// variavel para os logs
 	private static Logger log = Logger.getLogger(AiyhForbiddenTermsController.class.getName());
-		
+		  
 	public static boolean containsImproperTerms(String phrase) {
 
 		ScatteringSet scatteringSet = new ScatteringSet();

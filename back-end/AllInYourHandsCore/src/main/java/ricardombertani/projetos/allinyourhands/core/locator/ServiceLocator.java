@@ -5,7 +5,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import ricardombertani.projetos.allinyourhands.core.facade.CoreFacadeInterface;
 import ricardombertani.projetos.allinyourhands.core.util.AllInYourHandsConstants;
-import ricardombertani.projetos.allinyourhands.reports.facade.AiyhReportsFacadeInterface;
 
 
 
@@ -20,19 +19,7 @@ public class ServiceLocator {
 		return INSTANCE;
 	}    
 	
-	public AiyhReportsFacadeInterface  getReportsFacade() {
-		AiyhReportsFacadeInterface ejbRef = null;
-		try {
-			InitialContext context = new InitialContext();
-			ejbRef = (AiyhReportsFacadeInterface) context.lookup("AiyhReportsFacade/remote");
-		} catch (NamingException e) {
-			
-			e.printStackTrace();
-		}
 		
-		return ejbRef;
-	}
-	
 	public CoreFacadeInterface  getRemoteFacade() {
 		
 		CoreFacadeInterface ejbRef = null;

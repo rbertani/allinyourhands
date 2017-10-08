@@ -7,7 +7,7 @@ import java.util.List;
 // Implementa o Conjunto de Espalhamento - solucao utilizada para melhorar o desempenho de busca de
 // um determinado termo em um conjunto grande de dados de texto
 public class ScatteringSet {
- 
+   
 	private List<List<String>> table = new ArrayList<List<String>>();
 	private int tamanho = 0;
  

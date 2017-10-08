@@ -49,7 +49,7 @@ import ricardombertani.projetos.allinyourhands.core.apirequest.RequestManager;
 import ricardombertani.projetos.allinyourhands.core.util.AllInYourHandsConstants;
 import ricardombertani.projetos.allinyourhands.core.util.ApiUrlMaker;
 
-
+  
 /** Classe responsavel pela formatacao do resultado vindo do request atraves da classe RequestManager
  *   
  * @author Ricardo M. Bertani
@@ -895,7 +895,7 @@ public class ResponseFormater {
 						int directUrlIncludeEnabled = Integer.parseInt(System.getProperty(AllInYourHandsConstants.PROPERTY_API_GROOVSHARK_OFFICIAL_DIRECTURL_INCLUDE_ENABLED));
 						String songDirectUrl = "defaultText"; // texto generico para indicar que o song possui uma url
 						if(directUrlIncludeEnabled == 1){
-							songDirectUrl = ResponseFormater.formaterAudioUrlOfficialGroveshark_response( RequestManager.requestAudioUrlOfficialGroovesharkAPI(song.getId()) );
+							//songDirectUrl = ResponseFormater.formaterAudioUrlOfficialGroveshark_response( RequestManager.requestAudioUrlOfficialGroovesharkAPI(song.getId()) );
 						    log.debug("formaterAudioUrlOfficialGroveshark_response() finished: "+songDirectUrl);
 						}
 						song.setUrl( songDirectUrl );
