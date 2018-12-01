@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "Servico CloudFormation para a aplica\xE7\xE3o All In Your Hands"
+Globals:
+  Api:
+    EndpointConfiguration: REGIONAL
+Outputs:
+  AiyhSpringBootApi:
+    Description: URL for application
+    Export:
+      Name: AiyhAPIs
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Stage
+Resources:
+  LambdaSpringBootFunction:
+    Properties:
+      CodeUri: s3://allinyourhands-microservice/feee1a62348ac1f60147134b2ee85b17
+      Events:
+        GetResource:
+          Properties:
+            Method: any
+            Path: /{proxy+}
+          Type: Api
+      Handler: ricardombertani.projetos.allinyourhands.microservico.LambdaHandler::handleRequest
+      MemorySize: 1512
+      Policies: AWSLambdaBasicExecutionRole
+      Runtime: java8
+      Timeout: 60
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31

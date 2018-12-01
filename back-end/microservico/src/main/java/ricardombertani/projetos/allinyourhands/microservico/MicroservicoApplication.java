@@ -2,9 +2,10 @@ package ricardombertani.projetos.allinyourhands.microservico;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class MicroservicoApplication {
+public class MicroservicoApplication extends SpringBootServletInitializer{
 
 	public static void main(String[] args) {
 		SpringApplication.run(MicroservicoApplication.class, args);

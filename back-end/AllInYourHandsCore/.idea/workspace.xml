@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b46c1081-e824-414a-8bca-cce38b74959f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../microservico/sam.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/LambdaHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/config/Config.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/controller/VideoController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/util/ApiUrlMaker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/util/RequestManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/util/ResponseFormater.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../microservico/sam.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../microservico/sam.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/MicroservicoApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/MicroservicoApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/controller/BookController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/util/ApiUrlMaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/util/ApiUrlMaker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../microservico/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../microservico/src/main/resources/application.properties" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/classes/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,27 +16,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="-2082463761">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="1" />
-          <entry key="project.open.time.3" value="1" />
-          <entry key="project.opened" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="java" value="11" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="JAVA" value="11" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
   <component name="FileEditorManager">
     <leaf />
   </component>
@@ -45,16 +23,17 @@
     <findStrings>
       <find>status</find>
       <find>getSong</find>
+      <find>makeBooksApiURL</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1928" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-149" />
+    <option name="y" value="160" />
+    <option name="width" value="1346" />
+    <option name="height" value="688" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -62,7 +41,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -96,42 +74,16 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="core" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="AllInYourHandsCore" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AllInYourHandsCore" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="apirequest" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AllInYourHandsCore" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AllInYourHandsCore" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="apiresponse" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AllInYourHandsCore" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AllInYourHandsCore" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../microservico" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../front-end/allinyourhands-new-portalweb" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -145,6 +97,9 @@
       </list>
     </option>
   </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="b46c1081-e824-414a-8bca-cce38b74959f" name="Default Changelist" comment="" />
@@ -156,15 +111,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <editor active="true" />
     <layout>
-      <window_info id="Designer" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2579425" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info id="Image Layers" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Capture Tool" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -172,15 +128,19 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Palette&#9;" />
-      <window_info anchor="right" id="Maven Projects" />
+      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info anchor="right" id="Maven Projects" order="4" />
+      <window_info anchor="right" id="Palette" order="5" />
+      <window_info anchor="right" id="Capture Analysis" order="6" />
+      <window_info anchor="right" id="Theme Preview" order="7" />
+      <window_info anchor="right" id="Maven" order="8" />
     </layout>
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/util/AiyhForbiddenTermsController.java">
@@ -194,16 +154,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
           <caret line="31" column="23" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/apirequest/RequestManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6760">
-          <caret line="367" column="47" selection-start-line="367" selection-start-column="26" selection-end-line="367" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -223,8 +173,39 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/util/AllInYourHandsConstants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        <state relative-caret-position="187">
+          <caret line="11" column="120" selection-start-line="11" selection-start-column="62" selection-end-line="11" selection-end-column="120" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/util/ApiUrlMaker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="24" column="79" selection-start-line="24" selection-start-column="79" selection-end-line="24" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/util/ReportManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/apiresponse/ResponseFormater.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="63" column="37" selection-start-line="63" selection-start-column="27" selection-end-line="63" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/apirequest/RequestManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1059">
+          <caret line="367" column="47" selection-start-line="367" selection-start-column="26" selection-end-line="367" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

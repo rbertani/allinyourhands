@@ -1,44 +1,18 @@
 package ricardombertani.projetos.allinyourhands.microservico.util;
 
-import org.springframework.beans.factory.annotation.Value;
-
-import java.sql.Timestamp;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-/* Classe Responsavel por construir toda a URL de acesso as APIs do software*
- *     
- * @author Ricardo M. Bertani
- *            
- */                                                          
 public class ApiUrlMaker {
 
-	private  Logger log = Logger.getLogger(ApiUrlMaker.class.getName());
-
-	@Value("${baseURL.books}")
-	private  String baseURLBooks;
+	private  static Logger log = Logger.getLogger(ApiUrlMaker.class.getName());
 
 
-	
-	public String makeBooksApiURL(String text, String startIndex, String countryCode){	
-
-		  // os parametros desta API 
-		  Properties parameters = new Properties();
-		  parameters.setProperty("q",text);  
-		  parameters.setProperty("maxResults", System.getProperty(AllInYourHandsConstants.PROPERTY_API_BOOKS_RESULTS_PER_PAGE_LIMIT)); // maximo de resultados por vez
-		  parameters.setProperty("key", googleKeyReservBalancer() );
-		  parameters.setProperty("country", countryCode );
-		  parameters.setProperty("startIndex", startIndex); // este parametro dever� ser incrementado para a pagina��o
-            												// ele dever� ser incrementado de forma a ser maior que a quantidade
-            												// de itens na ultima request, dever� ser incrementado com o valor do parametro 
-             												//"maxResults", no caso de 40 em 40.
-				
-		  return makeApiURL(baseURLBooks, parameters);
-	}
-
-	private String makeApiURL(String baseURL, Properties parameters){
+	public static String makeApiURL(String baseURL, Properties parameters){
 
 		// o iterador, para criar a URL
 		Iterator i = parameters.keySet().iterator();
@@ -62,31 +36,31 @@ public class ApiUrlMaker {
 		return baseURL;
 	}
 
-	private  String googleKeyReservBalancer(){
+	public static String googleKeyReservBalancer(String keyuReservSelector,String key, String key1, String key2, String key3){
 
 		log.log(Level.INFO,"\n-->Using googleKeyReservBalancer(): ");
 
-		int rangeLimit = Integer.parseInt(System.getProperty(AllInYourHandsConstants.PROPERTY_API_GOOGLE_KEY_RESERV_SELECTOR));
+		int rangeLimit = Integer.parseInt(keyuReservSelector);
 		Random randomGenerator = new Random();
 		int keyIndex = randomGenerator.nextInt(rangeLimit);
 
 		switch(keyIndex){
 			case 0:
 				log.log(Level.INFO,"Using PROPERTY_API_GOOGLE_KEY ");
-				return System.getProperty(AllInYourHandsConstants.PROPERTY_API_GOOGLE_KEY);
+				return key;
 			case 1:
 				log.log(Level.INFO,"Using PROPERTY_API_GOOGLE_KEY1 ");
-				return System.getProperty(AllInYourHandsConstants.PROPERTY_API_GOOGLE_KEY1);
+				return key1;
 			case 2:
 				log.log(Level.INFO,"Using PROPERTY_API_GOOGLE_KEY2 ");
-				return System.getProperty(AllInYourHandsConstants.PROPERTY_API_GOOGLE_KEY2);
+				return key2;
 			case 3:
 				log.log(Level.INFO,"Using PROPERTY_API_GOOGLE_KEY3 ");
-				return System.getProperty(AllInYourHandsConstants.PROPERTY_API_GOOGLE_KEY3);
+				return key3;
 
 			default:
 				log.log(Level.INFO,"Using PROPERTY_API_GOOGLE_KEY[Default]");
-				return System.getProperty(AllInYourHandsConstants.PROPERTY_API_GOOGLE_KEY);
+				return key;
 		}
 
 	}

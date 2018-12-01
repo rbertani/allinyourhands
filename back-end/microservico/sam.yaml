@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Exemplo de aplicação com spring boot
+Description: Servico CloudFormation para a aplicação All In Your Hands
 
 Globals:
   Api:
@@ -24,7 +24,7 @@ Resources:
             Method: any
 
 Outputs:
-  SonataSpringBootApi:
+  AiyhSpringBootApi:
     Description: URL for application
     Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Stage'
     Export:
