@@ -1,0 +1,4 @@
+
+Successfully packaged artifacts and wrote output template to file output-sam.yaml.
+Execute the following command to deploy the packaged template
+aws cloudformation deploy --template-file C:\Users\rick_\Documents\fontesAiyh\allinyourhands\back-end\microservico\output-sam.yaml --stack-name <YOUR STACK NAME>
