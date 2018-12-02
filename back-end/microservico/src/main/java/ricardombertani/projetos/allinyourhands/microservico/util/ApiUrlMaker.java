@@ -65,6 +65,26 @@ public class ApiUrlMaker {
 
 	}
 
+	public  static Map<String, String> getParametersFromUrl(String url)
+	{
+		Map<String, String> map = new HashMap<String, String>();
+
+		String[] params = url.split("[&,?]");
+		for (String param : params)
+		{
+			try {
+				String name = param.split("=")[0];
+				String value = param.split("=")[1];
+				map.put(name, value);
+			} catch (Exception e)
+			{
+				log.log(Level.INFO,"\n--> getParametersFromUrlNo(): no value for parameter");
+			}
+		}
+
+		return map;
+	}
+
 	/*
 	public  String makeBooksApi2URL(String text, String offset){
 		String baseURL =  System.getProperty(AllInYourHandsConstants.PROPERTY_API_OPEN_LIBRARY_BASE_URL);		
@@ -523,25 +543,7 @@ public class ApiUrlMaker {
 		
 
 	
-	public  Map<String, String> getParametersFromUrl(String url)
-	 {
-		 Map<String, String> map = new HashMap<String, String>();
-		
-			 String[] params = url.split("[&,?]");
-			 for (String param : params)
-			 {
-				 try {
-					 String name = param.split("=")[0];
-					 String value = param.split("=")[1];
-					 map.put(name, value);
-				 } catch (Exception e)
-				 {
-					 log.log(Level.INFO,"\n--> getParametersFromUrlNo(): no value for parameter");
-				 }
-			 }
-		 
-		 return map;
-	 }
+
 	
 
 	private  String lastFMKeyReservBalancer(){

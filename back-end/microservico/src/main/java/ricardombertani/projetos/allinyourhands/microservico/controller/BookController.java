@@ -2,9 +2,12 @@ package ricardombertani.projetos.allinyourhands.microservico.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import ricardombertani.projetos.allinyourhands.apidata.book.BooksVolumeCollection;
 import ricardombertani.projetos.allinyourhands.microservico.util.ApiUrlMaker;
+import ricardombertani.projetos.allinyourhands.microservico.util.ResponseFormater;
 
 import java.io.File;
 import java.util.Properties;
@@ -12,20 +15,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping(path = "/rest/v2/")
+@RequestMapping(path = "/rest/v1/books")
 public class BookController {
 
     private static Logger log = Logger.getLogger(BookController.class.getName());
-    public static final String RESOURCES_DIRECTORY_PATH = new File("").getAbsolutePath() + File.separator
-            + "/src/main/resources/";
+    /*public static final String RESOURCES_DIRECTORY_PATH = new File("").getAbsolutePath() + File.separator
+            + "/src/main/resources/";*/
 
     @Autowired
     private Environment env;
 
 
-    @RequestMapping(path = "books", method = RequestMethod.GET)
-    @ResponseBody
-    public String getBooks(@RequestParam("keyword") String keyword,@RequestParam("pagenumber") String pagenumber,@RequestParam("countryCode") String countryCode ) {
+    @RequestMapping(method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    public BooksVolumeCollection getBooks(@RequestParam("keyword") String keyword,@RequestParam("pagenumber") String pagenumber,@RequestParam("countryCode") String countryCode ) {
 
         ApiUrlMaker apiUrlMaker = new ApiUrlMaker();
         String requestedApiUrl = makeBooksApiURL(keyword, pagenumber,countryCode);
@@ -35,7 +37,9 @@ public class BookController {
         RestTemplate restTemplate = new RestTemplate();
         String result = restTemplate.getForObject(requestedApiUrl, String.class);
 
-        return result;
+        BooksVolumeCollection booksVolumeCollection = ResponseFormater.formaterBooks1API_response(result,env.getProperty("books.resultsperpage"));
+
+        return booksVolumeCollection;
 
     }
 
