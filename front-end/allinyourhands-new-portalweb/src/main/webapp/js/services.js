@@ -1,11 +1,6 @@
-var contextUrl;
-if(location.href.indexOf("allinyourhandsweb") > -1){
-       contextUrl = "allinyourhandsweb.com";        
-}else{
-       contextUrl = "tudoemsuasmaos.com.br";
-}
 
-var baseURL = "http://" + contextUrl + "/rest/aiyhservice/";
+var baseURL = "https://s62qqxo46e.execute-api.us-west-2.amazonaws.com/Stage/rest/v1/"
+
 angular.module("services", ["ngResource"]).factory("aiyhStatus", ["$resource", function(e) {
     return e(baseURL + "statusapis/:webVersion")
 }]).factory("songService", ["$resource", function(e) {

@@ -1,15 +1,8 @@
-var contextUrl;
-if (location.href.indexOf("allinyourhandsweb") > -1) {
-    contextUrl = "allinyourhandsweb.com";
-} else {
-    contextUrl = "tudoemsuasmaos.com.br";
-}
 
-
-var baseURL = "http://" + contextUrl + "/rest/aiyhservice/v2/";
+var baseURL = "https://s62qqxo46e.execute-api.us-west-2.amazonaws.com/Stage/rest/v1/";
 
 angular.module("services", ["ngResource"]).factory("aiyhStatus", ["$resource", function(e) {
-    return e(baseURL + "statusapis?isportalweb=:isportalweb")
+    return e(baseURL + "status")
 
 }]).factory("songService", ["$resource", function(e) {
 
@@ -64,12 +57,12 @@ angular.module("services", ["ngResource"]).factory("aiyhStatus", ["$resource", f
     return e(baseURL + "contents/recommended")
 
 }]).factory("emailSenderService", ["$resource", function(e) {
-    return e("http://"+ contextUrl + "/rest/aiyhservice/email/send/:subject/:message")
+    return e(baseURL +"/email/send/:subject/:message")
 
 }]).factory("urlShortnerService", ["$resource", function(e) {
     return e(baseURL + "url/shortner?longURL=:longURL")
 
 }]).factory("reportService", ["$resource", function(e) {
-    return e("http://"+contextUrl+ "/rest/aiyhservice/report/send/:messageText")
+    return e(baseURL +"/report/send/:messageText")
 
 }]);
