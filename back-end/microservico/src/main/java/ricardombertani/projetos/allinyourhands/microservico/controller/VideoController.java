@@ -27,11 +27,11 @@ public class VideoController {
         parameters.setProperty("part","snippet");  // valor default (pode ser alterado, mas funciona bem assim)
         parameters.setProperty("q",text);
         parameters.setProperty("key", ApiUrlMaker.googleKeyReservBalancer(
-                env.getProperty("google.keyreserv.selector"),
-                env.getProperty("google.general.key"),
-                env.getProperty("google.general.key.reserv1"),
-                env.getProperty("google.general.key.reserv2"),
-                env.getProperty("google.general.key.reserv3")
+                System.getenv("google.keyreserv.selector"),
+                System.getenv("google.general.key"),
+                System.getenv("google.general.key.reserv1"),
+                System.getenv("google.general.key.reserv2"),
+                System.getenv("google.general.key.reserv3")
         ));
         parameters.setProperty("type", "video"); // por padr�o mantemos o tipo como v�deo
         parameters.setProperty("maxResults", env.getProperty("videos.resultsPerPage")); // quantidade maxima de resultados por pagina
@@ -57,11 +57,11 @@ public class VideoController {
         parameters.setProperty("regionCode",correctRegionCode);
         parameters.setProperty("hl",regionCode); // parametro que faz com que os resultados fiquem na linguagem correta
         parameters.setProperty("key", ApiUrlMaker.googleKeyReservBalancer(
-                env.getProperty("google.keyreserv.selector"),
-                env.getProperty("google.general.key"),
-                env.getProperty("google.general.key.reserv1"),
-                env.getProperty("google.general.key.reserv2"),
-                env.getProperty("google.general.key.reserv3")
+                System.getenv("google.keyreserv.selector"),
+                System.getenv("google.general.key"),
+                System.getenv("google.general.key.reserv1"),
+                System.getenv("google.general.key.reserv2"),
+                System.getenv("google.general.key.reserv3")
         ));
 
         return ApiUrlMaker.makeApiURL(baseURL, parameters).replaceAll("  ", " ").replaceAll(" ", "+");

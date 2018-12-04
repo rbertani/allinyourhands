@@ -52,11 +52,11 @@ public class BookController {
         parameters.setProperty("maxResults", env.getProperty("books.resultsperpage")); // maximo de resultados por vez
         parameters.setProperty("key",
                 ApiUrlMaker.googleKeyReservBalancer(
-                        env.getProperty("google.keyreserv.selector"),
-                        env.getProperty("google.general.key"),
-                        env.getProperty("google.general.key.reserv1"),
-                        env.getProperty("google.general.key.reserv2"),
-                        env.getProperty("google.general.key.reserv3")
+                        System.getenv("google.keyreserv.selector"),
+                        System.getenv("google.general.key"),
+                        System.getenv("google.general.key.reserv1"),
+                        System.getenv("google.general.key.reserv2"),
+                        System.getenv("google.general.key.reserv3")
                         )
 
         );

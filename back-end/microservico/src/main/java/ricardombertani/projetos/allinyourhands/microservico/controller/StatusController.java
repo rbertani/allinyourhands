@@ -39,8 +39,8 @@ public class StatusController {
                 "<goods>0</goods>" +
                 "<chat>0</chat>" +
                 "<streamingSessionID>" +""+ "</streamingSessionID>" +
-                "<billingKey>"+env.getProperty("general.status.billingKey")+"</billingKey>"+
-                "<gcmProjectNumber>"+env.getProperty("general.status.gtmprojectnumber")+"</gcmProjectNumber>"+
+                "<billingKey>"+System.getenv("general.status.billingKey")+"</billingKey>"+
+                "<gcmProjectNumber>"+System.getenv("general.status.gtmprojectnumber")+"</gcmProjectNumber>"+
                 "</statusAPIs>";
 
 
