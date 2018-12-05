@@ -882,7 +882,7 @@ angular.module("root", ["ngRoute","services","ngCookies","growlNotifications","x
                   {keyword:$scope.booksKeyword, pagenumber: $scope.bookPageNumber,countryCode:$scope.originalCountryCode},                 
                   function() {    
                      
-                        $scope.books = Results.books.book;
+                        $scope.books = Results.books;
 
                         if(angular.isArray($scope.books)){
                                               
@@ -911,8 +911,8 @@ angular.module("root", ["ngRoute","services","ngCookies","growlNotifications","x
                                 $scope.bookTempArray.push($scope.books);
                                 $scope.books = $scope.bookTempArray;
                               }else{
-								  $scope.loadResultsNotFoundPopUp();
-							  }
+								                 $scope.loadResultsNotFoundPopUp();
+							                }
                          }
 
                          $scope.foundBooks = false;
@@ -930,7 +930,7 @@ angular.module("root", ["ngRoute","services","ngCookies","growlNotifications","x
 
 
                         $scope.bookSearchStarted = true;
-						$('#searchBooks').blur();  
+						            $('#searchBooks').blur();  
                        
                          //if(!$scope.generalSearchDone)
                          //window.location.hash='#booksResultArea';
@@ -1771,13 +1771,13 @@ angular.module("root", ["ngRoute","services","ngCookies","growlNotifications","x
 
              var messageToSend = id+'|'+image+'|'+name+'|'+type+'|'+artistName+'|'+extraInformation+'|'+$scope.formatDate(new Date())+'|'+accessedContent;
              messageToSend = $scope.replaceAll(messageToSend,'/','*');
-             console.log('Sending Report: '+messageToSend);
+             console.log('Sending Report[DISABLED]: '+messageToSend);
 
-              reportService.get(
+              /*reportService.get(
                   {messageText: messageToSend},                
                   function(){
 
-                  });
+                  });*/
                 
           };
 

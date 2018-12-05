@@ -28,19 +28,19 @@ public class StatusController {
     public String getStatus() {
 
         String xmlResponse = "<statusAPIs>"+
-                "<audio>"+ env.getProperty("general.status.audios")  +"</audio>"+
-                "<video>"+ env.getProperty("general.status.videos") +"</video>"+
-                "<lyric>" + env.getProperty("general.status.lyrics") + "</lyric>"+
-                "<book>" + env.getProperty("general.status.books") +"</book>"+
-                "<placeSug>" + env.getProperty("general.status.suggestions") + "</placeSug>" +
-                "<placeNear>" +  env.getProperty("general.status.geolocalization") + "</placeNear>" +
-                "<weather>" + env.getProperty("general.status.weather") + "</weather>" +
-                "<directions>" + env.getProperty("general.status.geolocalization") + "</directions>" +
+                "<audio>"+ System.getenv("general_status_audios")  +"</audio>"+
+                "<video>"+ System.getenv("general_status_videos") +"</video>"+
+                "<lyric>" + System.getenv("general_status_lyrics") + "</lyric>"+
+                "<book>" + System.getenv("general_status_books") +"</book>"+
+                "<placeSug>" + System.getenv("general_status_suggestions") + "</placeSug>" +
+                "<placeNear>" +  System.getenv("general_status_geolocalization") + "</placeNear>" +
+                "<weather>" + System.getenv("general_status_weather") + "</weather>" +
+                "<directions>" + System.getenv("general_status_geolocalization") + "</directions>" +
                 "<goods>0</goods>" +
                 "<chat>0</chat>" +
                 "<streamingSessionID>" +""+ "</streamingSessionID>" +
-                "<billingKey>"+System.getenv("general.status.billingKey")+"</billingKey>"+
-                "<gcmProjectNumber>"+System.getenv("general.status.gtmprojectnumber")+"</gcmProjectNumber>"+
+                "<billingKey>"+System.getenv("general_status_billingKey")+"</billingKey>"+
+                "<gcmProjectNumber>"+System.getenv("general_status_gtmprojectnumber")+"</gcmProjectNumber>"+
                 "</statusAPIs>";
 
 

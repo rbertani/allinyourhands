@@ -26,13 +26,14 @@ public class VideoController {
         Properties parameters = new Properties();
         parameters.setProperty("part","snippet");  // valor default (pode ser alterado, mas funciona bem assim)
         parameters.setProperty("q",text);
-        parameters.setProperty("key", ApiUrlMaker.googleKeyReservBalancer(
-                System.getenv("google.keyreserv.selector"),
-                System.getenv("google.general.key"),
-                System.getenv("google.general.key.reserv1"),
-                System.getenv("google.general.key.reserv2"),
-                System.getenv("google.general.key.reserv3")
-        ));
+        parameters.setProperty("key",  ApiUrlMaker.googleKeyReservBalancer(
+                System.getenv("google_keyreserv_selector"),
+                System.getenv("google_general_key"),
+                System.getenv("google_general_key_reserv1"),
+                System.getenv("google_general_key_reserv2"),
+                System.getenv("google_general_key_reserv3")
+                )
+        );
         parameters.setProperty("type", "video"); // por padr�o mantemos o tipo como v�deo
         parameters.setProperty("maxResults", env.getProperty("videos.resultsPerPage")); // quantidade maxima de resultados por pagina
         // parameters.setProperty("videoCategoryId", categoryId);   Removida flag de categoria em 10/02/2016 - ouve uma alteracao na api do youtube, este campo nao é mais aceito estando vazio

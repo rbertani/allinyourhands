@@ -1771,13 +1771,13 @@ angular.module("root", ["ngRoute","services","ngCookies","growlNotifications","x
 
              var messageToSend = id+'|'+image+'|'+name+'|'+type+'|'+artistName+'|'+extraInformation+'|'+$scope.formatDate(new Date())+'|'+accessedContent;
              messageToSend = $scope.replaceAll(messageToSend,'/','*');
-             console.log('Sending Report: '+messageToSend);
+             console.log('Sending Report [DISABLED]: '+messageToSend);
 
-              reportService.get(
+              /*reportService.get(
                   {reportParameters: messageToSend},                
                   function(){
 
-                  });
+                  });*/
                 
           };
 
