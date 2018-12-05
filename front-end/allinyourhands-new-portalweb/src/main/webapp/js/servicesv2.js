@@ -63,6 +63,6 @@ angular.module("services", ["ngResource"]).factory("aiyhStatus", ["$resource", f
     return e(baseURL + "url/shortner?longURL=:longURL")
 
 }]).factory("reportService", ["$resource", function(e) {
-    return e(baseURL +"/report/send/:messageText")
+    return e(baseURL +"report/send/:messageText")
 
 }]);
