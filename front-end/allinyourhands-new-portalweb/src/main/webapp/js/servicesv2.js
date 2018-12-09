@@ -1,5 +1,5 @@
 
-var baseURL = "https://s62qqxo46e.execute-api.us-west-2.amazonaws.com/Stage/rest/v1/";
+var baseURL = "http://localhost:8080/rest/v1/"; //"https://s62qqxo46e.execute-api.us-west-2.amazonaws.com/Stage/rest/v1/";
 
 angular.module("services", ["ngResource"]).factory("aiyhStatus", ["$resource", function(e) {
     return e(baseURL + "status")

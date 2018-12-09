@@ -2,22 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b46c1081-e824-414a-8bca-cce38b74959f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/controller/GeolocalizationController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/controller/RecommendedContentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/controller/SongController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/controller/StatusController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/controller/VideoController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/controller/WeatherController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/util/ResponseFormater.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../allinyourhands-data/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../allinyourhands-data/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../microservico/output-sam.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../microservico/output-sam.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../microservico/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../microservico/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/controller/BookController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/util/AllInYourHandsConstants.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/util/ApiUrlMaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/util/ApiUrlMaker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/config/CorsFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/config/CorsFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/controller/GeolocalizationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/controller/GeolocalizationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/controller/StatusController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/controller/StatusController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/util/ResponseFormater.java" beforeDir="false" afterPath="$PROJECT_DIR$/../microservico/src/main/java/ricardombertani/projetos/allinyourhands/microservico/util/ResponseFormater.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../microservico/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../microservico/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../front-end/allinyourhands-new-portalweb/src/main/webapp/js/services.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../front-end/allinyourhands-new-portalweb/src/main/webapp/js/services.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../front-end/allinyourhands-new-portalweb/src/main/webapp/js/servicesv2.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../front-end/allinyourhands-new-portalweb/src/main/webapp/js/servicesv2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../front-end/allinyourhands-new-portalweb/src/main/webapp/pt-br/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../front-end/allinyourhands-new-portalweb/src/main/webapp/pt-br/index.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/classes/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,24 +20,51 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/facade/CoreFacade.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
-              <caret line="41" column="39" lean-forward="true" selection-start-line="41" selection-start-column="39" selection-end-line="41" selection-end-column="39" />
+            <state relative-caret-position="969">
+              <caret line="155" column="85" selection-start-line="155" selection-start-column="32" selection-end-line="155" selection-end-column="85" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/apirequest/RequestManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="283" column="70" selection-start-line="283" selection-start-column="51" selection-end-line="283" selection-end-column="70" />
+            <state relative-caret-position="211">
+              <caret line="236" column="61" selection-start-line="236" selection-start-column="61" selection-end-line="236" selection-end-column="61" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/util/ApiUrlMaker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="194">
+              <caret line="433" column="47" selection-start-line="433" selection-start-column="25" selection-end-line="433" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/util/AllInYourHandsConstants.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="178">
+              <caret line="143" column="142" lean-forward="true" selection-start-line="143" selection-start-column="73" selection-end-line="143" selection-end-column="142" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/facade/CoreFacadeInterface.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-382">
+              <caret line="49" column="30" selection-start-line="49" selection-start-column="18" selection-end-line="49" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -60,6 +80,7 @@
       <find>requestBooksAPI</find>
       <find>getStatus</find>
       <find>isAccessByPortalWeb</find>
+      <find>PROPERTY_API_DIRECTIONS_TIMEZONE_BASE_URL</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -77,6 +98,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -159,12 +181,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../API/allinyourhands-rest" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -193,8 +214,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2655068" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26928896" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -237,20 +259,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/util/AllInYourHandsConstants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="120" selection-start-line="11" selection-start-column="62" selection-end-line="11" selection-end-column="120" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/util/ApiUrlMaker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="24" column="79" selection-start-line="24" selection-start-column="79" selection-end-line="24" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/util/ReportManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -272,13 +280,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/facade/CoreFacadeInterface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="31" column="23" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/apiresponse/ResponseFormater.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -286,20 +287,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/facade/CoreFacade.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/facade/CoreFacadeInterface.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="41" column="39" lean-forward="true" selection-start-line="41" selection-start-column="39" selection-end-line="41" selection-end-column="39" />
+        <state relative-caret-position="-382">
+          <caret line="49" column="30" selection-start-line="49" selection-start-column="18" selection-end-line="49" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/util/AllInYourHandsConstants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="143" column="142" lean-forward="true" selection-start-line="143" selection-start-column="73" selection-end-line="143" selection-end-column="142" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/util/ApiUrlMaker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="433" column="47" selection-start-line="433" selection-start-column="25" selection-end-line="433" selection-end-column="47" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/apirequest/RequestManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="283" column="70" selection-start-line="283" selection-start-column="51" selection-end-line="283" selection-end-column="70" />
+        <state relative-caret-position="211">
+          <caret line="236" column="61" selection-start-line="236" selection-start-column="61" selection-end-line="236" selection-end-column="61" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ricardombertani/projetos/allinyourhands/core/facade/CoreFacade.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="969">
+          <caret line="155" column="85" selection-start-line="155" selection-start-column="32" selection-end-line="155" selection-end-column="85" />
         </state>
       </provider>
     </entry>

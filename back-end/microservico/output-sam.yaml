@@ -14,7 +14,7 @@ Outputs:
 Resources:
   LambdaSpringBootFunction:
     Properties:
-      CodeUri: s3://allinyourhands-microservice/dc1ca0c5936b659fc86ce2af7e3b1880
+      CodeUri: s3://allinyourhands-microservice/7ba26d52c72b6f46e32e21c5e446bba5
       Events:
         GetResource:
           Properties:
