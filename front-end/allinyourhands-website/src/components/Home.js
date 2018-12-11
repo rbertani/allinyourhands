@@ -24,8 +24,8 @@ class Home extends Component {
                     </center>
 
                     <div className="feature-desc">
-                      <p>Como funciona? Simples: escolha um conteúdo, faça sua busca e reproduza a mídia direto no navegador. ;-) </p>
-
+                      {/*<p>Como funciona? Simples: escolha um conteúdo, faça sua busca e reproduza a mídia direto no navegador. ;-) </p> */}
+                      <p>ATENÇÃO: ESTE SITE ESTÁ EM MANUTENÇÃO...ESTÁ SENDO MIGRADO PARA UMA TECNOLOGIA MAIS MODERNA PARA MELHOR ATENDÊ-LOS :-)</p>
                     </div>
                     <br />
 

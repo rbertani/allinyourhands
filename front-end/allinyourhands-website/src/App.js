@@ -1,16 +1,82 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import axios from 'axios';
+
 import Home from './components/Home';
 import Songs from './components/Songs';
 import Videos from './components/Videos';
 import Books from './components/Books';
 import Places from './components/Places';
 import Weather from './components/Weather';
-import './App.css';
 
 
 
 class App extends Component {
+
+  constructor(){
+    super();
+
+    this.state = {
+      homeSelected: "",
+      songsSelected: "",
+      booksSelected: "",
+      videosSelected: "",
+      placesSelected: "",
+      weatherSelected: "",
+      statusApis: {}
+
+    };
+  }
+
+  componentDidMount() {
+    axios.get(`https://dngn6ri326.execute-api.us-west-2.amazonaws.com/Stage/rest/v1/status`)
+      .then(res => {        
+        this.setState({ statusApis : res.data.statusAPIs });
+      });
+  }
+
+  selectedCurrentMenuItem = (menu) => {
+
+    console.log('-------> handleSelectedMenu');
+
+    if(menu === 'home'){
+      this.setState({homeSelected: 'active',songsSelected: '',booksSelected: '', videosSelected: '',placesSelected: '', weatherSelected : ''  });
+    }
+
+    else if(menu === 'songs'){
+      this.setState({homeSelected: '',songsSelected: 'active',booksSelected: '', videosSelected: '',placesSelected: '', weatherSelected : ''  });
+    }
+
+    else if(menu === 'books'){
+      this.setState({homeSelected: '',songsSelected: '',booksSelected: 'active', videosSelected: '',placesSelected: '', weatherSelected : ''  });
+    }
+
+    else if(menu === 'videos'){
+      this.setState({homeSelected: '',songsSelected: '',booksSelected: '', videosSelected: 'active',placesSelected: '', weatherSelected : ''  });
+    }
+    
+    else if(menu === 'places'){
+      this.setState({homeSelected: '',songsSelected: '',booksSelected: '', videosSelected: '',placesSelected: 'active', weatherSelected : ''  });
+    }
+
+    else if(menu === 'weather'){
+      this.setState({homeSelected: '',songsSelected: '',booksSelected: '', videosSelected: '',placesSelected: '', weatherSelected : 'active'  });
+    }
+
+  }
+
+  convertEnabledValue = (statusApiValue) => {
+
+    console.log("----> convertEnabledValue called!!");
+
+    return "none";
+    /*if(statusApiValue === "0"){     
+      return "none";
+    }
+    else return "block";*/
+  }
+
+ 
   render() {
     return (
 
@@ -36,23 +102,47 @@ class App extends Component {
               <nav className="navigation">
                 <ul className="list-unstyled">
 
-                  <li className="profile active">
-                    <Link to="/"><i className="fa fa-user icon_menus"></i><span className="nav-label">Home</span></Link>
+                  <li className={this.state.homeSelected}>
+                    <Link to="/">
+                      <div onClick={() => this.selectedCurrentMenuItem('home')}>
+                        <i className="fa fa-user icon_menus"></i><span className="nav-label">Home</span>
+                      </div>
+                    </Link>
                   </li>
-                  <li ng-show="audioActive" className="service">
-                    <Link to="/songs"><i className="fa fa-music icon_menus"></i> <span className="nav-label">Músicas</span></Link>
+                  <li className={this.state.songsSelected} style={{display: this.convertEnabledValue(this.state.statusApis.songs)}}>
+                    <Link to="/songs">
+                      <div onClick={() => this.selectedCurrentMenuItem('songs')}>
+                        <i className="fa fa-music icon_menus"></i> <span className="nav-label">Músicas</span>
+                      </div>
+                     </Link>
                   </li>
-                  <li ng-show="booksActive" className="resume">
-                    <Link to="/books"><i className="fa fa-book icon_menus"></i> <span className="nav-label">Livros</span></Link>
+                  <li className={this.state.booksSelected} style={{display: this.convertEnabledValue(this.state.statusApis.book)}}>
+                    <Link to="/books">
+                      <div onClick={() => this.selectedCurrentMenuItem('books')}>
+                        <i className="fa fa-book icon_menus"></i><span className="nav-label">Livros</span>
+                      </div>
+                    </Link>
                   </li>
-                  <li ng-show="videosActive" className="portfolio">
-                    <Link to="/Videos"><i className="fa fa-video-camera icon_menus"></i> <span className="nav-label">Vídeos</span></Link>
+                  <li className={this.state.videosSelected} style={{display: this.convertEnabledValue(this.state.statusApis.video)}}>
+                    <Link to="/videos">
+                      <div onClick={() => this.selectedCurrentMenuItem('videos')}>
+                        <i className="fa fa-video-camera icon_menus"></i> <span className="nav-label">Vídeos</span>
+                      </div>
+                    </Link>
                   </li>
-                  <li ng-show="placesActive" className="blog">
-                    <Link to="/places"><i className="fa fa-glass icon_menu"></i> <span className="nav-label">Lugares</span></Link>
+                  <li className={this.state.placesSelected} style={{display: this.convertEnabledValue(this.state.statusApis.placeNear)}}>
+                    <Link to="/places">
+                      <div onClick={() => this.selectedCurrentMenuItem('places')}>
+                      < i className="fa fa-glass icon_menu"></i> <span className="nav-label">Lugares</span>
+                      </div>
+                    </Link>
                   </li>
-                  <li ng-show="weatherActive" className="contact">
-                    <Link to="/weather"><i className="fa fa-sun-o icon_menus"></i> <span className="nav-label">Clima</span></Link>
+                  <li className={this.state.weatherSelected} style={{display: this.convertEnabledValue(this.state.statusApis.weather)}}>
+                    <Link to="/weather">
+                      <div onClick={() => this.selectedCurrentMenuItem('weather')}>
+                        <i className="fa fa-sun-o icon_menus"></i> <span className="nav-label">Clima</span>
+                      </div>
+                    </Link>
                   </li>
 
                 </ul>
