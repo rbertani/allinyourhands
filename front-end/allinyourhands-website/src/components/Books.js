@@ -1,8 +1,49 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import { properties } from '../properties.js';
 
 class Books extends Component {
+
+  constructor(){
+    super();
+
+    this.state = {
+      keyword : "",
+      pagenumber: "1",
+      countryCode: "pt",
+      books : [],
+      isLoading: false
+    };
+
+    this.handleQuery = this.handleQuery.bind(this);
+    this.requestBooksApi = this.requestBooksApi.bind(this);
+
+  }
+
+  handleQuery = (event) => {
+
+    console.log("VALOR DIGITADO: "+event.target.value);
+    this.setState({ keyword: event.target.value});
+  }
+
+  requestBooksApi = (event) => {
+
+    event.preventDefault();
+
+    this.setState({ isLoading: true});
+
+    axios.get(properties.apiBaseUrl + `/books?keyword=`+this.state.keyword+'&pagenumber='+this.state.pagenumber+'&countryCode='+this.state.countryCode)
+    .then(response => {        
+      this.setState({ books : response.data.books, isLoading: false });
+    });
+  }
+
   render() {
+
+    const { isLoading, books } = this.state;
+
     return (
+
       <section ng-show="booksActive" id="books" className="layers page_current">
 
         <div className="page_content">
@@ -25,10 +66,10 @@ class Books extends Component {
               <center>
                 <form style={{ marginTop: '40px' }}>
                   <input type="text" placeholder="Procure um Livro por palavra-chave" className="form-control input-lg"
-                    name="search" ng-model="booksKeyword" style={{ width: '70%' }} />
+                    name="search" style={{ width: '70%' }} value={this.state.keyword} onChange={this.handleQuery} />
 
                   <div className="row service_intro section_separate" style={{ marginTop: '10px' }}>
-                    <button type="submit" ng-click="getBooks()" className="btn btn_service_intro">Buscar</button>
+                    <button type="submit" onClick={this.requestBooksApi} className="btn btn_service_intro">Buscar</button>
                   </div>
                 </form>
               </center>
@@ -40,64 +81,55 @@ class Books extends Component {
 
             <center>
 
-              <div id="booksResultArea" tabindex="1" className="grid-wrap">
+              <div id="booksResultArea" tabIndex="1" className="grid-wrap">
 
-                <header className="section-header" style={{ marginBottom: '-60px' }}>
+                {/*<header className="section-header" style={{ marginBottom: '-60px' }}>
                   <p>Confira abaixo o que as pessoas estão lendo</p>
-                </header>
+                  </header>*/
+                }
+               
+               <React.Fragment>
 
+                 <div className="grid" id="portfoliolist3">
 
-                <div className="grid" id="portfoliolist3" ng-hide="bookSearchStarted">
+                  {!isLoading ? (
+                    books.map(book => {
+                      const { id, volumeInfo } = book;
+                      return (
+                            <div className="view view-first portfolio posters webdesign" data-cat="posters webdesign" >
 
+                              <a href="#books" ng-click="openBook( id, volumeInfo.imageLink.extraLarge, volumeInfo.title, volumeInfo.authors, webReaderLink, accessViewStatus)" style={{ cursor: 'pointer' }}>
+                                <img src={volumeInfo.imageLink.thumbnail} alt="img01" width="349" style={{ maxHeight: '232px', maxWidth: '349px' }} />
 
-                  <div className="view view-first portfolio posters webdesign" data-cat="posters webdesign" ng-repeat="recommendedContent in recommendedBooks | limitTo:6" >
+                                <div className="mask" style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
+                                  <h4>{volumeInfo.title}</h4>
+                                  <p><span className="cat-portfolio">{volumeInfo.description}</span></p>
+                                  <div className="portf_detail">
+                                  </div>
 
-                    <a href="#books" ng-click="openSuggestedBook(recommendedContent.id, recommendedContent.name,recommendedContent.type,recommendedContent.artist,recommendedContent.extraInformation, recommendedContent.image)" style={{ cursor: 'pointer' }}>
-                      <img src="{{recommendedContent.image}}" alt="img01" width="349" style={{ maxHeight: '232px', maxWidth: '349px' }} />
+                                </div>
+                              </a>
 
-                      <div className="mask" style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
-                        <h4>Content Name</h4>
-                        <p><span className="cat-portfolio">Artist</span></p>
-                        <div className="portf_detail">
+                            </div>
+                       )
+                      })
+ 
+                      ) : (
+                        <h3>Loading...</h3>
+                      )}
+                      
+                      </div>                   
+                    
+               </React.Fragment>
 
-                        </div>
-
-                      </div>
-                    </a>
-                  </div>
-
-                </div>
-
-                <div className="grid" id="portfoliolist3" ng-show="bookSearchStarted">
-
-
-                  <div className="view view-first portfolio posters webdesign" data-cat="posters webdesign" ng-repeat="book in books"  >
-
-                    <a href="#books" ng-click="openBook( book.id, book.volumeInfo.imageLink.extraLarge, book.volumeInfo.title, book.volumeInfo.authors, book.webReaderLink, book.accessViewStatus)" style={{ cursor: 'pointer' }}>
-                      <img src="{{book.volumeInfo.imageLink.extraLarge}}" alt="img01" width="349" style={{ maxHeight: '232px', maxWidth: '349px' }} />
-
-                      <div className="mask" style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
-                        <h4>Book Title</h4>
-                        <p><span className="cat-portfolio">Description</span></p>
-                        <div className="portf_detail">
-
-
-                        </div>
-
-                      </div>
-                    </a>
-
-                  </div>
-
-                </div>
-
-                <div className="col-md-12 nextprev" ng-show="bookSearchStarted">
+               <div className="col-md-12 nextprev">
                   <br />
                   <button className="btn btn-default btn-lg" ng-click="getBooksPreviousPage()"><span className="glyphicon glyphicon-chevron-left"></span></button>
 
                   <button className="btn btn-default btn-lg" ng-click="getBooksNextPage()"><span className="glyphicon glyphicon-chevron-right"></span></button>
 
                 </div>
+                
 
               </div>
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from 'axios';
-
+import { properties } from './properties.js';
 import Home from './components/Home';
 import Songs from './components/Songs';
 import Videos from './components/Videos';
@@ -28,16 +28,16 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
-    axios.get(`https://dngn6ri326.execute-api.us-west-2.amazonaws.com/Stage/rest/v1/status`)
-      .then(res => {        
-        this.setState({ statusApis : res.data.statusAPIs });
+  componentDidMount() {   
+      axios.get(properties.apiBaseUrl + `/status`)
+      .then(response => {        
+        this.setState({ statusApis : response.data.statusAPIs });
       });
   }
 
   selectedCurrentMenuItem = (menu) => {
 
-    console.log('-------> handleSelectedMenu');
+    //console.log('-------> handleSelectedMenu');
 
     if(menu === 'home'){
       this.setState({homeSelected: 'active',songsSelected: '',booksSelected: '', videosSelected: '',placesSelected: '', weatherSelected : ''  });
@@ -67,13 +67,12 @@ class App extends Component {
 
   convertEnabledValue = (statusApiValue) => {
 
-    console.log("----> convertEnabledValue called!!");
-
-    return "none";
-    /*if(statusApiValue === "0"){     
-      return "none";
+    //console.log("----> convertEnabledValue called!!");
+    
+    if(statusApiValue == "1"){     
+      return "block";
     }
-    else return "block";*/
+    else return "none";
   }
 
  
@@ -176,137 +175,7 @@ class App extends Component {
               <Route path="/weather" component={Weather} />
             </div>
 
-            <div className="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-              <div className="modal-dialog">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <button type="button" className="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span className="sr-only">Fechar</span></button>
-                    <h4 className="modal-title" id="myModalLabel">Assistir Video</h4>
-                  </div>
-                  <div className="modal-body">
-                    <center>
-                      <iframe width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen="true"></iframe>
-
-
-                    </center>
-                  </div>
-                  <div className="modal-footer">
-                    <button type="button" className="btn btn-default" data-dismiss="modal">Fechar</button>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-              <div className="modal-dialog">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <button type="button" className="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span className="sr-only">Fechar</span></button>
-                    <center><h4 className="modal-title" id="myModalLabel"></h4></center>
-                  </div>
-                  <div className="modal-body">
-                    <center>
-                      <p id="placeTitleArea"></p>
-                      <center>
-                        <img className="img-responsive img-centered" alt="" />
-                      </center>
-                      <p id="distanceTextArea"></p>
-                      <br />
-                      <p id="roteToDestinyArea"></p>
-                      <br />
-                      <br />
-                      <div id="streetViewHtmlCodeArea">
-                      </div>
-                    </center>
-                  </div>
-                  <div className="modal-footer">
-                    <button type="button" className="btn btn-default" data-dismiss="modal">Fechar</button>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-              <div className="modal-dialog">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <button type="button" className="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span className="sr-only">Fechar</span></button>
-                    <h4 className="modal-title" id="myModalLabel">Ouvir a Música</h4>
-                  </div>
-                  <div className="modal-body songbtns">
-                    <center>
-                      <img width="100%" height="100%" ></img>
-                      <h3>00:00</h3>
-                      <div className="progress">
-                        <div className="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style={{ width: '5%' }}>
-                          <span id="percentageArea" className="sr-only">0%</span>
-                        </div>
-                      </div>
-                      <button ng-hide="showPauseButton" className="btn btn-warning" ng-click="pausePlayAction()"><span className="glyphicon glyphicon-play"></span></button>
-                      <button ng-show="showPauseButton" className="btn btn-warning" ng-click="pausePlayAction()"><span className="glyphicon glyphicon-pause"></span></button>
-                      <button className="btn btn-warning" ng-click="stopAction()"><span className="glyphicon glyphicon-stop"></span></button>
-                      <br />
-                      <p>Para ouvir completo clique abaixo</p>
-                      <iframe width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
-                      <br />
-                      <a href="https://www.spotify.com" target="_blank"><span style={{ fontSize: '14px', color: 'blue' }}>Powered by Spotify</span></a>
-                    </center>
-                  </div>
-                  <div className="modal-footer">
-                    <button type="button" className="btn btn-default" data-dismiss="modal">Fechar</button>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-              <div className="modal-dialog">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <button type="button" className="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span className="sr-only">Fechar</span></button>
-                    <h4 className="modal-title" id="myModalLabel">Weather Forecast</h4>
-                  </div>
-                  <div className="modal-body songbtns">
-                    <center>
-                      <center>
-                        <img className="img-responsive img-centered" alt="" />
-                      </center>
-                      <p id="weatherForecastTextArea"></p>
-
-                    </center>
-                  </div>
-                  <div className="modal-footer">
-                    <button type="button" className="btn btn-default" data-dismiss="modal">Fechar</button>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="modal fade" id="myModal7" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-              <div className="modal-dialog">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <button type="button" className="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span className="sr-only">Fechar</span></button>
-                    <h3 className="modal-title" id="myModalLabel"><i className="fa fa-thumbs-down"></i> <span>Resultado Não Encontrado :-(</span></h3>
-                  </div>
-                  <div className="modal-body songbtns">
-                    <center>
-
-                      <h4 id="ResultsNotFoundText"></h4>
-
-                    </center>
-                  </div>
-                  <div className="modal-footer">
-                    <button type="button" className="btn btn-default" data-dismiss="modal">Fechar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+            
 
 
           </div>
