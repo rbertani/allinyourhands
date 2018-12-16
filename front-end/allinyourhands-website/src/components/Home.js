@@ -25,7 +25,7 @@ class Home extends Component {
 
                     <div className="feature-desc">
                       {/*<p>Como funciona? Simples: escolha um conteúdo, faça sua busca e reproduza a mídia direto no navegador. ;-) </p> */}
-                      <p>ATENÇÃO: ESTE SITE ESTÁ EM MANUTENÇÃO...ESTÁ SENDO MIGRADO PARA UMA TECNOLOGIA MAIS MODERNA PARA MELHOR ATENDÊ-LOS :-)</p>
+                      <p>ATENÇÃO: POR ENQUANTO APENAS OS LIVROS ESTÃO DISPONÍVEIS PARA PESQUISA. ESTAMOS MIGRANDO O SITE PARA UMA TECNOLOGIA MAIS MODERNA PARA ATENDÊ-LOS MELHOR :-)</p>
                     </div>
                     <br />
 
@@ -50,6 +50,7 @@ class Home extends Component {
           </div>
 
 
+          {/*
           <div id="contacts">
 
             <div id="tabs" className="tab_close" title="" data-toggle="tooltip" data-original-title="Deixe sua opinião">
@@ -84,13 +85,15 @@ class Home extends Component {
 
                       <div className="col-md-12 col-sm-12 col-xs-12 form-group" id="contact-email">
                         <i className="fa fa-envelope icon-contact"></i>
-                        <input type="text" name="email" className="form-control email-contact" placeholder="email..." ng-model="emailEmailClient" />
+                        <input type="text" name="email" className="form-control email-contact" placeholder="email..."  />
                       </div>
+                      
 
                       <div className="col-md-12 col-sm-12 col-xs-12 form-group" id="contact-message">
                         <i className="fa fa-comments icon-contact"></i>
                         <textarea name="message" cols="90" rows="10" className="form-control message-contact" id="inputError" placeholder="Sua mensagem..." ng-model="emailMessage"></textarea>
                       </div>
+                      
 
                       <div className="col-md-12 col-sm-12 col-xs-12 form-group" style={{ marginBottom: 0 }}>
                         <button type="submit" className="btn btn-block btn-cta btn-cta-contact-2" ng-click="sendMail()">Enviar<i className="fa fa-angle-right"></i></button>
@@ -104,6 +107,7 @@ class Home extends Component {
                 </div>
 
 
+                
                 <div className="collapser">
 
                   <p>Se preferir envie um e-mail para: </p>
@@ -114,14 +118,15 @@ class Home extends Component {
 
 
                 </div>
+                
 
 
-              </div>
+              </div> 
 
 
             </div>
 
-          </div>
+          </div>*/}
 
         </div>
 

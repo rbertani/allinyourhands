@@ -8,7 +8,8 @@ import Videos from './components/Videos';
 import Books from './components/Books';
 import Places from './components/Places';
 import Weather from './components/Weather';
-
+import { loadProgressBar } from 'axios-progress-bar'
+import 'axios-progress-bar/dist/nprogress.css'
 
 
 class App extends Component {
@@ -29,38 +30,64 @@ class App extends Component {
   }
 
   componentDidMount() {   
+
+      loadProgressBar();
+
       axios.get(properties.apiBaseUrl + `/status`)
-      .then(response => {        
-        this.setState({ statusApis : response.data.statusAPIs });
+      .then(response => {  
+        
+        if(response.data.statusAPIs.book == 1)
+            this.setState({ booksSelected : "block"  });
+        else 
+            this.setState({ booksSelected : "none"  });
+
+        if(response.data.statusAPIs.audio == 1)
+            this.setState({ songsSelected : "block"  });
+        else 
+            this.setState({ songsSelected : "none"  });
+
+        if(response.data.statusAPIs.weather == 1)
+            this.setState({ weatherSelected : "block"  });
+        else 
+            this.setState({ weatherSelected : "none"  });
+
+        if(response.data.statusAPIs.directions == 1)
+            this.setState({ placesSelected : "block"  });
+        else 
+            this.setState({ placesSelected : "none"  });
+
+       if(response.data.statusAPIs.video == 1)
+            this.setState({ videosSelected : "block"  });
+        else 
+            this.setState({ videosSelected : "none"  });
+
       });
   }
 
   selectedCurrentMenuItem = (menu) => {
-
-    //console.log('-------> handleSelectedMenu');
-
+     
     if(menu === 'home'){
-      this.setState({homeSelected: 'active',songsSelected: '',booksSelected: '', videosSelected: '',placesSelected: '', weatherSelected : ''  });
+     
     }
 
     else if(menu === 'songs'){
-      this.setState({homeSelected: '',songsSelected: 'active',booksSelected: '', videosSelected: '',placesSelected: '', weatherSelected : ''  });
+     
     }
 
     else if(menu === 'books'){
-      this.setState({homeSelected: '',songsSelected: '',booksSelected: 'active', videosSelected: '',placesSelected: '', weatherSelected : ''  });
+      
     }
 
     else if(menu === 'videos'){
-      this.setState({homeSelected: '',songsSelected: '',booksSelected: '', videosSelected: 'active',placesSelected: '', weatherSelected : ''  });
+     
     }
     
     else if(menu === 'places'){
-      this.setState({homeSelected: '',songsSelected: '',booksSelected: '', videosSelected: '',placesSelected: 'active', weatherSelected : ''  });
+     
     }
 
     else if(menu === 'weather'){
-      this.setState({homeSelected: '',songsSelected: '',booksSelected: '', videosSelected: '',placesSelected: '', weatherSelected : 'active'  });
+     
     }
 
   }
@@ -108,37 +135,37 @@ class App extends Component {
                       </div>
                     </Link>
                   </li>
-                  <li className={this.state.songsSelected} style={{display: this.convertEnabledValue(this.state.statusApis.songs)}}>
+                  <li className="" style={{display: this.state.songsSelected}}>
                     <Link to="/songs">
                       <div onClick={() => this.selectedCurrentMenuItem('songs')}>
                         <i className="fa fa-music icon_menus"></i> <span className="nav-label">Músicas</span>
                       </div>
                      </Link>
                   </li>
-                  <li className={this.state.booksSelected} style={{display: this.convertEnabledValue(this.state.statusApis.book)}}>
+                  <li className="" style={{display: this.state.booksSelected}}>
                     <Link to="/books">
                       <div onClick={() => this.selectedCurrentMenuItem('books')}>
                         <i className="fa fa-book icon_menus"></i><span className="nav-label">Livros</span>
                       </div>
                     </Link>
                   </li>
-                  <li className={this.state.videosSelected} style={{display: this.convertEnabledValue(this.state.statusApis.video)}}>
+                  <li className="" style={{display: this.state.videosSelected}}>
                     <Link to="/videos">
                       <div onClick={() => this.selectedCurrentMenuItem('videos')}>
                         <i className="fa fa-video-camera icon_menus"></i> <span className="nav-label">Vídeos</span>
                       </div>
                     </Link>
                   </li>
-                  <li className={this.state.placesSelected} style={{display: this.convertEnabledValue(this.state.statusApis.placeNear)}}>
+                  <li className="" style={{display: this.state.placesSelected}}>
                     <Link to="/places">
                       <div onClick={() => this.selectedCurrentMenuItem('places')}>
                       < i className="fa fa-glass icon_menu"></i> <span className="nav-label">Lugares</span>
                       </div>
                     </Link>
                   </li>
-                  <li className={this.state.weatherSelected} style={{display: this.convertEnabledValue(this.state.statusApis.weather)}}>
-                    <Link to="/weather">
-                      <div onClick={() => this.selectedCurrentMenuItem('weather')}>
+                  <li className="" style={{display: this.state.weatherSelected}}>
+                    <Link to="/weather" onClick={() => this.selectedCurrentMenuItem('weather')}>
+                      <div>
                         <i className="fa fa-sun-o icon_menus"></i> <span className="nav-label">Clima</span>
                       </div>
                     </Link>
