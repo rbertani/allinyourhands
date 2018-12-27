@@ -300,6 +300,40 @@ public class ResponseFormater {
 		return booksVolumeCollection;
 	}
 
+	public static String formaterPlacesGeocodingAPI_response(String response){
+
+		JSONObject jsonObject = null;
+		Location location = null;
+		try {
+			jsonObject = new JSONObject(response);
+
+			JSONArray results = isFieldNotNull(jsonObject,"results")?(JSONArray)getFieldObject(jsonObject,"results","jsonarray"):null;
+			if(isNotNullOrEmptyThisArray(results)){
+
+				for(int i=0; i < results.length(); i++){
+
+					JSONObject geometryJSONObj = isFieldNotNull(results.getJSONObject(i),"geometry")?(JSONObject)getFieldObject(results.getJSONObject(i),"geometry",""):null;
+
+					JSONObject locationJSONObj = isFieldNotNull(geometryJSONObj,"location")?(JSONObject)getFieldObject(geometryJSONObj,"location",""):null;
+
+					location = new Location(isFieldNotNull(locationJSONObj,"lat")?(String)getFieldObject(locationJSONObj,"lat","string"):"",
+							isFieldNotNull(locationJSONObj,"lng")?(String)getFieldObject(locationJSONObj,"lng","string"):"");
+				}
+
+			}
+
+		}catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+
+		String lat_lgt = (location != null)?location.getLat()+","+location.getLng():"";
+
+
+		return lat_lgt; // retorna algo como -23.5768634,-46.6431783
+	}
+
 	/*
 	
 	public static String formaterBooksFinalAPI_response(BooksVolumeCollection booksVolumeCollection){ // resposta em JSON
@@ -1448,40 +1482,7 @@ public class ResponseFormater {
 		
 	}
 		
-	public static String formaterPlacesGeocodingAPI_response(String response){
-		
-		JSONObject jsonObject = null;
-		Location location = null;
-		try {
-			jsonObject = new JSONObject(response);
-						
-			JSONArray results = isFieldNotNull(jsonObject,"results")?(JSONArray)getFieldObject(jsonObject,"results","jsonarray"):null; 
-			if(isNotNullOrEmptyThisArray(results)){
-				
-					for(int i=0; i < results.length(); i++){
-						
-						JSONObject geometryJSONObj = isFieldNotNull(results.getJSONObject(i),"geometry")?(JSONObject)getFieldObject(results.getJSONObject(i),"geometry",""):null; 
-						
-						JSONObject locationJSONObj = isFieldNotNull(geometryJSONObj,"location")?(JSONObject)getFieldObject(geometryJSONObj,"location",""):null; 
-						
-						location = new Location(isFieldNotNull(locationJSONObj,"lat")?(String)getFieldObject(locationJSONObj,"lat","string"):"",
-								                        isFieldNotNull(locationJSONObj,"lng")?(String)getFieldObject(locationJSONObj,"lng","string"):"");
-					}
-				
-			}
-			
-		}catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		}
-		
-		String lat_lgt = (location != null)?location.getLat()+","+location.getLng():"";
-		
-		log.log(Level.INFO,"\n--> O ENDERE�O INFORMADO EM CORDENADAS DE LAT E LONG FICOU:  "+lat_lgt);
-		
-		return lat_lgt; // retorna algo como -23.5768634,-46.6431783
-	}
+
 	
 	public static String formaterPlacesGeonamesAPI_response(String response){
 		

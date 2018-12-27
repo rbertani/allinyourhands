@@ -51,6 +51,8 @@ public class StatusController {
         }catch (JSONException e){
             e.printStackTrace();
         }
+
+
         return xmlJSONObj.toString();
 
     }
