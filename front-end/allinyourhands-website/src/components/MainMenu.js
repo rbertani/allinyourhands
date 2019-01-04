@@ -19,6 +19,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
+import { HomeOutline, BookOpenPageVariant, VideoVintage } from 'mdi-material-ui'
+
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -114,7 +116,7 @@ class MainMenu extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
-              Portal de Conteúdos
+              Tudo em suas Mãos - portal de conteúdos
             </Typography>
           </Toolbar>
         </AppBar>
@@ -133,23 +135,24 @@ class MainMenu extends React.Component {
             </IconButton>
           </div>
           <Divider />
-          <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
+          <List>            
+              <ListItem button>
+                <ListItemIcon > <HomeOutline/> </ListItemIcon>
+                <ListItemText primary={"Home"} />
+              </ListItem>  
+
+              <ListItem button>
+                <ListItemIcon > <BookOpenPageVariant /> </ListItemIcon>
+                <ListItemText primary={"Livros"} />
+              </ListItem>   
+
+              <ListItem button>
+                <ListItemIcon > <VideoVintage /> </ListItemIcon>
+                <ListItemText primary={"Videos"} />
+              </ListItem>            
           </List>
           <Divider />
-          <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
+         
         </Drawer>
         <main
           className={classNames(classes.content, {

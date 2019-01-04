@@ -9,6 +9,7 @@
     "antd": "^3.11.6",
     "axios": "^0.18.0",
     "axios-progress-bar": "^1.2.0",
+    "mdi-material-ui": "^5.8.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-html-parser": "^2.0.2",
