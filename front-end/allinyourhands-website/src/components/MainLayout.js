@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Header from './Header';
+import MainMenu from './MainMenu';
 
 const styles = theme => ({
   root: {
@@ -22,7 +22,7 @@ function MainLayout(props) {
    
       <Grid container spacing={24}>
         <Grid item xs={12}>               
-           <Header></Header>          
+           <MainMenu />         
         </Grid>
         <Grid item xs={6}>
           <Paper className={classes.paper}>xs=6</Paper>
