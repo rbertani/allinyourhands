@@ -5,9 +5,10 @@ import axios from 'axios';
 import { loadProgressBar } from 'axios-progress-bar'
 import 'axios-progress-bar/dist/nprogress.css'
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import Books from './components/Books';
 
-import { MuiThemeProvider } from '@material-ui/core/styles';
+
+import MainLayout from './components/MainLayout';
+import Books from './components/Books';
 
 //injectTapEventPlugin();
 
@@ -88,9 +89,9 @@ class App extends Component {
 
     return (
 
-    <MuiThemeProvider>
-      <div></div>
-    </MuiThemeProvider>
+   
+      <MainLayout></MainLayout>
+    
 
     );
   }
