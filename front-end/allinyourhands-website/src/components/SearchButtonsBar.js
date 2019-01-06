@@ -14,30 +14,37 @@ const styles = theme => ({
   },
 });
 
-function SearchButtonsBar(props) {
-  const { classes } = props;
-  return (
+class SearchButtonsBar extends React.Component {
 
-    <React.Fragment>
+  render() {
 
-      <Grid item xs={2} />
-      <Grid item xs={10}>
-        <Button variant="outlined" color="primary" className={classes.button} style={{visibility : props.videosActive}} >
-          Vídeos <br /> <VideoVintage />
-        </Button> 
-        <Button variant="outlined" color="primary" className={classes.button} style={{visibility : props.booksActive}}>
-          Livros <br /><BookOpenPageVariant />
-        </Button>
-        <Button variant="outlined" color="primary" className={classes.button} style={{visibility : props.placesActive}}>
-          Lugares <br /><MapMarker />
-        </Button>
-        <Button variant="outlined" color="primary" className={classes.button} style={{visibility : props.weatherActive}}>
-          Previsão <br /><WeatherPartlycloudy />
-        </Button>
-       
-      </Grid>
-    </React.Fragment>
-  );
+    const { classes } = this.props;
+
+    return (
+
+      <React.Fragment>
+
+        <Grid item xs={2} />
+        <Grid item xs={10}>
+          <Button variant="outlined" color="primary" className={classes.button} style={{ visibility: this.props.videosActive }} >
+            Vídeos <br /> <VideoVintage />
+          </Button>
+          <Button variant="outlined" color="primary" className={classes.button} 
+                  style={{ visibility: this.props.booksActive }} onClick={this.props.requestBooksApi}>
+            Livros <br /><BookOpenPageVariant />
+          </Button>
+          <Button variant="outlined" color="primary" className={classes.button} style={{ visibility: this.props.placesActive }}>
+            Lugares <br /><MapMarker />
+          </Button>
+          <Button variant="outlined" color="primary" className={classes.button} style={{ visibility: this.props.weatherActive }}>
+            Previsão <br /><WeatherPartlycloudy />
+          </Button>
+
+        </Grid>
+      </React.Fragment>
+    );
+  }
+
 }
 
 SearchButtonsBar.propTypes = {

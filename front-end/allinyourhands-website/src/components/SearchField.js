@@ -21,15 +21,14 @@ const styles = theme => ({
 });
 
 class SearchField extends React.Component {
-    state = {
-        searchText: 'Busque aqui',
-    }
+   
+    handleChange = keyword => event => {
+      
+        this.props.handleQuery(event);
 
-    handleChange = searchText => event => {
-        this.setState({
-            [searchText]: event.target.value,
-        });
     };
+
+    
 
     render() {
         const { classes } = this.props;
@@ -43,8 +42,8 @@ class SearchField extends React.Component {
                         id="outlined-name"
                         label="O que você busca?"
                         className={classes.textField}
-                        value={this.state.searchText}
-                        onChange={this.handleChange('searchText')}
+                        value={this.props.keyword}
+                        onChange={this.handleChange('keyword')}
                         margin="normal"
                         variant="outlined"
                         autoFocus={true}
