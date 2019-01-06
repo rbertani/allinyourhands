@@ -5,9 +5,7 @@ import axios from 'axios';
 import { loadProgressBar } from 'axios-progress-bar'
 import 'axios-progress-bar/dist/nprogress.css'
 import injectTapEventPlugin from 'react-tap-event-plugin';
-
-
-import MainLayout from './components/MainLayout';
+import Home from './components/Home';
 import Books from './components/Books';
 
 //injectTapEventPlugin();
@@ -18,15 +16,13 @@ class App extends Component {
     super();
 
     this.state = {
-      collapsed: false,
-      homeSelected: "",
-      songsSelected: "",
-      booksSelected: "",
-      videosSelected: "",
-      placesSelected: "",
-      weatherSelected: "",
+      collapsed: false,      
+      songsActive: "",
+      booksActive: "",
+      videosActive: "",
+      placesActive: "",
+      weatherActive: "",
       statusApis: {}
-
     };
   }
 
@@ -36,42 +32,41 @@ class App extends Component {
       current: e.key,
     });
   }
-  componentDidMount() {
+
+  componentDidMount () {
 
     loadProgressBar();
-
-    /*
+    
     axios.get(properties.apiBaseUrl + `/status`)
       .then(response => {
 
         if (response.data.statusAPIs.book == 1)
-          this.setState({ booksSelected: "block" });
+          this.setState({ booksActive: "visible" });
         else
-          this.setState({ booksSelected: "none" });
+          this.setState({ booksActive: "collapse" });
 
         if (response.data.statusAPIs.audio == 1)
-          this.setState({ songsSelected: "block" });
+          this.setState({ songsActive: "visible" });
         else
-          this.setState({ songsSelected: "none" });
-
+          this.setState({ songsActive: "collapse" });
+ 
         if (response.data.statusAPIs.weather == 1)
-          this.setState({ weatherSelected: "block" });
+          this.setState({ weatherActive: "visible" });
         else
-          this.setState({ weatherSelected: "none" });
+          this.setState({ weatherActive: "collapse" });
 
         if (response.data.statusAPIs.directions == 1)
-          this.setState({ placesSelected: "block" });
+          this.setState({ placesActive: "visible" });
         else
-          this.setState({ placesSelected: "none" });
+          this.setState({ placesActive: "collapse" });
 
         if (response.data.statusAPIs.video == 1)
-          this.setState({ videosSelected: "block" });
+          this.setState({ videosActive: "visible" });
         else
-          this.setState({ videosSelected: "none" });
+          this.setState({ videosActive: "collapse" });
 
       });
-
-      */
+ 
   }
 
   convertEnabledValue = (statusApiValue) => {
@@ -87,11 +82,16 @@ class App extends Component {
 
   render() {
 
-    return (
+    return (   
 
-   
-      <MainLayout></MainLayout>
-    
+      <Home 
+         booksActive={this.state.booksActive}
+         videosActive={this.state.videosActive}
+         songsActive={this.state.songsActive}
+         weatherActive={this.state.weatherActive}
+         placesActive={this.state.placesActive}
+         
+         />
 
     );
   }
