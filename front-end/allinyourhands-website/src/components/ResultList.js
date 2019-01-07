@@ -42,8 +42,16 @@ class ResultList extends Component {
                 const { id, volumeInfo, webReaderLink } = book;
 
                 return (
-                  <GridListTile rows={3} cols={2}>
-                    <ResultItem titulo={volumeInfo.title} imagemCard={volumeInfo.imageLink.thumbnail} descricao="" informacoesAdicionais={volumeInfo.description} />
+                  <GridListTile key={id} rows={3} cols={2}>
+                    <ResultItem                        
+                       searchedContentType={this.props.searchedContentType}
+                       titulo={volumeInfo.title} 
+                       imagemCard={volumeInfo.imageLink.thumbnail} 
+                       descricao="" 
+                       informacoesAdicionais={volumeInfo.description}
+                       htmlParaLeitura={webReaderLink}
+                       setCurrentBookHtml={this.props.setCurrentBookHtml}                       
+                       />
                   </GridListTile>
                 )
               })

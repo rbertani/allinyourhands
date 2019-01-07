@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { properties } from '../properties.js';
 import PropTypes from 'prop-types';
@@ -9,15 +10,8 @@ import SearchButtonsBar from './SearchButtonsBar';
 import ResultList from './ResultList';
 import Divider from '@material-ui/core/Divider';
 import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import ErrorIcon from '@material-ui/icons/Error';
-import InfoIcon from '@material-ui/icons/Info';
-import CloseIcon from '@material-ui/icons/Close';
-import WarningIcon from '@material-ui/icons/Warning';
-import IconButton from '@material-ui/core/IconButton';
-import green from '@material-ui/core/colors/green';
-import amber from '@material-ui/core/colors/amber';
+import BookReader from './BookReader';
+import GeolocationDetector from './GeolocationDetector';
 
 
 const styles = theme => ({
@@ -30,81 +24,11 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing.unit
-  },
-  success: {
-    backgroundColor: green[600],
-  },
-  error: {
-    backgroundColor: theme.palette.error.dark,
-  },
-  info: {
-    backgroundColor: theme.palette.primary.dark,
-  },
-  warning: {
-    backgroundColor: amber[700],
-  },
-  icon: {
-    fontSize: 20,
-  },
-  iconVariant: {
-    opacity: 0.9,
-    marginRight: theme.spacing.unit,
-  },
-  message: {
-    display: 'flex',
-    alignItems: 'center',
-  },
+  }
+
 });
 
-function MySnackbarContent(props) {
-  const { classes, className, message, onClose, variant, ...other } = props;
-  const Icon = variantIcon[variant];
-
-  return (
-    <SnackbarContent    
-      aria-describedby="client-snackbar"
-      message={
-        <span id="client-snackbar" className={classes.message}>
-          <Icon />
-          {message}
-        </span>
-      }
-      action={[
-        <IconButton
-          key="close"
-          aria-label="Close"
-          color="inherit"
-          className={classes.close}
-          onClick={onClose}
-        >
-          <CloseIcon className={classes.icon} />
-        </IconButton>,
-      ]}
-      {...other}
-    />
-  );
-}
-
-MySnackbarContent.propTypes = {
-  classes: PropTypes.object.isRequired,
-  className: PropTypes.string,
-  message: PropTypes.node,
-  onClose: PropTypes.func,
-  variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,
-};
-
-const MySnackbarContentWrapper = withStyles(styles)(MySnackbarContent);
-
-const variantIcon = {
-  success: CheckCircleIcon,
-  warning: WarningIcon,
-  error: ErrorIcon,
-  info: InfoIcon,
-};
-
-
-
-//function Home(props) {
+ 
 class Home extends Component {
 
   constructor() {
@@ -113,7 +37,12 @@ class Home extends Component {
 
     this.state = {
       keyword : "",
+      searchedContentType: "", // "books", "videos", "places", "weather", "all"
       openedSnack: false,
+      snackVertical: "bottom", 
+      snackHorizontal: "left",
+      latitude: "",
+      longitude: "",
 
       pagenumber: 1,
       countryCode: "pt",
@@ -123,24 +52,34 @@ class Home extends Component {
       currentBookHtml : ''
     };
 
+    this.setSearchedContentType = this.setSearchedContentType.bind(this);
     this.handleQuery = this.handleQuery.bind(this);
+   
     this.requestBooksApi = this.requestBooksApi.bind(this);
     this.pageNextAction = this.pageNextAction.bind(this);
     this.pageBackAction = this.pageBackAction.bind(this);
     this.setCurrentBookHtml = this.setCurrentBookHtml.bind(this);
     this.returnToResultList = this.returnToResultList.bind(this);
+    this.handleSnackClose = this.handleSnackClose.bind(this);
 
+    
+  }
+
+  setSearchedContentType = (contentType) => {
+    this.setState({ searchedContentType: contentType});
   }
 
   handleQuery = (event) => {    
     this.setState({ keyword: event.target.value});
   }
-
+  
   requestBooksApi = (event) => {
 
     event.preventDefault();
 
-    if(this.state.keyword != '')
+    this.setSearchedContentType("books");
+
+    if(this.state.keyword !== '')
       this.requestBooksApiFinal(1);
     else this.setState({openedSnack: true});
 
@@ -180,10 +119,14 @@ class Home extends Component {
     this.setState({bookIsBeingReaded: false});
   }
 
+  handleSnackClose = () => {
+    this.setState({ openedSnack: false });
+  };
+
   render() {
     
     const { classes } = this.props; 
-
+   
     return (
 
       <div className={classes.root}>
@@ -196,17 +139,17 @@ class Home extends Component {
         </Grid>
 
         <Grid container spacing={8} sx={12}>
-          <SearchField keyword={this.state.keyword} handleQuery={this.handleQuery}/>
+          <SearchField keyword={this.state.keyword} handleQuery={this.handleQuery} />
         </Grid>
 
         <Grid container spacing={8} sx={12}>
-          <SearchButtonsBar           
+          <SearchButtonsBar   
+             
             booksActive={this.props.booksActive}
             videosActive={this.props.videosActive}
             songsActive={this.props.songsActive}
             weatherActive={this.props.weatherActive}
             placesActive={this.props.placesActive}
-
             requestBooksApi={this.requestBooksApi}
 
           />
@@ -215,32 +158,28 @@ class Home extends Component {
         <Grid container spacing={8} sx={12}>
           <Divider variant="middle" />
         </Grid>
-
+     
         <Grid container sx={12}>
-          <ResultList booksAreLoaded={this.state.booksAreLoaded} books={this.state.books}/>
+
+          {this.state.bookIsBeingReaded ?
+          (
+            <div>                               
+               <BookReader htmlBookContent={this.state.currentBookHtml}></BookReader>
+            </div>
+          ) :
+          (
+            <ResultList 
+              booksAreLoaded={this.state.booksAreLoaded} 
+              books={this.state.books}
+              setCurrentBookHtml={this.setCurrentBookHtml}
+              searchedContentType={this.state.searchedContentType}
+            />
+          )}
+
         </Grid>
 
-        {this.state.openedSnack ? 
-           (
-            <Snackbar
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
-            }}
-            open={true}
-            autoHideDuration={6000}
-            onClose={this.handleClose}
-           />
-
-            )
-            :
-            ( 
-
-              <div></div>
-
-            )
-        }
-
+        <GeolocationDetector/>
+ 
       </div>
 
     );

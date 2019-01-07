@@ -47,10 +47,26 @@ const styles = theme => ({
 });
 
 class ResultItem extends React.Component {
-  state = { expanded: false };
+
+  constructor() {
+
+    super();
+
+    this.state = { expanded: false };
+
+    this.openResultItem = this.openResultItem.bind(this);
+
+  }
 
   handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }));
+    this.setState({ expanded: !this.state.expanded });
+  };
+
+  openResultItem = () => {    
+ 
+    if(this.props.searchedContentType == "books"){     
+      this.props.setCurrentBookHtml(this.props.htmlParaLeitura);
+    }
   };
 
   render() {
@@ -58,44 +74,47 @@ class ResultItem extends React.Component {
 
     return (
 
-      <Card className={classes.card}>
-        <CardHeader   
-         title={this.props.titulo}            
-        />
-        <CardMedia
-          className={classes.media}
-          image={this.props.imagemCard}              
-        />
-        <CardContent>
-          <Typography component="p">
-              {this.props.descricao}  
-          </Typography>
-        </CardContent>
-        <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Give a star">
-            <StarBorderIcon />
-          </IconButton>
-          <IconButton aria-label="Share">
-            <ShareIcon />
-          </IconButton>
-          <IconButton
-            className={classnames(classes.expand, {
-              [classes.expandOpen]: this.state.expanded,
-            })}
-            onClick={this.handleExpandClick}
-            aria-expanded={this.state.expanded}
-            aria-label="Show more"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions>
-        <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography paragraph>{this.props.informacoesAdicionais} </Typography>            
-          </CardContent>
-        </Collapse>
-      </Card>
-          
+      
+        <Card className={classes.card}>
+          <a href="#" onClick={() => this.openResultItem()} style={{ cursor: 'pointer' }}>
+            <CardHeader   
+            title={this.props.titulo}            
+            />
+            <CardMedia
+              className={classes.media}
+              image={this.props.imagemCard}              
+            />
+            <CardContent>
+              <Typography component="p">
+                  {this.props.descricao}  
+              </Typography>
+            </CardContent>
+          </a>
+          <CardActions className={classes.actions} disableActionSpacing>
+            <IconButton aria-label="Give a star">
+              <StarBorderIcon />
+            </IconButton>
+            <IconButton aria-label="Share">
+              <ShareIcon />
+            </IconButton>
+            <IconButton
+              className={classnames(classes.expand, {
+                [classes.expandOpen]: this.state.expanded,
+              })}
+              onClick={this.handleExpandClick}
+              aria-expanded={this.state.expanded}
+              aria-label="Show more"
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          </CardActions>
+          <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+              <Typography paragraph>{this.props.informacoesAdicionais} </Typography>            
+            </CardContent>
+          </Collapse>
+        </Card>
+                
     );
   }
 }
