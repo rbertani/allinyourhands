@@ -155,9 +155,13 @@ class Home extends Component {
           />
         </Grid>
 
+       
+      {
+       this.state.searchedContentType == "books" ?
+       (
 
-        {this.state.bookIsBeingReaded ?
-         (
+        this.state.bookIsBeingReaded ?
+        (
             <div>
               <BookReader htmlBookContent={this.state.currentBookHtml}></BookReader>
             </div>
@@ -169,8 +173,15 @@ class Home extends Component {
               setCurrentBookHtml={this.setCurrentBookHtml}
               searchedContentType={this.state.searchedContentType}
             />
-          )}
+          )
+        
+       ):
 
+       (
+        <div></div>
+        )
+        
+        }
 
         <GeolocationDetector />
 
