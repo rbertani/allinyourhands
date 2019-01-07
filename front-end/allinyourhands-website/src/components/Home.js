@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { properties } from '../properties.js';
 import PropTypes from 'prop-types';
@@ -8,10 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import SearchField from './SearchField';
 import SearchButtonsBar from './SearchButtonsBar';
 import ResultList from './ResultList';
-import Divider from '@material-ui/core/Divider';
-import Snackbar from '@material-ui/core/Snackbar';
 import BookReader from './BookReader';
-import GeolocationDetector from './GeolocationDetector';
 
 
 const styles = theme => ({
@@ -43,7 +39,7 @@ class Home extends Component {
       snackHorizontal: "left",
       latitude: "",
       longitude: "",
-
+      geolocalizationEnabled: false,
       pagenumber: 1,
       countryCode: "pt",
       books: [],
@@ -61,10 +57,30 @@ class Home extends Component {
     this.setCurrentBookHtml = this.setCurrentBookHtml.bind(this);
     this.returnToResultList = this.returnToResultList.bind(this);
     this.handleSnackClose = this.handleSnackClose.bind(this);
+    this.handleGetPosition = this.handleGetPosition.bind(this);
 
+    this.handleGetPosition();
 
   }
 
+  handleGetPosition = () => {
+ 
+    if (navigator.geolocation) {
+     
+      navigator.geolocation.getCurrentPosition(data => {
+        let positionUser = {
+          lat: data.coords.latitude,
+          lng: data.coords.longitude
+        };
+
+        this.setState({geolocalizationEnabled: true});
+        console.log("latitude: "+positionUser.lat+"  longitude: "+positionUser.lng);
+       
+      });
+    } 
+
+  };
+ 
   setSearchedContentType = (contentType) => {
     this.setState({ searchedContentType: contentType });
   }
@@ -150,8 +166,8 @@ class Home extends Component {
             songsActive={this.props.songsActive}
             weatherActive={this.props.weatherActive}
             placesActive={this.props.placesActive}
-            requestBooksApi={this.requestBooksApi}
-
+            requestBooksApi={this.requestBooksApi}          
+            geolocalizationEnabled={this.state.geolocalizationEnabled}
           />
         </Grid>
 
@@ -183,7 +199,6 @@ class Home extends Component {
         
         }
 
-        <GeolocationDetector />
 
       </div>
 

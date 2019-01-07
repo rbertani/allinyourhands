@@ -33,9 +33,21 @@ class SearchButtonsBar extends React.Component {
                   style={{ visibility: this.props.booksActive }} onClick={this.props.requestBooksApi}>
             Livros <br /><BookOpenPageVariant />
           </Button>
-          <Button variant="outlined" color="primary" className={classes.button} style={{ visibility: this.props.placesActive }}>
-            Lugares <br /><MapMarker />
-          </Button>
+
+          {this.props.geolocalizationEnabled ? 
+            (
+              <Button variant="outlined" color="primary" className={classes.button} style={{ visibility: this.props.placesActive }}>
+                Lugares <br /><MapMarker />
+              </Button>
+            ) :
+            (
+              <Button variant="outlined" color="primary" disabled className={classes.button} style={{ visibility: this.props.placesActive }}>
+                Lugares <br /><MapMarker />
+              </Button>
+            )
+          }
+
+
           <Button variant="outlined" color="primary" className={classes.button} style={{ visibility: this.props.weatherActive }}>
             Previsão <br /><WeatherPartlycloudy />
           </Button>
