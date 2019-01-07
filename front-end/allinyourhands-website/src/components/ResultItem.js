@@ -2,49 +2,45 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
+import Card from "@material-ui/core/Card";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Collapse from "@material-ui/core/Collapse";
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import red from '@material-ui/core/colors/red';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Typography from "@material-ui/core/Typography";
+import red from "@material-ui/core/colors/red";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import ShareIcon from "@material-ui/icons/Share";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 
 const styles = theme => ({
- 
- card: {
-    maxWidth: 400,
-    fontSize: 7
+  card: {
+    maxWidth: 400
   },
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    paddingTop: "56.25%" // 16:9
   },
   actions: {
-    display: 'flex',
+    display: "flex"
   },
   expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest
+    })
   },
   expandOpen: {
-    transform: 'rotate(180deg)',
+    transform: "rotate(180deg)"
   },
   avatar: {
-    backgroundColor: red[500],
-  }, 
-
-  
+    backgroundColor: red[500]
+  }
 });
+
 
 class ResultItem extends React.Component {
 
@@ -62,9 +58,9 @@ class ResultItem extends React.Component {
     this.setState({ expanded: !this.state.expanded });
   };
 
-  openResultItem = () => {    
- 
-    if(this.props.searchedContentType == "books"){     
+  openResultItem = () => {
+
+    if (this.props.searchedContentType == "books") {
       this.props.setCurrentBookHtml(this.props.htmlParaLeitura);
     }
   };
@@ -73,33 +69,29 @@ class ResultItem extends React.Component {
     const { classes } = this.props;
 
     return (
-
       
         <Card className={classes.card}>
+
           <a href="#" onClick={() => this.openResultItem()} style={{ cursor: 'pointer' }}>
-            <CardHeader   
-            title={this.props.titulo}            
-            />
             <CardMedia
               className={classes.media}
-              image={this.props.imagemCard}              
+              image={this.props.imagemCard}
+              title="Paella dish"
             />
-            <CardContent>
-              <Typography component="p">
-                  {this.props.descricao}  
-              </Typography>
-            </CardContent>
           </a>
+          <CardContent>
+            <Typography component="p">{this.props.titulo}</Typography>
+          </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
-            <IconButton aria-label="Give a star">
-              <StarBorderIcon />
+            <IconButton aria-label="Add to favorites">
+              <FavoriteIcon />
             </IconButton>
             <IconButton aria-label="Share">
               <ShareIcon />
             </IconButton>
             <IconButton
               className={classnames(classes.expand, {
-                [classes.expandOpen]: this.state.expanded,
+                [classes.expandOpen]: this.state.expanded
               })}
               onClick={this.handleExpandClick}
               aria-expanded={this.state.expanded}
@@ -110,11 +102,12 @@ class ResultItem extends React.Component {
           </CardActions>
           <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
             <CardContent>
-              <Typography paragraph>{this.props.informacoesAdicionais} </Typography>            
+              <Typography paragraph>{this.props.descricao}</Typography>
             </CardContent>
           </Collapse>
         </Card>
-                
+ 
+
     );
   }
 }
