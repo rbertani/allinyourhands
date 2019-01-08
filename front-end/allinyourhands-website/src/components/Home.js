@@ -5,10 +5,12 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import SearchField from './SearchField';
-import SearchButtonsBar from './SearchButtonsBar';
 import ResultList from './ResultList';
 import BookReader from './BookReader';
-
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import logoImage from '../images/lupa.jpg' 
 
 const styles = theme => ({
   root: {
@@ -20,7 +22,10 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing.unit
-  }
+  },
+  dividerInset: {
+    margin: `5px 0 0 ${theme.spacing.unit * 9}px`,
+  },
 
 });
 
@@ -64,23 +69,23 @@ class Home extends Component {
   }
 
   handleGetPosition = () => {
- 
+
     if (navigator.geolocation) {
-     
+
       navigator.geolocation.getCurrentPosition(data => {
         let positionUser = {
           lat: data.coords.latitude,
           lng: data.coords.longitude
         };
 
-        this.setState({geolocalizationEnabled: true});
-        console.log("latitude: "+positionUser.lat+"  longitude: "+positionUser.lng);
-       
+        this.setState({ geolocalizationEnabled: true });
+        console.log("latitude: " + positionUser.lat + "  longitude: " + positionUser.lng);
+
       });
-    } 
+    }
 
   };
- 
+
   setSearchedContentType = (contentType) => {
     this.setState({ searchedContentType: contentType });
   }
@@ -147,56 +152,52 @@ class Home extends Component {
 
       <div className={classes.root}>
 
-        <Grid container spacing={24}>
-          <Grid item xs={4} >
-          </Grid>
-          <Grid item xs={8} >
-          </Grid>
-        </Grid>
+        <center>
+          <img src={logoImage} />
+        </center>
 
-        <Grid container spacing={24}>
-          <SearchField keyword={this.state.keyword} handleQuery={this.handleQuery} />
-        </Grid>
-
-        <Grid container spacing={24}>
-          <SearchButtonsBar
-
+        <Grid container spacing={24} xs={12}>
+          <SearchField
+            keyword={this.state.keyword}
+            handleQuery={this.handleQuery}
             booksActive={this.props.booksActive}
             videosActive={this.props.videosActive}
             songsActive={this.props.songsActive}
             weatherActive={this.props.weatherActive}
             placesActive={this.props.placesActive}
-            requestBooksApi={this.requestBooksApi}          
+            requestBooksApi={this.requestBooksApi}
             geolocalizationEnabled={this.state.geolocalizationEnabled}
           />
         </Grid>
 
-       
-      {
-       this.state.searchedContentType == "books" ?
-       (
+        <br /> <br />
 
-        this.state.bookIsBeingReaded ?
-        (
-            <div>
-              <BookReader htmlBookContent={this.state.currentBookHtml}></BookReader>
-            </div>
-         ) :
-         (
-            <ResultList
-              booksAreLoaded={this.state.booksAreLoaded}
-              books={this.state.books}
-              setCurrentBookHtml={this.setCurrentBookHtml}
-              searchedContentType={this.state.searchedContentType}
-            />
-          )
-        
-       ):
 
-       (
-        <div></div>
-        )
-        
+        {
+          this.state.searchedContentType == "books" ?
+            (
+
+              this.state.bookIsBeingReaded ?
+                (
+                  <div>
+                    <BookReader htmlBookContent={this.state.currentBookHtml}></BookReader>
+                  </div>
+                ) :
+                (
+                  <ResultList
+                    booksAreLoaded={this.state.booksAreLoaded}
+                    books={this.state.books}
+                    setCurrentBookHtml={this.setCurrentBookHtml}
+                    searchedContentType={this.state.searchedContentType}
+                  />
+                )
+
+            ) :
+
+            (
+              <div></div>
+            )
+
         }
 
 
