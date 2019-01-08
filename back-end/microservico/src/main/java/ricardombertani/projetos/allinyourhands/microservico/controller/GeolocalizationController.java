@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import ricardombertani.projetos.allinyourhands.microservico.util.ApiUrlMaker;
 import ricardombertani.projetos.allinyourhands.microservico.util.ResponseFormater;
 import java.util.Properties;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,7 +30,6 @@ public class GeolocalizationController {
     @RequestMapping(method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     public String getDistance(@RequestParam("origin") String origin,@RequestParam("destination") String destination ){
 
-        ApiUrlMaker apiUrlMaker = new ApiUrlMaker();
         RestTemplate restTemplate = new RestTemplate();
 
         String geocodingUrlOrigin = makeGeocodingURL(origin);
@@ -83,27 +83,63 @@ public class GeolocalizationController {
 
     }
 
-    public String makeDistanceApiURL(String origins, String destinations){
+    @RequestMapping(method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    public String getPlaces(@RequestParam("latAndLong") String latAndLong,
+                            @RequestParam("countryCode") String countryCode,
+                            @RequestParam("section") String section,
+                            @RequestParam("offsetPlaces") String offsetPlaces
+                            ){
 
-        // os parametros desta API
-        Properties parameters = new Properties();
-        parameters.setProperty("origins",origins);
-        parameters.setProperty("destinations",destinations);
-        parameters.setProperty("mode","walking");  //driving , walking,bicycling ,transit
-        //  parameters.setProperty("language", language);
-        parameters.setProperty("key", ApiUrlMaker.googleKeyReservBalancer(
-                        System.getenv("google_keyreserv_selector"),
-                        System.getenv("google_general_key"),
-                        System.getenv("google_general_key_reserv1"),
-                        System.getenv("google_general_key_reserv2"),
-                        System.getenv("google_general_key_reserv3")
-                )
-
-        );
-
-        return ApiUrlMaker.makeApiURL(env.getProperty("geolocalization.distanceAPIBaseURL"), parameters);
+        return "";
 
     }
+
+
+
+
+    private  Properties getPlacesCommonProperties(String latAndLong, String countryCode, String section, String offsetPlaces){
+        Properties parameters = new Properties();
+
+        String clientAndSecret = foursquareKeyReservBalancer();
+        String clientAndSecretVector[] = clientAndSecret.split("\\|");
+
+        parameters.setProperty("client_id",clientAndSecretVector[0]);
+        parameters.setProperty("client_secret", clientAndSecretVector[1]);
+        parameters.setProperty("ll", latAndLong);
+        parameters.setProperty("section", section); // section seria a categoria de sugestao (food, drinks, coffee, shops, arts, outdoors, sights, trending or specials, nextVenues or topPicks )
+        parameters.setProperty("limit", System.getProperty(AllInYourHandsConstants.PROPERTY_API_PLACES_RESULTS_PER_PAGE_LIMIT)); // limite de resultados por vez
+        parameters.setProperty("locale", countryCode);
+        parameters.setProperty("v", "20131104"); // a data de atualizacao da API
+
+        int offSetIntegerValur = Integer.valueOf(offsetPlaces) * Integer.valueOf(System.getProperty(AllInYourHandsConstants.PROPERTY_API_PLACES_RESULTS_PER_PAGE_LIMIT));
+        parameters.setProperty("offset",  String.valueOf(offSetIntegerValur)  );
+
+
+        return parameters;
+    }
+
+
+    private  String foursquareKeyReservBalancer(){
+
+        int rangeLimit = Integer.parseInt(System.getProperty(AllInYourHandsConstants.PROPERTY_API_PLACES_CLIENT_KEY_SELECTOR));
+        Random randomGenerator = new Random();
+        int keyIndex = randomGenerator.nextInt(rangeLimit);
+
+        switch(keyIndex){
+            case 0:
+                log.log(Level.INFO,"Using PROPERTY_API_FOURSQUARE_KEY");
+                return System.getProperty(AllInYourHandsConstants.PROPERTY_API_PLACES_CLIENT_ID)+"|"+System.getProperty(AllInYourHandsConstants.PROPERTY_API_PLACES_CLIENT_SECRET);
+
+            case 1:
+                log.log(Level.INFO,"Using PROPERTY_API_FOURSQUARE_KEY2");
+                return System.getProperty(AllInYourHandsConstants.PROPERTY_API_PLACES_CLIENT_ID2)+"|"+System.getProperty(AllInYourHandsConstants.PROPERTY_API_PLACES_CLIENT_SECRET2);
+        }
+
+        return System.getProperty(AllInYourHandsConstants.PROPERTY_API_LASTFM_KEY);
+
+
+    }
+
 
     public String makeGeocodingURL(String address){
         // os parametros desta API
@@ -121,6 +157,46 @@ public class GeolocalizationController {
         );
 
         return ApiUrlMaker.makeApiURL(env.getProperty("geolocalization.geocodeAPIBaseURL"), parameters).replaceAll("  ", " ").replaceAll(" ", "+");
+    }
+
+    public String makeDistanceApiURL(String origins, String destinations){
+
+        // os parametros desta API
+        Properties parameters = new Properties();
+        parameters.setProperty("origins",origins);
+        parameters.setProperty("destinations",destinations);
+        parameters.setProperty("mode","walking");  //driving , walking,bicycling ,transit
+        //  parameters.setProperty("language", language);
+        parameters.setProperty("key", ApiUrlMaker.googleKeyReservBalancer(
+                System.getenv("google_keyreserv_selector"),
+                System.getenv("google_general_key"),
+                System.getenv("google_general_key_reserv1"),
+                System.getenv("google_general_key_reserv2"),
+                System.getenv("google_general_key_reserv3")
+                )
+
+        );
+
+        return ApiUrlMaker.makeApiURL(env.getProperty("geolocalization.distanceAPIBaseURL"), parameters);
+
+    }
+
+    public String makePlacesSuggestionsURL(String latAndLong,String countryCode, String section, String offsetPlaces){
+        //String baseURL =  System.getProperty(AllInYourHandsConstants.PROPERTY_API_PLACES_SUGGESTIONS_BASE_URL);
+
+        // os parametros desta API
+        Properties parameters = getPlacesCommonProperties(latAndLong, countryCode,section,offsetPlaces);
+
+        return ApiUrlMaker.makeApiURL(env.getProperty("geolocalization.suggestionPlacesBaseURL"), parameters);
+    }
+
+    public String makePlacesNearOfMeURL(String latAndLong,String countryCode, String section, String offsetPlaces){
+        //String baseURL =  System.getProperty(AllInYourHandsConstants.PROPERTY_API_PLACES_NEAR_OF_ME_BASE_URL);
+
+        // os parametros desta API
+        Properties parameters = getPlacesCommonProperties(latAndLong, countryCode, section, offsetPlaces);
+
+        return ApiUrlMaker.makeApiURL(env.getProperty("geolocalization.placesNearmeBaseURL"), parameters);
     }
 
 }
