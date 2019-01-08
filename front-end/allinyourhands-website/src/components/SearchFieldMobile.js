@@ -8,7 +8,12 @@ import SearchIcon from '@material-ui/icons/Search';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { VideoVintage, BookOpenPageVariant, MapMarker, WeatherPartlycloudy } from 'mdi-material-ui'
- 
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
 
@@ -31,8 +36,17 @@ class SearchFieldMobile extends React.Component {
         super();
         this.state = {
             anchorEl: null,
+            geolizationDialogOpen: false
         }
     }
+
+    handleDialogGeoClickOpen = () => {
+        this.setState({ geolizationDialogOpen: true });
+    };
+
+    handleDialogGeoClose = () => {
+        this.setState({ geolizationDialogOpen: false });
+    };
 
     handleClose = () => {
         this.setState({ anchorEl: null });
@@ -49,61 +63,93 @@ class SearchFieldMobile extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, fullScreen } = this.props;
 
         return (
-            <TextField
-                id="outlined-name"
-                label="O que você busca?"
-                className={classes.textField}
-                value={this.props.keyword}
-                onChange={this.handleChange('keyword')}
-                margin="normal"
-                variant="outlined"
-                autoFocus={true}
-                fullWidth={true}
-                InputProps={{
-                    endAdornment: (
-                        <InputAdornment position="end">
-                          
+
+            <React.Fragment>
+                <TextField
+                    id="outlined-name"
+                    label="O que você busca?"
+                    className={classes.textField}
+                    value={this.props.keyword}
+                    onChange={this.handleChange('keyword')}
+                    margin="normal"
+                    variant="outlined"
+                    autoFocus={true}
+                    fullWidth={true}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+
                                 <IconButton
                                     aria-label="Toggle password visibility"
                                     onClick={this.searchAction}
                                 >
                                     <SearchIcon />
-                                </IconButton>                                
+                                </IconButton>
                                 <Menu
-                                        id="simple-menu"
-                                        anchorEl={this.state.anchorEl}
-                                        open={Boolean(this.state.anchorEl)}
-                                        onClose={this.handleClose}
+                                    id="simple-menu"
+                                    anchorEl={this.state.anchorEl}
+                                    open={Boolean(this.state.anchorEl)}
+                                    onClose={this.handleClose}
                                 >
                                     <MenuItem onClick={this.handleClose} style={{ visibility: this.props.videosActive }}> Vídeos <br /> <VideoVintage /></MenuItem>
-                                    <MenuItem onClick={this.props.requestBooksApi} 
-                                            style={{ visibility: this.props.booksActive }}>
+                                    <MenuItem onClick={this.props.requestBooksApi}
+                                        style={{ visibility: this.props.booksActive }}>
                                         Livros <br /><BookOpenPageVariant />
                                     </MenuItem>
                                     {this.props.geolocalizationEnabled ?
                                         (
 
-                                        <MenuItem onClick={this.handleClose} style={{ visibility: this.props.placesActive }}> Lugares <br /><MapMarker /></MenuItem>
-                                        
+                                            <MenuItem onClick={this.handleClose}
+                                                style={{ visibility: this.props.placesActive }}>
+                                                Lugares <br /><MapMarker />
+                                            </MenuItem>
+
                                         ) :
                                         (
 
-                                            <MenuItem onClick={this.handleClose} 
-                                                    style={{ visibility: this.props.placesActive }}
-                                                    onClick={this.handleClickDisabledPlaces}> Lugares <br /><MapMarker /></MenuItem>
-                                        
+                                            <MenuItem onClick={this.handleClose}
+                                                style={{ visibility: this.props.placesActive }}
+                                                onClick={this.handleDialogGeoClickOpen}
+                                            >
+                                                Lugares <br /><MapMarker color="secondary" />
+                                            </MenuItem>
+
                                         )
                                     }
 
-                            </Menu>
-                           
-                        </InputAdornment>
-                    ),
-                }}
-            />
+                                </Menu>
+
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+
+                <Dialog
+                    fullScreen={fullScreen}
+                    open={this.state.geolizationDialogOpen}
+                    onClose={this.handleDialogGeoClose}
+                    aria-labelledby="responsive-dialog-title"
+                >
+                    <DialogTitle id="responsive-dialog-title">{"Serviço de geolocalização bloqueado"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            O serviço de geolocalização do seu navegador está bloqueado e por isso este serviço não pode funcionar :-(.
+                            Por favor, o desbloqueie e volte a acessar nosso site.
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleDialogGeoClose} color="primary">
+                            Ok
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+
+            </React.Fragment>
+
+
         );
     }
 }

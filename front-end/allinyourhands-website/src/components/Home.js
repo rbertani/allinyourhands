@@ -171,6 +171,7 @@ class Home extends Component {
                 placesActive={this.props.placesActive}
                 requestBooksApi={this.requestBooksApi}
                 geolocalizationEnabled={this.state.geolocalizationEnabled}
+                handleGetPosition={this.handleGetPosition}
               />
             </Grid>
         </MobileView>
@@ -187,26 +188,11 @@ class Home extends Component {
                 placesActive={this.props.placesActive}
                 requestBooksApi={this.requestBooksApi}
                 geolocalizationEnabled={this.state.geolocalizationEnabled}
+                handleGetPosition={this.handleGetPosition}
               />            
           
         </BrowserView>
         
-
-        {/*
-        <BrowserView>
-          <Grid container spacing={24} xs={12}>
-             <SearchButtonBar 
-                handleQuery={this.handleQuery}
-                booksActive={this.props.booksActive}
-                videosActive={this.props.videosActive}
-                songsActive={this.props.songsActive}
-                weatherActive={this.props.weatherActive}
-                placesActive={this.props.placesActive}
-                requestBooksApi={this.requestBooksApi}
-                geolocalizationEnabled={this.state.geolocalizationEnabled}
-             />
-          </Grid>
-        </BrowserView>*/}
 
         <br /> <br />
 

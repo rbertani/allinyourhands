@@ -60,7 +60,7 @@ class ResultItem extends React.Component {
 
   openResultItem = () => {
 
-    if (this.props.searchedContentType == "books") {
+    if (this.props.searchedContentType === "books") {
       this.props.setCurrentBookHtml(this.props.htmlParaLeitura);
     }
   };

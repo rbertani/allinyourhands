@@ -7,6 +7,12 @@ import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
 import Divider from '@material-ui/core/Divider';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
     container: {
@@ -28,6 +34,9 @@ const styles = theme => ({
         height: 28,
         margin: 4,
     },
+    iconButton: {
+        padding: 10,
+    },
 });
 
 class SearchFieldDesktop extends React.Component {
@@ -37,8 +46,18 @@ class SearchFieldDesktop extends React.Component {
         super();
         this.state = {
             anchorEl: null,
+            geolizationDialogOpen: false
         }
     }
+
+    handleDialogGeoClickOpen = () => {
+        this.setState({ geolizationDialogOpen: true });
+    };
+
+    handleDialogGeoClose = () => {
+        this.setState({ geolizationDialogOpen: false });        
+    };
+
 
     handleClose = () => {
         this.setState({ anchorEl: null });
@@ -55,26 +74,22 @@ class SearchFieldDesktop extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, fullScreen } = this.props;
 
         return (
 
             <form className={classes.container} noValidate autoComplete="off">
                 <TextField
-                    id="outlined-full-width"
+                    id="outlined-search"
                     label="O que você busca?"
                     className={classes.textField}
-                    style={{ width: 600, marginLeft: '35%' }}
                     value={this.props.keyword}
                     onChange={this.handleChange('keyword')}
-                    placeholder="Placeholder"
-                    fullWidth
-                    margin="dense"
+                    margin="normal"
                     variant="outlined"
+                    style={{ width: 600, marginLeft: '35%' }}
+                    type="search"
                     autoFocus={true}
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">
@@ -90,13 +105,15 @@ class SearchFieldDesktop extends React.Component {
                                 <IconButton
                                     aria-label="Toggle password visibility"
                                     onClick={this.searchAction}
+                                    color="primary"
                                 >
                                     <VideoVintage />
                                 </IconButton>
 
                                 <IconButton
                                     aria-label="Toggle password visibility"
-                                    onClick={this.searchAction}
+                                    onClick={this.props.requestBooksApi}
+                                    color="primary"
                                 >
                                     <BookOpenPageVariant />
                                 </IconButton>
@@ -104,11 +121,14 @@ class SearchFieldDesktop extends React.Component {
 
                                 {this.props.geolocalizationEnabled ?
                                     (
-                                       
+
                                         <IconButton
                                             aria-label="Toggle password visibility"
                                             onClick={this.searchAction}
-                                            style={{ visibility: this.props.placesActive }}>
+                                            style={{ visibility: this.props.placesActive }}
+                                            color="primary"
+                                        >
+
                                             <MapMarker />
                                         </IconButton>
 
@@ -116,8 +136,10 @@ class SearchFieldDesktop extends React.Component {
                                     (
                                         <IconButton
                                             aria-label="Toggle password visibility"
-                                            onClick={this.searchAction}
-                                            style={{ visibility: this.props.placesActive }}>
+                                            onClick={this.handleDialogGeoClickOpen}
+                                            style={{ visibility: this.props.placesActive }}
+                                            color="secondary"
+                                        >
 
                                             <MapMarker />
                                         </IconButton>
@@ -128,6 +150,7 @@ class SearchFieldDesktop extends React.Component {
                                 <IconButton
                                     aria-label="Toggle password visibility"
                                     onClick={this.searchAction}
+                                    color="primary"
                                 >
                                     <WeatherPartlycloudy />
                                 </IconButton>
@@ -136,6 +159,27 @@ class SearchFieldDesktop extends React.Component {
                         ),
                     }}
                 />
+
+
+                <Dialog
+                    fullScreen={fullScreen}
+                    open={this.state.geolizationDialogOpen}
+                    onClose={this.handleDialogGeoClose}
+                    aria-labelledby="responsive-dialog-title"
+                >
+                    <DialogTitle id="responsive-dialog-title">{"Serviço de geolocalização bloqueado"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            O serviço de geolocalização do seu navegador está bloqueado e por isso este serviço não pode funcionar :-(. 
+                            Por favor, o desbloqueie e volte a acessar nosso site.
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleDialogGeoClose} color="primary">
+                            Ok
+                        </Button>                        
+                    </DialogActions>
+                </Dialog>
 
             </form>
 
