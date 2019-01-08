@@ -4,13 +4,15 @@ import { properties } from '../properties.js';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import SearchField from './SearchField';
+import SearchFieldMobile from './SearchFieldMobile';
+import SearchFieldDesktop from './SearchFieldDesktop';
 import ResultList from './ResultList';
 import BookReader from './BookReader';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import logoImage from '../images/lupa.jpg' 
+import {
+  BrowserView,
+  MobileView    
+} from "react-device-detect";
 
 const styles = theme => ({
   root: {
@@ -156,19 +158,55 @@ class Home extends Component {
           <img src={logoImage} />
         </center>
 
-        <Grid container spacing={24} xs={12}>
-          <SearchField
-            keyword={this.state.keyword}
-            handleQuery={this.handleQuery}
-            booksActive={this.props.booksActive}
-            videosActive={this.props.videosActive}
-            songsActive={this.props.songsActive}
-            weatherActive={this.props.weatherActive}
-            placesActive={this.props.placesActive}
-            requestBooksApi={this.requestBooksApi}
-            geolocalizationEnabled={this.state.geolocalizationEnabled}
-          />
-        </Grid>
+        
+        <MobileView>
+            <Grid container spacing={24} xs={12}>
+              <SearchFieldMobile
+                keyword={this.state.keyword}
+                handleQuery={this.handleQuery}
+                booksActive={this.props.booksActive}
+                videosActive={this.props.videosActive}
+                songsActive={this.props.songsActive}
+                weatherActive={this.props.weatherActive}
+                placesActive={this.props.placesActive}
+                requestBooksApi={this.requestBooksApi}
+                geolocalizationEnabled={this.state.geolocalizationEnabled}
+              />
+            </Grid>
+        </MobileView>
+            
+        <BrowserView>
+                  
+              <SearchFieldDesktop
+                keyword={this.state.keyword}
+                handleQuery={this.handleQuery}
+                booksActive={this.props.booksActive}
+                videosActive={this.props.videosActive}
+                songsActive={this.props.songsActive}
+                weatherActive={this.props.weatherActive}
+                placesActive={this.props.placesActive}
+                requestBooksApi={this.requestBooksApi}
+                geolocalizationEnabled={this.state.geolocalizationEnabled}
+              />            
+          
+        </BrowserView>
+        
+
+        {/*
+        <BrowserView>
+          <Grid container spacing={24} xs={12}>
+             <SearchButtonBar 
+                handleQuery={this.handleQuery}
+                booksActive={this.props.booksActive}
+                videosActive={this.props.videosActive}
+                songsActive={this.props.songsActive}
+                weatherActive={this.props.weatherActive}
+                placesActive={this.props.placesActive}
+                requestBooksApi={this.requestBooksApi}
+                geolocalizationEnabled={this.state.geolocalizationEnabled}
+             />
+          </Grid>
+        </BrowserView>*/}
 
         <br /> <br />
 
