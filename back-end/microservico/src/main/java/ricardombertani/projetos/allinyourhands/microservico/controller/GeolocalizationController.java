@@ -136,11 +136,11 @@ public class GeolocalizationController {
         parameters.setProperty("ll", latAndLong);
         parameters.setProperty("query",query);
         parameters.setProperty("section", section); // section seria a categoria de sugestao (food, drinks, coffee, shops, arts, outdoors, sights, trending or specials, nextVenues or topPicks )
-        parameters.setProperty("limit", System.getenv("places.resultsperpage")); // limite de resultados por vez
+        parameters.setProperty("limit", System.getenv("places_resultsperpage")); // limite de resultados por vez
         parameters.setProperty("locale", countryCode);
         parameters.setProperty("v", "20131104"); // a data de atualizacao da API
 
-        int offSetIntegerValur = Integer.valueOf(offsetPlaces) * Integer.valueOf(System.getenv("places.resultsperpage"));
+        int offSetIntegerValur = Integer.valueOf(offsetPlaces) * Integer.valueOf(System.getenv("places_resultsperpage"));
         parameters.setProperty("offset",  String.valueOf(offSetIntegerValur)  );
 
 
