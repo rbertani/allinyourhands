@@ -7,7 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import SearchFieldMobile from './SearchFieldMobile';
 import SearchFieldDesktop from './SearchFieldDesktop';
 import ResultList from './ResultList';
-import BookReader from './BookReader';
 import logoImage from '../images/lupa.jpg' 
 import {
   BrowserView,
@@ -41,11 +40,7 @@ class Home extends Component {
     this.state = {
       keyword: "",
       searchedContentType: "", // "books", "videos", "places", "weather", "all"
-      openedSnack: false,
-      snackVertical: "bottom",
-      snackHorizontal: "left",
-      latitude: "",
-      longitude: "",
+      userGeolocalization : "",
       geolocalizationEnabled: false,
       pagenumber: 1,
       countryCode: "pt",
@@ -59,6 +54,7 @@ class Home extends Component {
     this.handleQuery = this.handleQuery.bind(this);
 
     this.requestBooksApi = this.requestBooksApi.bind(this);
+    this.requestPlacesApi = this.requestPlacesApi.bind(this);
     this.pageNextAction = this.pageNextAction.bind(this);
     this.pageBackAction = this.pageBackAction.bind(this);
     this.setCurrentBookHtml = this.setCurrentBookHtml.bind(this);
@@ -80,8 +76,8 @@ class Home extends Component {
           lng: data.coords.longitude
         };
 
-        this.setState({ geolocalizationEnabled: true });
-        console.log("latitude: " + positionUser.lat + "  longitude: " + positionUser.lng);
+        this.setState({ geolocalizationEnabled: true, userGeolocalization: positionUser });
+        console.log("latitude: " + this.state.userGeolocalization.lat + "  longitude: " + this.state.userGeolocalization.lng);
 
       });
     }
@@ -99,19 +95,37 @@ class Home extends Component {
   requestBooksApi = (event) => {
 
     event.preventDefault();
-
     this.setSearchedContentType("books");
 
     if (this.state.keyword !== '')
-      this.requestBooksApiFinal(1);
-    else this.setState({ openedSnack: true });
-
+      this.requestBooksApiWithPagination(1);    
 
   }
 
-  requestBooksApiFinal = (pageNumber) => {
+  requestBooksApiWithPagination = (pageNumber) => {
 
     axios.get(properties.apiBaseUrl + `/books?keyword=` + this.state.keyword + '&pagenumber=' + pageNumber + '&countryCode=' + this.state.countryCode)
+      .then(({ data }) => {
+        console.log(data);
+        this.setState({ books: data.books, booksAreLoaded: true, bookIsBeingReaded: false });
+      });
+  }
+
+  requestPlacesApi = (event) => {
+   
+    event.preventDefault();
+    this.setSearchedContentType("places");
+
+    if (this.state.keyword !== '')
+     this.requestPlacesApiWithPagination(1);
+
+  }
+
+  requestPlacesApiWithPagination = (pageNumber) => {
+
+    let latAndLong = this.state.userGeolocalization.lat + "," + this.state.userGeolocalization.lng;
+
+    axios.get(properties.apiBaseUrl + `/places?query=` + this.state.keyword + '&offsetPlaces=' + pageNumber + '&countryCode=' + this.state.countryCode +'&latAndLong='+latAndLong+'&section=')
       .then(({ data }) => {
         console.log(data);
         this.setState({ books: data.books, booksAreLoaded: true, bookIsBeingReaded: false });
@@ -169,15 +183,17 @@ class Home extends Component {
                 songsActive={this.props.songsActive}
                 weatherActive={this.props.weatherActive}
                 placesActive={this.props.placesActive}
-                requestBooksApi={this.requestBooksApi}
                 geolocalizationEnabled={this.state.geolocalizationEnabled}
                 handleGetPosition={this.handleGetPosition}
+
+                requestBooksApi={this.requestBooksApi}
+                requestPlacesApi={this.requestPlacesApi}
+               
               />
             </Grid>
         </MobileView>
             
-        <BrowserView>
-                  
+        <BrowserView>                  
               <SearchFieldDesktop
                 keyword={this.state.keyword}
                 handleQuery={this.handleQuery}
@@ -186,44 +202,26 @@ class Home extends Component {
                 songsActive={this.props.songsActive}
                 weatherActive={this.props.weatherActive}
                 placesActive={this.props.placesActive}
-                requestBooksApi={this.requestBooksApi}
                 geolocalizationEnabled={this.state.geolocalizationEnabled}
                 handleGetPosition={this.handleGetPosition}
-              />            
-          
+
+                requestBooksApi={this.requestBooksApi}
+                requestPlacesApi={this.requestPlacesApi}
+              /> 
         </BrowserView>
         
 
         <br /> <br />
 
-
-        {
-          this.state.searchedContentType == "books" ?
-            (
-
-              this.state.bookIsBeingReaded ?
-                (
-                  <div>
-                    <BookReader htmlBookContent={this.state.currentBookHtml}></BookReader>
-                  </div>
-                ) :
-                (
-                  <ResultList
-                    booksAreLoaded={this.state.booksAreLoaded}
-                    books={this.state.books}
-                    setCurrentBookHtml={this.setCurrentBookHtml}
-                    searchedContentType={this.state.searchedContentType}
-                  />
-                )
-
-            ) :
-
-            (
-              <div></div>
-            )
-
-        }
-
+        <ResultList
+            searchedContentType={this.state.searchedContentType}
+            books={this.state.books}
+            booksAreLoaded={this.state.booksAreLoaded}      
+            currentBookHtml={this.state.currentBookHtml}    
+            setCurrentBookHtml={this.setCurrentBookHtml}
+            bookIsBeingReaded={this.state.bookIsBeingReaded}
+        />
+ 
 
       </div>
 

@@ -102,7 +102,7 @@ class SearchFieldMobile extends React.Component {
                                     {this.props.geolocalizationEnabled ?
                                         (
 
-                                            <MenuItem onClick={this.handleClose}
+                                            <MenuItem  onClick={this.props.requestPlacesApi}
                                                 style={{ visibility: this.props.placesActive }}>
                                                 Lugares <br /><MapMarker />
                                             </MenuItem>

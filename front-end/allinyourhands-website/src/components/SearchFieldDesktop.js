@@ -124,7 +124,7 @@ class SearchFieldDesktop extends React.Component {
 
                                         <IconButton
                                             aria-label="Toggle password visibility"
-                                            onClick={this.searchAction}
+                                            onClick={this.props.requestPlacesApi}
                                             style={{ visibility: this.props.placesActive }}
                                             color="primary"
                                         >
