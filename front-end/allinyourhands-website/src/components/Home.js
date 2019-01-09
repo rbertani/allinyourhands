@@ -132,7 +132,7 @@ class Home extends Component {
     axios.get(properties.apiBaseUrl + `/places?query=` + this.state.keyword + '&offsetPlaces=' + pageNumber + '&countryCode=' + this.state.countryCode +'&latAndLong='+latAndLong+'&section=')
       .then(({ data }) => {
         console.log(data);
-        this.setState({ places: data.suggestions, placesAreLoaded: true, placesIsBeingDetailed: false });
+        this.setState({ places: data, placesAreLoaded: true, placesIsBeingDetailed: false });
       });
   }
 
