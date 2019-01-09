@@ -45,9 +45,13 @@ class Home extends Component {
       pagenumber: 1,
       countryCode: "pt",
       books: [],
+      places: [],
       booksAreLoaded: false,
       bookIsBeingReaded: false,
-      currentBookHtml: ''
+      currentBookHtml: '',
+      placesAreLoaded: false, 
+      placesIsBeingDetailed: false
+      
     };
 
     this.setSearchedContentType = this.setSearchedContentType.bind(this);
@@ -128,7 +132,7 @@ class Home extends Component {
     axios.get(properties.apiBaseUrl + `/places?query=` + this.state.keyword + '&offsetPlaces=' + pageNumber + '&countryCode=' + this.state.countryCode +'&latAndLong='+latAndLong+'&section=')
       .then(({ data }) => {
         console.log(data);
-        this.setState({ books: data.books, booksAreLoaded: true, bookIsBeingReaded: false });
+        this.setState({ places: data.suggestions, placesAreLoaded: true, placesIsBeingDetailed: false });
       });
   }
 
