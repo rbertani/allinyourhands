@@ -1,5 +1,8 @@
 package ricardombertani.projetos.allinyourhands.microservico.controller;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.mapper.MapperWrapper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import ricardombertani.projetos.allinyourhands.apidata.places.Suggestion;
+import ricardombertani.projetos.allinyourhands.apidata.places.SuggestionCollection;
 import ricardombertani.projetos.allinyourhands.microservico.util.ApiUrlMaker;
 import ricardombertani.projetos.allinyourhands.microservico.util.ResponseFormater;
 import java.util.Properties;
@@ -19,7 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping(path = "/rest/v1/distance")
+@RequestMapping(path = "/rest/v1")
 public class GeolocalizationController {
 
     private static Logger log = Logger.getLogger(GeolocalizationController.class.getName());
@@ -27,7 +32,7 @@ public class GeolocalizationController {
     @Autowired
     private Environment env;
 
-    @RequestMapping(method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(path = "/distance", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     public String getDistance(@RequestParam("origin") String origin,@RequestParam("destination") String destination ){
 
         RestTemplate restTemplate = new RestTemplate();
@@ -83,21 +88,44 @@ public class GeolocalizationController {
 
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String getPlaces(@RequestParam("latAndLong") String latAndLong,
+    @RequestMapping(path = "/places", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    public SuggestionCollection getPlaces(@RequestParam("query") String query, @RequestParam("latAndLong") String latAndLong,
                             @RequestParam("countryCode") String countryCode,
                             @RequestParam("section") String section,
                             @RequestParam("offsetPlaces") String offsetPlaces
                             ){
 
-        return "";
+        RestTemplate restTemplate = new RestTemplate();
+
+        String placesSuggestedUrl = makePlacesSuggestionsURL(query,latAndLong,countryCode, section, offsetPlaces);
+        log.log(Level.INFO,"Requested Suggested Places API... URL: "+placesSuggestedUrl);
+        String placesSuggestedResponse = restTemplate.getForObject(placesSuggestedUrl,String.class);
+        SuggestionCollection suggestionCollection = ResponseFormater.formaterPlacesSuggestionsAPI_response(placesSuggestedResponse);
+
+        String placesNearMeUrl = makePlacesNearOfMeURL(query,latAndLong,countryCode, section, offsetPlaces);
+        log.log(Level.INFO,"Requested Places Near Me API... URL: "+placesNearMeUrl);
+        String placesNearMeResponse = restTemplate.getForObject(placesNearMeUrl,String.class);
+        SuggestionCollection suggestionCollection2 = ResponseFormater.formaterPlacesNearOfMeAPI_response(placesNearMeResponse);
+
+        SuggestionCollection allPlaceSuggestions = new SuggestionCollection();
+
+        // unindo as duas listas de resultados
+        for(Suggestion suggestion : suggestionCollection.getSuggestions()){
+            for(Suggestion suggestion2 : suggestionCollection2.getSuggestions()){
+                allPlaceSuggestions.add(suggestion);
+                allPlaceSuggestions.add(suggestion2);
+            }
+        }
+
+
+        return allPlaceSuggestions;
 
     }
 
 
 
 
-    private  Properties getPlacesCommonProperties(String latAndLong, String countryCode, String section, String offsetPlaces){
+    private  Properties getPlacesCommonProperties(String query, String latAndLong, String countryCode, String section, String offsetPlaces){
         Properties parameters = new Properties();
 
         String clientAndSecret = foursquareKeyReservBalancer();
@@ -106,12 +134,13 @@ public class GeolocalizationController {
         parameters.setProperty("client_id",clientAndSecretVector[0]);
         parameters.setProperty("client_secret", clientAndSecretVector[1]);
         parameters.setProperty("ll", latAndLong);
+        parameters.setProperty("query",query);
         parameters.setProperty("section", section); // section seria a categoria de sugestao (food, drinks, coffee, shops, arts, outdoors, sights, trending or specials, nextVenues or topPicks )
-        parameters.setProperty("limit", System.getProperty(AllInYourHandsConstants.PROPERTY_API_PLACES_RESULTS_PER_PAGE_LIMIT)); // limite de resultados por vez
+        parameters.setProperty("limit", System.getenv("places.resultsperpage")); // limite de resultados por vez
         parameters.setProperty("locale", countryCode);
         parameters.setProperty("v", "20131104"); // a data de atualizacao da API
 
-        int offSetIntegerValur = Integer.valueOf(offsetPlaces) * Integer.valueOf(System.getProperty(AllInYourHandsConstants.PROPERTY_API_PLACES_RESULTS_PER_PAGE_LIMIT));
+        int offSetIntegerValur = Integer.valueOf(offsetPlaces) * Integer.valueOf(System.getenv("places.resultsperpage"));
         parameters.setProperty("offset",  String.valueOf(offSetIntegerValur)  );
 
 
@@ -121,21 +150,21 @@ public class GeolocalizationController {
 
     private  String foursquareKeyReservBalancer(){
 
-        int rangeLimit = Integer.parseInt(System.getProperty(AllInYourHandsConstants.PROPERTY_API_PLACES_CLIENT_KEY_SELECTOR));
+        int rangeLimit = Integer.parseInt(System.getenv("foursquare_key_selector"));
         Random randomGenerator = new Random();
         int keyIndex = randomGenerator.nextInt(rangeLimit);
 
         switch(keyIndex){
             case 0:
                 log.log(Level.INFO,"Using PROPERTY_API_FOURSQUARE_KEY");
-                return System.getProperty(AllInYourHandsConstants.PROPERTY_API_PLACES_CLIENT_ID)+"|"+System.getProperty(AllInYourHandsConstants.PROPERTY_API_PLACES_CLIENT_SECRET);
+                return System.getenv("foursquare_client_id_1")+"|"+System.getenv("foursquare_secret_1");
 
             case 1:
                 log.log(Level.INFO,"Using PROPERTY_API_FOURSQUARE_KEY2");
-                return System.getProperty(AllInYourHandsConstants.PROPERTY_API_PLACES_CLIENT_ID2)+"|"+System.getProperty(AllInYourHandsConstants.PROPERTY_API_PLACES_CLIENT_SECRET2);
+                return System.getenv("foursquare_client_id_2")+"|"+System.getenv("foursquare_secret_2");
         }
 
-        return System.getProperty(AllInYourHandsConstants.PROPERTY_API_LASTFM_KEY);
+        return System.getenv("foursquare_client_id_1")+"|"+System.getenv("foursquare_secret_1");//System.getProperty(AllInYourHandsConstants.PROPERTY_API_LASTFM_KEY);
 
 
     }
@@ -181,20 +210,18 @@ public class GeolocalizationController {
 
     }
 
-    public String makePlacesSuggestionsURL(String latAndLong,String countryCode, String section, String offsetPlaces){
-        //String baseURL =  System.getProperty(AllInYourHandsConstants.PROPERTY_API_PLACES_SUGGESTIONS_BASE_URL);
+    public String makePlacesSuggestionsURL(String query, String latAndLong,String countryCode, String section, String offsetPlaces){
 
         // os parametros desta API
-        Properties parameters = getPlacesCommonProperties(latAndLong, countryCode,section,offsetPlaces);
+        Properties parameters = getPlacesCommonProperties(query,latAndLong, countryCode,section,offsetPlaces);
 
         return ApiUrlMaker.makeApiURL(env.getProperty("geolocalization.suggestionPlacesBaseURL"), parameters);
     }
 
-    public String makePlacesNearOfMeURL(String latAndLong,String countryCode, String section, String offsetPlaces){
-        //String baseURL =  System.getProperty(AllInYourHandsConstants.PROPERTY_API_PLACES_NEAR_OF_ME_BASE_URL);
+    public String makePlacesNearOfMeURL(String query,String latAndLong,String countryCode, String section, String offsetPlaces){
 
         // os parametros desta API
-        Properties parameters = getPlacesCommonProperties(latAndLong, countryCode, section, offsetPlaces);
+        Properties parameters = getPlacesCommonProperties(query,latAndLong, countryCode, section, offsetPlaces);
 
         return ApiUrlMaker.makeApiURL(env.getProperty("geolocalization.placesNearmeBaseURL"), parameters);
     }

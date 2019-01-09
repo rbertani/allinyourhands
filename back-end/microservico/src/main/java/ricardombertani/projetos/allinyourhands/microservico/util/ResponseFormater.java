@@ -334,6 +334,308 @@ public class ResponseFormater {
 		return lat_lgt; // retorna algo como -23.5768634,-46.6431783
 	}
 
+
+	public static SuggestionCollection formaterPlacesSuggestionsAPI_response(String response){
+
+		JSONObject jsonObject = null;
+		SuggestionCollection suggestionCollection = new SuggestionCollection();
+		try {
+			jsonObject = new JSONObject(response);
+
+			JSONObject responseJSONObj =  isFieldNotNull(jsonObject,"response")?(JSONObject)getFieldObject(jsonObject,"response",""):null;
+			suggestionCollection.setTotalResults( isFieldNotNull(responseJSONObj,"totalResults")?(Integer)getFieldObject(responseJSONObj,"totalResults","int"):0  );
+
+
+			JSONArray groups = isFieldNotNull(responseJSONObj,"groups")?(JSONArray)getFieldObject(responseJSONObj,"groups","jsonarray"):null;
+
+			if(isNotNullOrEmptyThisArray(groups)){
+
+				for(int i=0; i < groups.length(); i++){
+
+					Suggestion suggestion = new Suggestion();
+					suggestion.setType(  isFieldNotNull(groups.getJSONObject(i),"type")?(String)getFieldObject(groups.getJSONObject(i),"type","string"):"" );
+
+					JSONArray items = isFieldNotNull(groups.getJSONObject(i),"items")?(JSONArray)getFieldObject(groups.getJSONObject(i),"items","jsonarray"):null;
+
+					if(isNotNullOrEmptyThisArray(items)){
+
+						for(int j=0; j< items.length(); j++){
+
+							Place place = new Place();
+
+							JSONObject venueObj =  isFieldNotNull(items.getJSONObject(j),"venue")?(JSONObject)getFieldObject(items.getJSONObject(j),"venue",""):null;
+
+							place.setId( isFieldNotNull(venueObj,"id")?(String)getFieldObject(venueObj,"id","string"):""  );
+							place.setName( isFieldNotNull(venueObj,"name")?(String)getFieldObject(venueObj,"name","string"):""  );
+
+							JSONObject contactObj = isFieldNotNull(venueObj,"contact")?(JSONObject)getFieldObject(venueObj,"contact",""):null;
+							place.setPhone( isFieldNotNull(contactObj,"phone")?(String)getFieldObject(contactObj,"phone","string"):""  );
+
+							JSONObject locationObj = isFieldNotNull(venueObj,"location")?(JSONObject)getFieldObject(venueObj,"location",""):null;
+							place.setAddress( isFieldNotNull(locationObj,"address")?(String)getFieldObject(locationObj,"address","string"):""  );
+							place.setState( isFieldNotNull(locationObj,"state")?(String)getFieldObject(locationObj,"state","string"):""  );
+							place.setCountry( isFieldNotNull(locationObj,"country")?(String)getFieldObject(locationObj,"country","string"):""  );
+
+							String latLong = (isFieldNotNull(locationObj,"lat")?(String)getFieldObject(locationObj,"lat","string"):"") + "," + (isFieldNotNull(locationObj,"lng")?(String)getFieldObject(locationObj,"lng","string"):"");
+							place.setLatLong(latLong);
+
+							String distance = isFieldNotNull(locationObj,"distance")?(String)getFieldObject(locationObj,"distance","string"):"";
+							if(!distance.equals("")){
+								int distanceIntValue = Integer.parseInt(distance);
+								if(distanceIntValue > 1000){
+									distance = distance.substring(0, 2).toCharArray()[0]+","+distance.substring(0, 2).toCharArray()[1]+" Km";
+								}else{
+									distance = distanceIntValue+" m";
+								}
+							}
+							place.setDistance( distance  );
+							place.setPostalCode( isFieldNotNull(locationObj,"postalCode")?(String)getFieldObject(locationObj,"postalCode","string"):""  );
+
+							JSONArray categories = isFieldNotNull(venueObj,"categories")?(JSONArray)getFieldObject(venueObj,"categories","jsonarray"):null;
+							if(isNotNullOrEmptyThisArray(categories)){
+
+								place.setCategoryName( isFieldNotNull(categories.getJSONObject(0),"name")?(String)getFieldObject(categories.getJSONObject(0),"name","string"):"" );
+
+								JSONObject iconObj = isFieldNotNull(categories.getJSONObject(0),"icon")?(JSONObject)getFieldObject(categories.getJSONObject(0),"icon",""):null;
+
+								String imgPrefix = isFieldNotNull(iconObj,"prefix")?(String)getFieldObject(iconObj,"prefix","string"):"";
+								String imgSufix = isFieldNotNull(iconObj,"suffix")?(String)getFieldObject(iconObj,"suffix","string"):"";
+								String imgURL = imgPrefix+"bg_88"+imgSufix; // "bg" serve para deixar a imagem mais escura e 88 � o tamanho (no caso m�ximo, mas poderia ter os seguintes valores: 32, 44, 64 ou 88)
+								place.setImagePreviewURL(imgURL);
+							}
+
+							place.setUrlSite( isFieldNotNull(venueObj,"url")?(String)getFieldObject(venueObj,"url","string"):"" );
+
+							JSONObject statsJSONObj = isFieldNotNull(venueObj,"stats")?(JSONObject)getFieldObject(venueObj,"stats",""):null;
+							place.setCheckinsCount( isFieldNotNull(statsJSONObj,"checkinsCount")?(Integer)getFieldObject(statsJSONObj,"checkinsCount","int"):0 );
+							place.setUsersCount( isFieldNotNull(statsJSONObj,"usersCount")?(Integer)getFieldObject(statsJSONObj,"usersCount","int"):0 );
+
+							JSONObject hoursJSONObj = isFieldNotNull(venueObj,"hours")?(JSONObject)getFieldObject(venueObj,"hours",""):null;
+							if(hoursJSONObj != null){
+								place.setStatusText(  isFieldNotNull(hoursJSONObj,"status")?(String)getFieldObject(hoursJSONObj,"status","string"):"" );
+								place.setOpen( isFieldNotNull(hoursJSONObj,"isOpen")?(Boolean)getFieldObject(hoursJSONObj,"isOpen","boolean"):false );
+							}
+							JSONObject hereNowJSONObj = isFieldNotNull(venueObj,"hereNow")?(JSONObject)getFieldObject(venueObj,"hereNow",""):null;
+							if(hereNowJSONObj != null)
+								place.setCount(  isFieldNotNull(hereNowJSONObj,"count")?(Integer)getFieldObject(hereNowJSONObj,"count","int"):0  );
+
+							JSONArray tipsObj =  isFieldNotNull(items.getJSONObject(j),"tips")?(JSONArray)getFieldObject(items.getJSONObject(j),"tips","jsonarray"):null;
+
+							if(isNotNullOrEmptyThisArray(tipsObj)){
+
+								for(int p=0; p< tipsObj.length(); p++){ // para cada dica dada por uma pessoa deste lugar, adicionamos as dicas ao lugar corrente
+
+									Tip tip = new Tip(isFieldNotNull(tipsObj.getJSONObject(p),"text")?(String)getFieldObject(tipsObj.getJSONObject(p),"text","string"):"",
+											(isFieldNotNull(tipsObj.getJSONObject(p),"canonicalUrl")?(String)getFieldObject(tipsObj.getJSONObject(p),"canonicalUrl","string"):"").replace("\\", "")
+									);
+
+									place.add(tip);
+								}
+							}
+
+
+							if(!place.getCategoryName().equals("Neighborhood") && !place.getAddress().equals("") ) // adicionamos dicas sobre lugares exceto indica��es do pr�prio bairro
+								suggestion.add(place);
+						}
+
+					}
+
+					suggestionCollection.add(suggestion);
+				}
+
+			}
+
+		}catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+
+		xstreamXML.alias("suggestions", SuggestionCollection.class);
+		xstreamXML.alias("suggestion", Suggestion.class);
+		xstreamXML.addImplicitCollection(SuggestionCollection.class, "suggestions");
+		xstreamXML.addImplicitCollection(Suggestion.class, "places");
+		xstreamXML.alias("place", Place.class);
+		xstreamXML.addImplicitCollection(Place.class, "tips");
+		xstreamXML.alias("tip", Tip.class);
+
+
+
+		return suggestionCollection;//xstreamXML.toXML(suggestionCollection);
+	}
+
+	public static SuggestionCollection formaterPlacesNearOfMeAPI_response(String response){
+
+		JSONObject jsonObject = null;
+		SuggestionCollection suggestionCollection = new SuggestionCollection();
+
+		try {
+			jsonObject = new JSONObject(response);
+
+			JSONObject responseJSONObj =  isFieldNotNull(jsonObject,"response")?(JSONObject)getFieldObject(jsonObject,"response",""):null;
+			//suggestionCollection.setTotalResults( isFieldNotNull(responseJSONObj,"totalResults")?(Integer)getFieldObject(responseJSONObj,"totalResults","int"):0  );
+
+
+
+			Suggestion suggestion = new Suggestion();
+			//suggestion.setType(  isFieldNotNull(groups.getJSONObject(i),"type")?(String)getFieldObject(groups.getJSONObject(i),"type","string"):"" );
+
+			JSONArray venuesObj = isFieldNotNull(responseJSONObj,"venues")?(JSONArray)getFieldObject(responseJSONObj,"venues","jsonarray"):null;
+
+
+			if(isNotNullOrEmptyThisArray(venuesObj)){
+
+
+				for(int j=0; j< venuesObj.length(); j++){
+
+					Place place = new Place();
+
+					JSONObject venueObj =  venuesObj.getJSONObject(j);
+
+					place.setId( isFieldNotNull(venueObj,"id")?(String)getFieldObject(venueObj,"id","string"):""  );
+					place.setName( isFieldNotNull(venueObj,"name")?(String)getFieldObject(venueObj,"name","string"):""  );
+
+					JSONObject contactObj = isFieldNotNull(venueObj,"contact")?(JSONObject)getFieldObject(venueObj,"contact",""):null;
+					place.setPhone( isFieldNotNull(contactObj,"phone")?(String)getFieldObject(contactObj,"phone","string"):""  );
+
+					JSONObject locationObj = isFieldNotNull(venueObj,"location")?(JSONObject)getFieldObject(venueObj,"location",""):null;
+					place.setAddress( isFieldNotNull(locationObj,"address")?(String)getFieldObject(locationObj,"address","string"):""  );
+					place.setState( isFieldNotNull(locationObj,"state")?(String)getFieldObject(locationObj,"state","string"):""  );
+					place.setCountry( isFieldNotNull(locationObj,"country")?(String)getFieldObject(locationObj,"country","string"):""  );
+
+					String latLong = (isFieldNotNull(locationObj,"lat")?(String)getFieldObject(locationObj,"lat","string"):"") + "," + (isFieldNotNull(locationObj,"lng")?(String)getFieldObject(locationObj,"lng","string"):"");
+					place.setLatLong(latLong);
+
+					String distance = isFieldNotNull(locationObj,"distance")?(String)getFieldObject(locationObj,"distance","string"):"";
+					if(!distance.equals("")){
+						int distanceIntValue = Integer.parseInt(distance);
+						if(distanceIntValue > 1000){
+							distance = distance.substring(0, 2).toCharArray()[0]+","+distance.substring(0, 2).toCharArray()[1]+" Km";
+						}else{
+							distance = distanceIntValue+" m";
+						}
+					}
+					place.setDistance( distance  );
+
+					place.setPostalCode( isFieldNotNull(locationObj,"postalCode")?(String)getFieldObject(locationObj,"postalCode","string"):""  );
+
+					JSONArray categories = isFieldNotNull(venueObj,"categories")?(JSONArray)getFieldObject(venueObj,"categories","jsonarray"):null;
+					if(isNotNullOrEmptyThisArray(categories)){
+
+						place.setCategoryName( isFieldNotNull(categories.getJSONObject(0),"name")?(String)getFieldObject(categories.getJSONObject(0),"name","string"):"" );
+
+						JSONObject iconObj = isFieldNotNull(categories.getJSONObject(0),"icon")?(JSONObject)getFieldObject(categories.getJSONObject(0),"icon",""):null;
+
+						String imgPrefix = isFieldNotNull(iconObj,"prefix")?(String)getFieldObject(iconObj,"prefix","string"):"";
+						String imgSufix = isFieldNotNull(iconObj,"suffix")?(String)getFieldObject(iconObj,"suffix","string"):"";
+						String imgURL = imgPrefix+"bg_88"+imgSufix; // "bg" serve para deixar a imagem mais escura e 88 � o tamanho (no caso m�ximo, mas poderia ter os seguintes valores: 32, 44, 64 ou 88)
+						place.setImagePreviewURL(imgURL);
+
+					}
+
+					place.setUrlSite( (isFieldNotNull(venueObj,"url")?(String)getFieldObject(venueObj,"url","string"):"") );
+
+					JSONObject statsJSONObj = isFieldNotNull(venueObj,"stats")?(JSONObject)getFieldObject(venueObj,"stats",""):null;
+					place.setCheckinsCount( isFieldNotNull(statsJSONObj,"checkinsCount")?(Integer)getFieldObject(statsJSONObj,"checkinsCount","int"):0 );
+					place.setUsersCount( isFieldNotNull(statsJSONObj,"usersCount")?(Integer)getFieldObject(statsJSONObj,"usersCount","int"):0 );
+
+
+					// campos a desconsiderar
+					place.setCategoryName(null);
+
+					if( !place.getAddress().equals("") ) // somente adicionamos locais que possuem endere�o e telefone
+						suggestion.add(place);
+				}
+				//}
+			}
+
+			suggestionCollection.add(suggestion);
+
+
+		}catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+
+		xstreamXML.alias("places_near_of_you", SuggestionCollection.class);
+		xstreamXML.alias("places", Suggestion.class);
+		xstreamXML.addImplicitCollection(SuggestionCollection.class, "suggestions");
+		xstreamXML.addImplicitCollection(Suggestion.class, "places");
+		xstreamXML.alias("place", Place.class);
+
+
+		return suggestionCollection; //xstreamXML.toXML(suggestionCollection); // retorna xml do tipo <places__near__of__you> <places> <type/> <place> <name/><address/><distance/><postalCode/><usersCount/> </place> </places></places__near__of__you>
+	}
+
+
+	public static String formaterVideoAPI_response(String videosDirectUrl,String response){
+
+		JSONArray items = null;
+		JSONObject jsonObject = null;
+
+		VideoCollection videoCollection = new VideoCollection();
+
+
+		try {
+
+			jsonObject = new JSONObject(response);
+
+			String nextPageToken = isFieldNotNull(jsonObject,"nextPageToken")?(String)getFieldObject(jsonObject,"nextPageToken","string"):"";
+			//session.setAttribute("pageToken",nextPageToken);
+			videoCollection.setNextPageToken(nextPageToken);
+
+			items = (JSONArray)jsonObject.get("items");
+
+			if(isNotNullOrEmptyThisArray(items)){
+				// Obtendo as informa��es de cada video
+				for(int i = 0; i < items.length(); i++){
+
+					Video video = new Video();
+					JSONObject jsonVideoObject = items.getJSONObject(i);
+
+					JSONObject jsonIdObject = isFieldNotNull(jsonVideoObject,"id")?(JSONObject)getFieldObject(jsonVideoObject,"id",""):null;
+					if(jsonIdObject != null){
+						video.setId( isFieldNotNull(jsonIdObject,"videoId")?(String)getFieldObject(jsonIdObject,"videoId","string"):"" );
+						video.setDirectURL( videosDirectUrl  + video.getId() );
+					}
+
+					JSONObject jsonSnippetObject = isFieldNotNull(jsonVideoObject,"snippet")?(JSONObject)getFieldObject(jsonVideoObject,"snippet",""):null;
+					if(jsonSnippetObject != null){
+						video.setPublishedAt( isFieldNotNull(jsonSnippetObject,"publishedAt")?(String)getFieldObject(jsonSnippetObject,"publishedAt","string"):""  );
+						video.setTitle( isFieldNotNull(jsonSnippetObject,"title")?(String)getFieldObject(jsonSnippetObject,"title","string"):""   );
+						video.setDescription( isFieldNotNull(jsonSnippetObject,"description")?(String)getFieldObject(jsonSnippetObject,"description","string"):"" );
+
+						JSONObject thumbnails = isFieldNotNull(jsonSnippetObject,"thumbnails")?(JSONObject)getFieldObject(jsonSnippetObject,"thumbnails",""):null;
+
+						JSONObject defaultField = isFieldNotNull(thumbnails,"default")?(JSONObject)getFieldObject(thumbnails,"default",""):null;
+
+						video.setPreviewImage( isFieldNotNull(defaultField,"url")?(String)getFieldObject(defaultField,"url","string"):"" );
+
+						video.setChannelId(  isFieldNotNull(jsonSnippetObject,"channelId")?(String)getFieldObject(jsonSnippetObject,"channelId","string"):"" );
+						video.setChannelTitle(  isFieldNotNull(jsonSnippetObject,"channelTitle")?(String)getFieldObject(jsonSnippetObject,"channelTitle","string"):"" );
+
+					}
+
+					videoCollection.add(video);
+
+				}
+			}
+		}catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+
+		xstreamXML.alias("videos", VideoCollection.class);
+		xstreamXML.alias("video", Video.class);
+		xstreamXML.addImplicitCollection(VideoCollection.class, "videos");
+
+		return xstreamXML.toXML(videoCollection); //retorna xml no estilo  <videos> <video> <id/> <publishedAt/> <title/> <channelId/> </description> <channelTitle/> <directURL/> </video> </videos>
+
+
+	}
+
 	/*
 	
 	public static String formaterBooksFinalAPI_response(BooksVolumeCollection booksVolumeCollection){ // resposta em JSON
@@ -761,72 +1063,7 @@ public class ResponseFormater {
 		
 	}
 	
-	public static String formaterVideoAPI_response(String response){	
-		
-		JSONArray items = null;
-		JSONObject jsonObject = null;
-		
-		VideoCollection videoCollection = new VideoCollection();
-		
-		
-		try {
-			 
-			jsonObject = new JSONObject(response);		
-				
-			String nextPageToken = isFieldNotNull(jsonObject,"nextPageToken")?(String)getFieldObject(jsonObject,"nextPageToken","string"):"";
-			//session.setAttribute("pageToken",nextPageToken);
-			videoCollection.setNextPageToken(nextPageToken);
-			
-			items = (JSONArray)jsonObject.get("items");
-			
-			if(isNotNullOrEmptyThisArray(items)){
-				// Obtendo as informa��es de cada video
-				for(int i = 0; i < items.length(); i++){
-					
-					Video video = new Video();
-					JSONObject jsonVideoObject = items.getJSONObject(i);
-					
-					JSONObject jsonIdObject = isFieldNotNull(jsonVideoObject,"id")?(JSONObject)getFieldObject(jsonVideoObject,"id",""):null; 
-					if(jsonIdObject != null){
-					  video.setId( isFieldNotNull(jsonIdObject,"videoId")?(String)getFieldObject(jsonIdObject,"videoId","string"):"" );
-					  video.setDirectURL( System.getProperty(AllInYourHandsConstants.PROPERTY_API_YOUTUBE_VIDEO_DIRECT_URL)  + video.getId() );
-					}
-					
-					JSONObject jsonSnippetObject = isFieldNotNull(jsonVideoObject,"snippet")?(JSONObject)getFieldObject(jsonVideoObject,"snippet",""):null; 
-					if(jsonSnippetObject != null){
-					  video.setPublishedAt( isFieldNotNull(jsonSnippetObject,"publishedAt")?(String)getFieldObject(jsonSnippetObject,"publishedAt","string"):""  );
-					  video.setTitle( isFieldNotNull(jsonSnippetObject,"title")?(String)getFieldObject(jsonSnippetObject,"title","string"):""   );
-					  video.setDescription( isFieldNotNull(jsonSnippetObject,"description")?(String)getFieldObject(jsonSnippetObject,"description","string"):"" );
-					  
-					  JSONObject thumbnails = isFieldNotNull(jsonSnippetObject,"thumbnails")?(JSONObject)getFieldObject(jsonSnippetObject,"thumbnails",""):null;
-					  
-					  JSONObject defaultField = isFieldNotNull(thumbnails,"default")?(JSONObject)getFieldObject(thumbnails,"default",""):null;
-					  
-					  video.setPreviewImage( isFieldNotNull(defaultField,"url")?(String)getFieldObject(defaultField,"url","string"):"" );
-					  
-					  video.setChannelId(  isFieldNotNull(jsonSnippetObject,"channelId")?(String)getFieldObject(jsonSnippetObject,"channelId","string"):"" );
-					  video.setChannelTitle(  isFieldNotNull(jsonSnippetObject,"channelTitle")?(String)getFieldObject(jsonSnippetObject,"channelTitle","string"):"" );
-					  
-					}
-					
-					videoCollection.add(video);
-					
-				}
-			}
-		}catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		}
-		
-		xstreamXML.alias("videos", VideoCollection.class);
-		xstreamXML.alias("video", Video.class);
-		xstreamXML.addImplicitCollection(VideoCollection.class, "videos");
-		
-		return xstreamXML.toXML(videoCollection); //retorna xml no estilo  <videos> <video> <id/> <publishedAt/> <title/> <channelId/> </description> <channelTitle/> <directURL/> </video> </videos>
-		
-		
-	}
+
 	
 	public static String formaterVideoCategoriesAPI_response(String response){	
 		
@@ -1598,242 +1835,8 @@ public class ResponseFormater {
 		
 		return lat_lgt; // retorna algo como -23.5768634,-46.6431783
 	}
-	
-   public static String formaterPlacesSuggestionsAPI_response(String response){
-		
-		JSONObject jsonObject = null;
-		SuggestionCollection suggestionCollection = new SuggestionCollection();
-		try {
-			jsonObject = new JSONObject(response);
-			
-			JSONObject responseJSONObj =  isFieldNotNull(jsonObject,"response")?(JSONObject)getFieldObject(jsonObject,"response",""):null; 
-			suggestionCollection.setTotalResults( isFieldNotNull(responseJSONObj,"totalResults")?(Integer)getFieldObject(responseJSONObj,"totalResults","int"):0  );
-			
-				
-			JSONArray groups = isFieldNotNull(responseJSONObj,"groups")?(JSONArray)getFieldObject(responseJSONObj,"groups","jsonarray"):null; 
-			
-			if(isNotNullOrEmptyThisArray(groups)){
-				
-					for(int i=0; i < groups.length(); i++){
-						
-						Suggestion suggestion = new Suggestion();
-						suggestion.setType(  isFieldNotNull(groups.getJSONObject(i),"type")?(String)getFieldObject(groups.getJSONObject(i),"type","string"):"" );
-						
-						JSONArray items = isFieldNotNull(groups.getJSONObject(i),"items")?(JSONArray)getFieldObject(groups.getJSONObject(i),"items","jsonarray"):null; 
-												
-						if(isNotNullOrEmptyThisArray(items)){							
-									
-								for(int j=0; j< items.length(); j++){
-								 
-								  Place place = new Place();
-								 	
-								  JSONObject venueObj =  isFieldNotNull(items.getJSONObject(j),"venue")?(JSONObject)getFieldObject(items.getJSONObject(j),"venue",""):null; 
-									
-									place.setId( isFieldNotNull(venueObj,"id")?(String)getFieldObject(venueObj,"id","string"):""  );
-									place.setName( isFieldNotNull(venueObj,"name")?(String)getFieldObject(venueObj,"name","string"):""  );
-									
-									JSONObject contactObj = isFieldNotNull(venueObj,"contact")?(JSONObject)getFieldObject(venueObj,"contact",""):null; 
-									place.setPhone( isFieldNotNull(contactObj,"phone")?(String)getFieldObject(contactObj,"phone","string"):""  );
-									
-									JSONObject locationObj = isFieldNotNull(venueObj,"location")?(JSONObject)getFieldObject(venueObj,"location",""):null; 
-									place.setAddress( isFieldNotNull(locationObj,"address")?(String)getFieldObject(locationObj,"address","string"):""  );
-									place.setState( isFieldNotNull(locationObj,"state")?(String)getFieldObject(locationObj,"state","string"):""  );
- 									place.setCountry( isFieldNotNull(locationObj,"country")?(String)getFieldObject(locationObj,"country","string"):""  );
-									
- 									String latLong = (isFieldNotNull(locationObj,"lat")?(String)getFieldObject(locationObj,"lat","string"):"") + "," + (isFieldNotNull(locationObj,"lng")?(String)getFieldObject(locationObj,"lng","string"):"");
- 									place.setLatLong(latLong);
- 											
-									String distance = isFieldNotNull(locationObj,"distance")?(String)getFieldObject(locationObj,"distance","string"):"";
-									if(!distance.equals("")){
-										int distanceIntValue = Integer.parseInt(distance);
-										if(distanceIntValue > 1000){
-											distance = distance.substring(0, 2).toCharArray()[0]+","+distance.substring(0, 2).toCharArray()[1]+" Km";
-										}else{
-											distance = distanceIntValue+" m";
-										}
-									}
-									place.setDistance( distance  );
-									place.setPostalCode( isFieldNotNull(locationObj,"postalCode")?(String)getFieldObject(locationObj,"postalCode","string"):""  );
-									
-									JSONArray categories = isFieldNotNull(venueObj,"categories")?(JSONArray)getFieldObject(venueObj,"categories","jsonarray"):null; 
-									if(isNotNullOrEmptyThisArray(categories)){
-																				
- 											place.setCategoryName( isFieldNotNull(categories.getJSONObject(0),"name")?(String)getFieldObject(categories.getJSONObject(0),"name","string"):"" );
- 											
- 											JSONObject iconObj = isFieldNotNull(categories.getJSONObject(0),"icon")?(JSONObject)getFieldObject(categories.getJSONObject(0),"icon",""):null;
- 											
- 											String imgPrefix = isFieldNotNull(iconObj,"prefix")?(String)getFieldObject(iconObj,"prefix","string"):"";
- 										    String imgSufix = isFieldNotNull(iconObj,"suffix")?(String)getFieldObject(iconObj,"suffix","string"):"";
- 										    String imgURL = imgPrefix+"bg_88"+imgSufix; // "bg" serve para deixar a imagem mais escura e 88 � o tamanho (no caso m�ximo, mas poderia ter os seguintes valores: 32, 44, 64 ou 88)
- 										    place.setImagePreviewURL(imgURL);
-									}
-																		
-									place.setUrlSite( isFieldNotNull(venueObj,"url")?(String)getFieldObject(venueObj,"url","string"):"" );
-									
-									JSONObject statsJSONObj = isFieldNotNull(venueObj,"stats")?(JSONObject)getFieldObject(venueObj,"stats",""):null; 
-									place.setCheckinsCount( isFieldNotNull(statsJSONObj,"checkinsCount")?(Integer)getFieldObject(statsJSONObj,"checkinsCount","int"):0 );
-									place.setUsersCount( isFieldNotNull(statsJSONObj,"usersCount")?(Integer)getFieldObject(statsJSONObj,"usersCount","int"):0 );
-									
-									JSONObject hoursJSONObj = isFieldNotNull(venueObj,"hours")?(JSONObject)getFieldObject(venueObj,"hours",""):null; 
-									if(hoursJSONObj != null){
-										place.setStatusText(  isFieldNotNull(hoursJSONObj,"status")?(String)getFieldObject(hoursJSONObj,"status","string"):"" );
-										place.setOpen( isFieldNotNull(hoursJSONObj,"isOpen")?(Boolean)getFieldObject(hoursJSONObj,"isOpen","boolean"):false );
-									}
-									JSONObject hereNowJSONObj = isFieldNotNull(venueObj,"hereNow")?(JSONObject)getFieldObject(venueObj,"hereNow",""):null; 
-									if(hereNowJSONObj != null)
-										place.setCount(  isFieldNotNull(hereNowJSONObj,"count")?(Integer)getFieldObject(hereNowJSONObj,"count","int"):0  );
-									
-								  JSONArray tipsObj =  isFieldNotNull(items.getJSONObject(j),"tips")?(JSONArray)getFieldObject(items.getJSONObject(j),"tips","jsonarray"):null; 	
-								  	
-								  if(isNotNullOrEmptyThisArray(tipsObj)){
-										    
-											for(int p=0; p< tipsObj.length(); p++){ // para cada dica dada por uma pessoa deste lugar, adicionamos as dicas ao lugar corrente
-												
-												Tip tip = new Tip(isFieldNotNull(tipsObj.getJSONObject(p),"text")?(String)getFieldObject(tipsObj.getJSONObject(p),"text","string"):"",
-														                                  (isFieldNotNull(tipsObj.getJSONObject(p),"canonicalUrl")?(String)getFieldObject(tipsObj.getJSONObject(p),"canonicalUrl","string"):"").replace("\\", "")
-														                                  );
-											   
-												place.add(tip);
-											}
-									}
-									
-								  	
-								   if(!place.getCategoryName().equals("Neighborhood") && !place.getAddress().equals("") ) // adicionamos dicas sobre lugares exceto indica��es do pr�prio bairro
-									   suggestion.add(place);
-								}
-							
-						}
-						
-						suggestionCollection.add(suggestion);
-					}
-				
-			}
-			
-		}catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		}
-		
-		xstreamXML.alias("suggestions", SuggestionCollection.class);
-		xstreamXML.alias("suggestion", Suggestion.class);
-		xstreamXML.addImplicitCollection(SuggestionCollection.class, "suggestions");
-		xstreamXML.addImplicitCollection(Suggestion.class, "places");
-		xstreamXML.alias("place", Place.class);
-		xstreamXML.addImplicitCollection(Place.class, "tips");
-		xstreamXML.alias("tip", Tip.class);
-		
-		
-		
-		return xstreamXML.toXML(suggestionCollection);
-	}
-   
-    
-   public static String formaterPlacesNearOfMeAPI_response(String response){
-		
- 		JSONObject jsonObject = null;
- 		SuggestionCollection suggestionCollection = new SuggestionCollection();
- 		
- 		try {
- 			jsonObject = new JSONObject(response);
- 			
- 			JSONObject responseJSONObj =  isFieldNotNull(jsonObject,"response")?(JSONObject)getFieldObject(jsonObject,"response",""):null; 
- 			//suggestionCollection.setTotalResults( isFieldNotNull(responseJSONObj,"totalResults")?(Integer)getFieldObject(responseJSONObj,"totalResults","int"):0  );
- 			
- 				
 
- 						Suggestion suggestion = new Suggestion();
- 						//suggestion.setType(  isFieldNotNull(groups.getJSONObject(i),"type")?(String)getFieldObject(groups.getJSONObject(i),"type","string"):"" );
- 						
- 						JSONArray venuesObj = isFieldNotNull(responseJSONObj,"venues")?(JSONArray)getFieldObject(responseJSONObj,"venues","jsonarray"):null; 
- 						
- 						
- 						if(isNotNullOrEmptyThisArray(venuesObj)){
- 							
- 							 																
- 								for(int j=0; j< venuesObj.length(); j++){
- 								 
- 								  Place place = new Place();
- 								 	
- 								  JSONObject venueObj =  venuesObj.getJSONObject(j);  
- 									
- 									place.setId( isFieldNotNull(venueObj,"id")?(String)getFieldObject(venueObj,"id","string"):""  );
- 									place.setName( isFieldNotNull(venueObj,"name")?(String)getFieldObject(venueObj,"name","string"):""  );
- 									
- 									JSONObject contactObj = isFieldNotNull(venueObj,"contact")?(JSONObject)getFieldObject(venueObj,"contact",""):null; 
- 									place.setPhone( isFieldNotNull(contactObj,"phone")?(String)getFieldObject(contactObj,"phone","string"):""  );
- 									
- 									JSONObject locationObj = isFieldNotNull(venueObj,"location")?(JSONObject)getFieldObject(venueObj,"location",""):null; 
- 									place.setAddress( isFieldNotNull(locationObj,"address")?(String)getFieldObject(locationObj,"address","string"):""  );
- 									place.setState( isFieldNotNull(locationObj,"state")?(String)getFieldObject(locationObj,"state","string"):""  );
- 									place.setCountry( isFieldNotNull(locationObj,"country")?(String)getFieldObject(locationObj,"country","string"):""  );
- 									
- 									String latLong = (isFieldNotNull(locationObj,"lat")?(String)getFieldObject(locationObj,"lat","string"):"") + "," + (isFieldNotNull(locationObj,"lng")?(String)getFieldObject(locationObj,"lng","string"):"");
- 									place.setLatLong(latLong);
- 									
- 									String distance = isFieldNotNull(locationObj,"distance")?(String)getFieldObject(locationObj,"distance","string"):"";
- 									if(!distance.equals("")){
-										int distanceIntValue = Integer.parseInt(distance);
-										if(distanceIntValue > 1000){
-											distance = distance.substring(0, 2).toCharArray()[0]+","+distance.substring(0, 2).toCharArray()[1]+" Km";
-										}else{
-											distance = distanceIntValue+" m";
-										}
-									}
-									place.setDistance( distance  );
- 									 									
- 									place.setPostalCode( isFieldNotNull(locationObj,"postalCode")?(String)getFieldObject(locationObj,"postalCode","string"):""  );
- 									
- 									JSONArray categories = isFieldNotNull(venueObj,"categories")?(JSONArray)getFieldObject(venueObj,"categories","jsonarray"):null; 
- 									if(isNotNullOrEmptyThisArray(categories)){
- 																							
- 											place.setCategoryName( isFieldNotNull(categories.getJSONObject(0),"name")?(String)getFieldObject(categories.getJSONObject(0),"name","string"):"" );
- 											
- 										    JSONObject iconObj = isFieldNotNull(categories.getJSONObject(0),"icon")?(JSONObject)getFieldObject(categories.getJSONObject(0),"icon",""):null;
- 											
- 											String imgPrefix = isFieldNotNull(iconObj,"prefix")?(String)getFieldObject(iconObj,"prefix","string"):"";
- 										    String imgSufix = isFieldNotNull(iconObj,"suffix")?(String)getFieldObject(iconObj,"suffix","string"):"";
- 										    String imgURL = imgPrefix+"bg_88"+imgSufix; // "bg" serve para deixar a imagem mais escura e 88 � o tamanho (no caso m�ximo, mas poderia ter os seguintes valores: 32, 44, 64 ou 88)
- 										    place.setImagePreviewURL(imgURL);
- 										
- 									}
- 									
- 									place.setUrlSite( (isFieldNotNull(venueObj,"url")?(String)getFieldObject(venueObj,"url","string"):"") );
- 									
- 									JSONObject statsJSONObj = isFieldNotNull(venueObj,"stats")?(JSONObject)getFieldObject(venueObj,"stats",""):null; 
- 									place.setCheckinsCount( isFieldNotNull(statsJSONObj,"checkinsCount")?(Integer)getFieldObject(statsJSONObj,"checkinsCount","int"):0 );
- 									place.setUsersCount( isFieldNotNull(statsJSONObj,"usersCount")?(Integer)getFieldObject(statsJSONObj,"usersCount","int"):0 );
- 									
 
- 									// campos a desconsiderar
- 									place.setCategoryName(null);
- 									
- 								   if( !place.getAddress().equals("") ) // somente adicionamos locais que possuem endere�o e telefone
- 									   suggestion.add(place);
- 								}
- 							//}
- 						}
- 						
- 						suggestionCollection.add(suggestion);
-
- 			
- 		}catch (JSONException e) {
- 			// TODO Auto-generated catch block
- 			e.printStackTrace();
- 			
- 		}
- 		
- 		xstreamXML.alias("places_near_of_you", SuggestionCollection.class);
- 		xstreamXML.alias("places", Suggestion.class);
- 		xstreamXML.addImplicitCollection(SuggestionCollection.class, "suggestions");
- 		xstreamXML.addImplicitCollection(Suggestion.class, "places");
- 		xstreamXML.alias("place", Place.class);
- 		
- 		
- 		
- 		return xstreamXML.toXML(suggestionCollection); // retorna xml do tipo <places__near__of__you> <places> <type/> <place> <name/><address/><distance/><postalCode/><usersCount/> </place> </places></places__near__of__you>
- 	}
-   
     public static String formaterShortnerUrlAPI_response(String response){
 		
     	log.log(Level.INFO,"\n--->RESPONSE OF SHORTENER API:\n"+response);

@@ -2,15 +2,22 @@ package ricardombertani.projetos.allinyourhands.microservico.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+import ricardombertani.projetos.allinyourhands.apidata.places.SuggestionCollection;
 import ricardombertani.projetos.allinyourhands.microservico.util.ApiUrlMaker;
+import ricardombertani.projetos.allinyourhands.microservico.util.ResponseFormater;
 
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping(path = "/videos")
+@RequestMapping(path = "/rest/v1/videos")
 public class VideoController {
 
     private static Logger log = Logger.getLogger(VideoController.class.getName());
@@ -18,9 +25,21 @@ public class VideoController {
     @Autowired
     private Environment env;
 
+    @RequestMapping(method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    public String getVideos(@RequestParam("q") String query, @RequestParam("nextpagetoken") String nextpagetoken) {
 
+        RestTemplate restTemplate = new RestTemplate();
 
-    public  String makeVideoApiURL(String text, String categoryId, String  pageToken){
+        String videoRequestUrl = makeVideoApiURL(query,"",nextpagetoken);
+        log.log(Level.INFO,"Requested Video API... URL: "+videoRequestUrl);
+
+        String response = restTemplate.getForObject(videoRequestUrl,String.class);
+
+        return ResponseFormater.formaterVideoAPI_response(env.getProperty("videos.youtubeDirectUrl"),response);
+
+    }
+
+    public  String makeVideoApiURL(String text, String categoryId, String  nextPageToken){
         String baseURL =  env.getProperty("videos.youtubeAPIBaseUrl");
         // os parametros desta API
         Properties parameters = new Properties();
@@ -41,7 +60,7 @@ public class VideoController {
         // parameters.setProperty("regionCode", regionCode);
 
 
-        parameters.setProperty("pageToken", pageToken); // parametro que ficar� responsavel por sempre mostrar o proximo request, o token � obtido atrav�s do campo "nextPageToken"
+        parameters.setProperty("pageToken", nextPageToken); // parametro que ficar� responsavel por sempre mostrar o proximo request, o token � obtido atrav�s do campo "nextPageToken"
 
         return ApiUrlMaker.makeApiURL(baseURL, parameters).replaceAll("  ", " ").replaceAll(" ", "+"); // substituimos espa�os por "+" por um problema no request das APIs da Google
 
