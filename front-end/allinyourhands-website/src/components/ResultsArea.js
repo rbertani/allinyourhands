@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import ResultItem from './ResultItem';
 import BookReader from './BookReader';
 import Button from '@material-ui/core/Button';
+import { UndoVariant } from 'mdi-material-ui'
 
 const styles = theme => ({
   root: {
@@ -152,7 +153,7 @@ class ResultsArea extends Component {
           (
             <div>
               <Button color="primary" className={classes.button} onClick={() => this.backAction()}>
-                Voltar
+                <UndoVariant />  Voltar
               </Button>
               <BookReader htmlBookContent={this.props.currentBookHtml}></BookReader>
             </div>
