@@ -62,6 +62,11 @@ class ResultItem extends React.Component {
 
     if (this.props.searchedContentType === "books") {
       this.props.setCurrentBookHtml(this.props.htmlParaLeitura);
+
+    }else if(this.props.searchedContentType === "places"){
+      // abrir street view
+    }else if(this.props.searchedContentType === "all"){
+      // qualquer conteudo...
     }
   };
 

@@ -46,11 +46,14 @@ class Home extends Component {
       countryCode: "pt",
       books: [],
       places: [],
+      allContents: [],
       booksAreLoaded: false,
       bookIsBeingReaded: false,
       currentBookHtml: '',
       placesAreLoaded: false, 
-      placesIsBeingDetailed: false
+      placesIsBeingDetailed: false,
+      allContentsAreLoaded: false, 
+      genericContentsIsBeingDetailed: false
       
     };
 
@@ -59,6 +62,7 @@ class Home extends Component {
 
     this.requestBooksApi = this.requestBooksApi.bind(this);
     this.requestPlacesApi = this.requestPlacesApi.bind(this);
+    this.requestAllApi = this.requestAllApi.bind(this);
     this.pageNextAction = this.pageNextAction.bind(this);
     this.pageBackAction = this.pageBackAction.bind(this);
     this.setCurrentBookHtml = this.setCurrentBookHtml.bind(this);
@@ -111,7 +115,7 @@ class Home extends Component {
     axios.get(properties.apiBaseUrl + `/books?keyword=` + this.state.keyword + '&pagenumber=' + pageNumber + '&countryCode=' + this.state.countryCode)
       .then(({ data }) => {
         console.log(data);
-        this.setState({ books: data.books, booksAreLoaded: true, bookIsBeingReaded: false });
+        this.setState({ books: data, booksAreLoaded: true, bookIsBeingReaded: false });
       });
   }
 
@@ -133,6 +137,27 @@ class Home extends Component {
       .then(({ data }) => {
         console.log(data);
         this.setState({ places: data, placesAreLoaded: true, placesIsBeingDetailed: false });
+      });
+  }
+
+  requestAllApi = (event) => {
+   
+    event.preventDefault();
+    this.setSearchedContentType("all");
+
+    if (this.state.keyword !== '')
+     this.requestAllApiWithPagination(1);
+
+  }
+
+  requestAllApiWithPagination = (pageNumber) => {
+     
+    let latAndLong = this.state.userGeolocalization.lat + "," + this.state.userGeolocalization.lng;
+    
+    axios.get(properties.apiBaseUrl + `/all?query=` + this.state.keyword + '&pageNumber=' + pageNumber + '&countryCode=' + this.state.countryCode +'&latAndLong='+latAndLong+'&section=')
+      .then(({ data }) => {
+        console.log(data);
+        this.setState({ allContents: data, allContentsAreLoaded: true, genericContentsIsBeingDetailed: false });
       });
   }
 
@@ -192,6 +217,7 @@ class Home extends Component {
 
                 requestBooksApi={this.requestBooksApi}
                 requestPlacesApi={this.requestPlacesApi}
+                requestAllApi={this.requestAllApi}
                
               />
             </Grid>
@@ -211,6 +237,7 @@ class Home extends Component {
 
                 requestBooksApi={this.requestBooksApi}
                 requestPlacesApi={this.requestPlacesApi}
+                requestAllApi={this.requestAllApi}
               /> 
         </BrowserView>
         
@@ -224,6 +251,12 @@ class Home extends Component {
             currentBookHtml={this.state.currentBookHtml}    
             setCurrentBookHtml={this.setCurrentBookHtml}
             bookIsBeingReaded={this.state.bookIsBeingReaded}
+            places={this.state.places}
+            placesAreLoaded={this.state.placesAreLoaded}
+            placesIsBeingDetailed={this.state.placesIsBeingDetailed}
+            allContents={this.state.allContents}
+            allContentsAreLoaded={this.state.allContentsAreLoaded}
+            genericContentsIsBeingDetailed={this.state.genericContentsIsBeingDetailed}
         />
  
 

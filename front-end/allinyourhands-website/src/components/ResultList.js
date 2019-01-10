@@ -68,7 +68,63 @@ class ResultList extends Component {
          ) :
 
         (
+          this.props.searchedContentType == "places" ?
+          (
+            <Grid container spacing={24}>
+
+                  {this.props.places.map(place => {
+                        const { id, name, address, distance, postalCode, imagePreviewURL, categoryName } = place;
+        
+                        return (
+                          <Grid item xs={6} md={3}>
+                            <ResultItem
+                              searchedContentType={this.props.searchedContentType}
+                              titulo={<div dangerouslySetInnerHTML={{__html: name + "<br />" + address  }} /> }
+                              imagemCard={imagePreviewURL}
+                              descricao={<div dangerouslySetInnerHTML={{__html: "<br />Categoria: " + categoryName+ "<br />CEP: " + postalCode + "<br />Distancia: " + distance }} /> }
+                              informacoesAdicionais=""   
+                            />
+                          </Grid>
+        
+                        )
+                      })
+        
+        
+                    }
+        
+                </Grid>
+          ) :
+          (
+            this.props.searchedContentType == "all" ?
+            (
+              <Grid container spacing={24}>
+  
+                    {this.props.allContents.map(genericContent => {
+                          const { id, type, title, description, image, htmlContent } = genericContent;
+          
+                          return (
+                            <Grid item xs={6} md={3}>
+                              <ResultItem
+                                searchedContentType={type}
+                                titulo={<div dangerouslySetInnerHTML={{__html: title  }} /> }
+                                imagemCard={image}
+                                descricao={<div dangerouslySetInnerHTML={{__html: description }} /> }
+                                informacoesAdicionais=""   
+                              />
+                            </Grid>
+          
+                          )
+                        })
+          
+          
+                      }
+          
+                  </Grid>
+            ) :
+            (
               <div></div>
+            )
+          )
         )
 
         }

@@ -84,7 +84,7 @@ class SearchFieldMobile extends React.Component {
 
                                 <IconButton
                                     aria-label="Toggle password visibility"
-                                    onClick={this.searchAction}
+                                    onClick={this.props.requestAllApi}
                                 >
                                     <SearchIcon />
                                 </IconButton>
