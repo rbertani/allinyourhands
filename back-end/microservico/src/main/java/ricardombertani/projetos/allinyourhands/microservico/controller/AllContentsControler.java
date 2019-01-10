@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -26,25 +28,37 @@ public class AllContentsControler {
     private Environment env;
 
     @RequestMapping(method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String getPlaces(@RequestParam("query") String query, @RequestParam("latAndLong") String latAndLong,
+    public String getAllContents(@RequestParam("query") String query, @RequestParam("latAndLong") String latAndLong,
                                  @RequestParam("countryCode") String countryCode,
                                  @RequestParam("section") String section,
-                                 @RequestParam("pageNumber") String pageNumber
+                                 @RequestParam("pageNumber") String pageNumber,
+                                 @RequestParam("nextpagetoken") String nextpagetoken
     ){
 
         String genericResult = "";
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String booksApiURL = "http://localhost:8080/rest/v1/books?keyword="+query+"java&pagenumber="+pageNumber+"&countryCode="+countryCode;
-        String booksResult = restTemplate.getForObject(booksApiURL, String.class);
+        String booksApiURL = "http://localhost:8080/rest/v1/books?keyword="+query+"&pagenumber="+pageNumber+"&countryCode="+countryCode;
+        String booksResult = "[]";
 
         String placesApiURL = "http://localhost:8080/rest/v1/places?query="+query+"&latAndLong="+latAndLong+"&countryCode="+countryCode+"&section="+section+"&offsetPlaces="+pageNumber;
-        String placesResult = restTemplate.getForObject(placesApiURL, String.class);
+        String placesResult = "[]";
 
-        String videosApiURL = "";
+        String videosApiURL = "ttp://localhost:8080/rest/v1/videos?q="+query+"&nextpagetoken="+nextpagetoken;
+        String videosResult = "[]";
 
-        JSONArray genericContentResult = new JSONArray();
+        try {
+            booksResult = restTemplate.getForObject(booksApiURL, String.class);
+            placesResult = restTemplate.getForObject(placesApiURL, String.class);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+
+        List<JSONObject> genericContentResult = new ArrayList<JSONObject>();
+        List<JSONObject> booksList = new ArrayList<JSONObject>();
+        List<JSONObject> placesList = new ArrayList<JSONObject>();
 
         try {
             JSONArray books = new JSONArray(booksResult);
@@ -63,7 +77,7 @@ public class AllContentsControler {
                 tmpObject.put("htmlContent" , ((JSONObject)books.get(i)).get("webReaderLink") );
 
 
-                genericContentResult.put(tmpObject);
+                booksList.add(tmpObject);
             }
 
             for(int i=0;i<places.length();i++){
@@ -76,42 +90,23 @@ public class AllContentsControler {
                 tmpObject.put("description" ,"Categoria: " + "<br />" + "Phone: " + "<br />" + ((JSONObject)places.get(i)).get("phone") + "<br />" + ((JSONObject)places.get(i)).get("categoryName") +"CEP: " + "<br />" + ((JSONObject)places.get(i)).get("postalCode") + "<br />" + ((JSONObject)places.get(i)).get("distance"));
                 tmpObject.put("image" , ((JSONObject)places.get(i)).getString("imagePreviewURL") );
 
-                genericContentResult.put(tmpObject);
+                placesList.add(tmpObject);
             }
 
-            // shuffle the contents
-            int minorSize =  (books.length() < places.length())? books.length() : places.length();
+            genericContentResult.addAll(booksList);
+            genericContentResult.addAll(placesList);
 
-            int index = 0;
-            while(index < minorSize){
-                if(index%2 == 0)
-                    genericContentResult.put(books.get(index));
-                else genericContentResult.put(places.get(index));
-
-                index++;
-            }
+            Collections.shuffle(genericContentResult);
 
 
         }catch(JSONException e){
             e.printStackTrace();
         }
 
+        JSONArray finalResult = new JSONArray(genericContentResult);
 
-        return genericContentResult.toString();
-    }
 
-    public static JSONArray shuffleJsonArray (JSONArray array) throws JSONException {
-
-        Random rnd = new Random();
-        for (int i = array.length() - 1; i >= 0; i--)
-        {
-            int j = rnd.nextInt(i + 1);
-            // Simple swap
-            Object object = array.get(j);
-            array.put(j, array.get(i));
-            array.put(i, object);
-        }
-        return array;
+        return finalResult.toString();
     }
 
 }

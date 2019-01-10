@@ -110,7 +110,6 @@ public class GeolocalizationController {
         String placesNearMeResponse = restTemplate.getForObject(placesNearMeUrl,String.class);
         SuggestionCollection suggestionCollection2 = ResponseFormater.formaterPlacesNearOfMeAPI_response(placesNearMeResponse);
 
-        SuggestionCollection allPlaceSuggestions = new SuggestionCollection();
         List<Suggestion> suggestions1 = suggestionCollection.getSuggestions();
         List<Suggestion> suggestions2 = suggestionCollection2.getSuggestions();
 
