@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import ricardombertani.projetos.allinyourhands.apidata.places.Place;
 import ricardombertani.projetos.allinyourhands.apidata.places.Suggestion;
 import ricardombertani.projetos.allinyourhands.apidata.places.SuggestionCollection;
 import ricardombertani.projetos.allinyourhands.microservico.util.ApiUrlMaker;
 import ricardombertani.projetos.allinyourhands.microservico.util.ResponseFormater;
+
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.util.logging.Level;
@@ -89,7 +92,7 @@ public class GeolocalizationController {
     }
 
     @RequestMapping(path = "/places", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-    public SuggestionCollection getPlaces(@RequestParam("query") String query, @RequestParam("latAndLong") String latAndLong,
+    public List<Place> getPlaces(@RequestParam("query") String query, @RequestParam("latAndLong") String latAndLong,
                             @RequestParam("countryCode") String countryCode,
                             @RequestParam("section") String section,
                             @RequestParam("offsetPlaces") String offsetPlaces
@@ -108,17 +111,15 @@ public class GeolocalizationController {
         SuggestionCollection suggestionCollection2 = ResponseFormater.formaterPlacesNearOfMeAPI_response(placesNearMeResponse);
 
         SuggestionCollection allPlaceSuggestions = new SuggestionCollection();
+        List<Suggestion> suggestions1 = suggestionCollection.getSuggestions();
+        List<Suggestion> suggestions2 = suggestionCollection2.getSuggestions();
 
-        // unindo as duas listas de resultados
-        for(Suggestion suggestion : suggestionCollection.getSuggestions()){
-            for(Suggestion suggestion2 : suggestionCollection2.getSuggestions()){
-                allPlaceSuggestions.add(suggestion);
-                allPlaceSuggestions.add(suggestion2);
-            }
-        }
+        List<Place> places1 = suggestions1.get(0).getPlaces();
+        List<Place> places2 = suggestions2.get(0).getPlaces();
+        places1.addAll(places2);
 
 
-        return allPlaceSuggestions;
+        return places1;
 
     }
 
