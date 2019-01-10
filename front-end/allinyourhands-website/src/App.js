@@ -1,10 +1,8 @@
 import React, { Component, Suspense } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
 import { properties } from './properties.js';
 import axios from 'axios';
 import { loadProgressBar } from 'axios-progress-bar'
 import 'axios-progress-bar/dist/nprogress.css'
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import Home from './components/Home';
 
 

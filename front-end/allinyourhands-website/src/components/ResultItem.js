@@ -50,7 +50,7 @@ class ResultItem extends React.Component {
 
     this.state = { expanded: false };
 
-    this.openResultItem = this.openResultItem.bind(this);
+    this.detailResultItem = this.detailResultItem.bind(this);
 
   }
 
@@ -58,16 +58,46 @@ class ResultItem extends React.Component {
     this.setState({ expanded: !this.state.expanded });
   };
 
-  openResultItem = () => {
+  detailResultItem = () => {
 
+   
     if (this.props.searchedContentType === "books") {
+      
+      // ativar visualização de livros
       this.props.setCurrentBookHtml(this.props.htmlParaLeitura);
+      this.props.setCurrentContentDetailedType("books");
+      this.props.setTargetContentDetailed(true);
+    
 
     }else if(this.props.searchedContentType === "places"){
+      
+      this.props.setCurrentContentDetailedType("places");
+      
       // abrir street view
+
     }else if(this.props.searchedContentType === "all"){
-      // qualquer conteudo...
+        
+        // verificar conteudo para tomar acao
+       
+        if(this.props.currentContentType === "books"){
+
+          this.props.setCurrentBookHtml(this.props.htmlParaLeitura);
+          this.props.setCurrentContentDetailedType("books");
+          this.props.setTargetContentDetailed(true);
+        
+
+        }else if(this.props.currentContentType === "places"){
+
+          this.props.setCurrentContentDetailedType("places");
+
+        }
+
     }
+
+
+   
+
+
   };
 
   render() {
@@ -77,7 +107,7 @@ class ResultItem extends React.Component {
       
         <Card className={classes.card}>
 
-          <a href="#" onClick={() => this.openResultItem()} style={{ cursor: 'pointer' }}>
+          <a href="#" onClick={() => this.detailResultItem()} style={{ cursor: 'pointer' }}>
             <CardMedia
               className={classes.media}
               image={this.props.imagemCard}

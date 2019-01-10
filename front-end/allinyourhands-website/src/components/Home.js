@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import SearchFieldMobile from './SearchFieldMobile';
 import SearchFieldDesktop from './SearchFieldDesktop';
-import ResultList from './ResultList';
+import ResultsArea from './ResultsArea';
 import logoImage from '../images/lupa.jpg' 
 import {
   BrowserView,
@@ -43,23 +43,22 @@ class Home extends Component {
       userGeolocalization : "",
       geolocalizationEnabled: false,
       pagenumber: 1,
+      nextpagetoken: '',
       countryCode: "pt",
       books: [],
       places: [],
-      allContents: [],
-      booksAreLoaded: false,
-      bookIsBeingReaded: false,
-      currentBookHtml: '',
-      placesAreLoaded: false, 
-      placesIsBeingDetailed: false,
-      allContentsAreLoaded: false, 
-      genericContentsIsBeingDetailed: false
+      allContents: [],  
+      currentContentDetailedType: '',  // tipo do conteúdo que está sendo detalhado
+      targetContentDetailed: false,   // informa se o conteúdo está sendo detalhado
+      currentBookHtml: '', // conteudo html de um livro
+     
       
     };
 
     this.setSearchedContentType = this.setSearchedContentType.bind(this);
+    this.setTargetContentDetailed = this.setTargetContentDetailed.bind(this);
+    this.setCurrentContentDetailedType = this.setCurrentContentDetailedType.bind(this);
     this.handleQuery = this.handleQuery.bind(this);
-
     this.requestBooksApi = this.requestBooksApi.bind(this);
     this.requestPlacesApi = this.requestPlacesApi.bind(this);
     this.requestAllApi = this.requestAllApi.bind(this);
@@ -96,6 +95,14 @@ class Home extends Component {
     this.setState({ searchedContentType: contentType });
   }
 
+  setTargetContentDetailed = (contentDetailed) => {
+    this.setState({targetContentDetailed : contentDetailed });
+  }
+
+  setCurrentContentDetailedType = (currentContentTypeValue) => {
+    this.setState({currentContentDetailedType : currentContentTypeValue });
+  }
+
   handleQuery = (event) => {
     this.setState({ keyword: event.target.value });
   }
@@ -104,6 +111,7 @@ class Home extends Component {
 
     event.preventDefault();
     this.setSearchedContentType("books");
+    this.setTargetContentDetailed(false);
 
     if (this.state.keyword !== '')
       this.requestBooksApiWithPagination(1);    
@@ -123,6 +131,7 @@ class Home extends Component {
    
     event.preventDefault();
     this.setSearchedContentType("places");
+    this.setTargetContentDetailed(false);
 
     if (this.state.keyword !== '')
      this.requestPlacesApiWithPagination(1);
@@ -144,6 +153,7 @@ class Home extends Component {
    
     event.preventDefault();
     this.setSearchedContentType("all");
+    this.setTargetContentDetailed(false);
 
     if (this.state.keyword !== '')
      this.requestAllApiWithPagination(1);
@@ -154,7 +164,7 @@ class Home extends Component {
      
     let latAndLong = this.state.userGeolocalization.lat + "," + this.state.userGeolocalization.lng;
     
-    axios.get(properties.apiBaseUrl + `/all?query=` + this.state.keyword + '&pageNumber=' + pageNumber + '&countryCode=' + this.state.countryCode +'&latAndLong='+latAndLong+'&section=')
+    axios.get(properties.apiBaseUrl + `/all?query=` + this.state.keyword + '&pageNumber=' + pageNumber + '&nextpagetoken=' + this.state.nextpagetoken+ '&countryCode=' + this.state.countryCode +'&latAndLong='+latAndLong+'&section=')
       .then(({ data }) => {
         console.log(data);
         this.setState({ allContents: data, allContentsAreLoaded: true, genericContentsIsBeingDetailed: false });
@@ -244,19 +254,19 @@ class Home extends Component {
 
         <br /> <br />
 
-        <ResultList
+        <ResultsArea
             searchedContentType={this.state.searchedContentType}
             books={this.state.books}
             booksAreLoaded={this.state.booksAreLoaded}      
             currentBookHtml={this.state.currentBookHtml}    
             setCurrentBookHtml={this.setCurrentBookHtml}
             bookIsBeingReaded={this.state.bookIsBeingReaded}
-            places={this.state.places}
-            placesAreLoaded={this.state.placesAreLoaded}
-            placesIsBeingDetailed={this.state.placesIsBeingDetailed}
-            allContents={this.state.allContents}
-            allContentsAreLoaded={this.state.allContentsAreLoaded}
-            genericContentsIsBeingDetailed={this.state.genericContentsIsBeingDetailed}
+            places={this.state.places}           
+            allContents={this.state.allContents} 
+            targetContentDetailed={this.state.targetContentDetailed}   
+            setTargetContentDetailed={this.setTargetContentDetailed}  
+            currentContentDetailedType={this.state.currentContentDetailedType}   
+            setCurrentContentDetailedType={this.setCurrentContentDetailedType}           
         />
  
 
