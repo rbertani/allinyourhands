@@ -2,7 +2,6 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: "Servico CloudFormation para a aplica\xE7\xE3o All In Your Hands"
 Globals:
   Api:
-    Cors: '''http://tudoemsuasmaos.com.br'''
     EndpointConfiguration: REGIONAL
 Outputs:
   AiyhSpringBootApi:
@@ -14,7 +13,7 @@ Outputs:
 Resources:
   LambdaSpringBootFunction:
     Properties:
-      CodeUri: s3://allinyourhands-microservice/59f84627e1f2ceb3fe80f82258de4000
+      CodeUri: s3://allinyourhands-microservice/6014152c8fde3c7aff61983018b12f34
       Events:
         GetResource:
           Properties:

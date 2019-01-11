@@ -5,7 +5,6 @@ Description: Servico CloudFormation para a aplicação All In Your Hands
 Globals:
   Api:
     EndpointConfiguration: REGIONAL
-    Cors: "'http://tudoemsuasmaos.com.br'"
 
 Resources:
   LambdaSpringBootFunction:

@@ -39,13 +39,15 @@ public class AllContentsControler {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String booksApiURL = "http://localhost:8080/rest/v1/books?keyword="+query+"&pagenumber="+pageNumber+"&countryCode="+countryCode;
+        String awsServiceBaseURL = System.getenv("awsservice_baseurl");
+
+        String booksApiURL = awsServiceBaseURL+"/rest/v1/books?keyword="+query+"&pagenumber="+pageNumber+"&countryCode="+countryCode;
         String booksResult = "[]";
 
-        String placesApiURL = "http://localhost:8080/rest/v1/places?query="+query+"&latAndLong="+latAndLong+"&countryCode="+countryCode+"&section="+section+"&offsetPlaces="+pageNumber;
+        String placesApiURL = awsServiceBaseURL+"/rest/v1/places?query="+query+"&latAndLong="+latAndLong+"&countryCode="+countryCode+"&section="+section+"&offsetPlaces="+pageNumber;
         String placesResult = "[]";
 
-        String videosApiURL = "ttp://localhost:8080/rest/v1/videos?q="+query+"&nextpagetoken="+nextpagetoken;
+        String videosApiURL = awsServiceBaseURL+"/rest/v1/videos?q="+query+"&nextpagetoken="+nextpagetoken;
         String videosResult = "[]";
 
         try {
