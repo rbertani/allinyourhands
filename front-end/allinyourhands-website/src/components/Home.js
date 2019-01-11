@@ -87,6 +87,7 @@ class Home extends Component {
     this.handleDialogGeoClickOpen = this.handleDialogGeoClickOpen.bind(this);
     this.handleDialogInputChange = this.handleDialogInputChange.bind(this);
     this.handleGeofailOkDialogAction = this.handleGeofailOkDialogAction.bind(this);
+    this.moreContentsAction = this.moreContentsAction.bind(this);
 
     this.handleGetPosition();
    
@@ -136,7 +137,7 @@ class Home extends Component {
   }
 
   verifyGeolocalizationStatus = () => {
-    if (this.state.geolocalizationEnabled === false && this.state.localizationAlreadyVerified == false) { // não foi possível determinar a localização     
+    if (this.state.geolocalizationEnabled === false && this.state.localizationAlreadyVerified === false) { // não foi possível determinar a localização     
       this.handleDialogGeoClickOpen();
       console.log("---> Dialog opened!");
     }
@@ -156,7 +157,6 @@ class Home extends Component {
       this.handleDialogGeoClose();
     }
   }
-
   
   requestBooksApi = (event) => {
 
@@ -164,17 +164,27 @@ class Home extends Component {
     this.setSearchedContentType("books");
     this.setTargetContentDetailed(false);
   
-    if (this.state.keyword !== '')
+    if (this.state.keyword !== ''){      
       this.requestBooksApiWithPagination(1);
+      this.setState({pagenumber : 1});
+    }
 
   }
 
-  requestBooksApiWithPagination = (pageNumber) => {
+  requestBooksApiWithPagination = (index) => {
 
-    axios.get(properties.apiBaseUrl + `/books?keyword=` + this.state.keyword + '&pagenumber=' + pageNumber + '&countryCode=' + this.state.countryCode)
+    let currentPage = (index != null) ?  index : this.state.pagenumber;
+
+    console.log("Pagina atual: "+currentPage);
+
+    axios.get(properties.apiBaseUrl + `/books?keyword=` + this.state.keyword + '&pagenumber=' + currentPage + '&countryCode=' + this.state.countryCode)
       .then(({ data }) => {
-        console.log(data);
-        this.setState({ books: data, booksAreLoaded: true, bookIsBeingReaded: false });
+        
+        var arrayTmp = (index != null) ? [] : this.state.books;
+        arrayTmp = arrayTmp.concat(data); 
+        console.log(arrayTmp);       
+       
+        this.setState({ books: arrayTmp, booksAreLoaded: true, bookIsBeingReaded: false, pagenumber: this.state.pagenumber + 1 });
       });
   }
 
@@ -186,21 +196,31 @@ class Home extends Component {
 
     this.verifyGeolocalizationStatus();
 
-    if (this.state.keyword !== '')
+    if (this.state.keyword !== ''){
       this.requestPlacesApiWithPagination(1);
+      this.setState({pagenumber : 1});
+    }
 
   }
 
-  requestPlacesApiWithPagination = (pageNumber) => {
+  requestPlacesApiWithPagination = (index) => {
    
     if(this.state.formattedUserGeolocalization === ""){    
       this.setState({ formattedUserGeolocalization: this.state.userGeolocalization.lat + "," + this.state.userGeolocalization.lng });
     }
 
-    axios.get(properties.apiBaseUrl + `/places?query=` + this.state.keyword + '&offsetPlaces=' + pageNumber + '&countryCode=' + this.state.countryCode + '&latAndLong=' + this.state.formattedUserGeolocalization + '&section=')
+    let currentPage = (index != null) ?  index : this.state.pagenumber;
+
+    console.log("Pagina atual: "+currentPage);
+
+    axios.get(properties.apiBaseUrl + `/places?query=` + this.state.keyword + '&offsetPlaces=' + currentPage + '&countryCode=' + this.state.countryCode + '&latAndLong=' + this.state.formattedUserGeolocalization + '&section=')
       .then(({ data }) => {
-        console.log(data);
-        this.setState({ places: data, placesAreLoaded: true, placesIsBeingDetailed: false });
+        
+        var arrayTmp = (index != null) ? [] : this.state.places;
+        arrayTmp = arrayTmp.concat(data); 
+        console.log(arrayTmp);     
+
+        this.setState({ places: arrayTmp, placesAreLoaded: true, placesIsBeingDetailed: false, pagenumber: this.state.pagenumber + 1 });
       });
   }
 
@@ -212,21 +232,30 @@ class Home extends Component {
 
     this.verifyGeolocalizationStatus();
 
-    if (this.state.keyword !== '')
+    if (this.state.keyword !== ''){
       this.requestAllApiWithPagination(1);
+      this.setState({pagenumber : 1});
+    }
 
   }
 
-  requestAllApiWithPagination = (pageNumber) => {
+  requestAllApiWithPagination = (index) => {
 
     if(this.state.formattedUserGeolocalization === ""){    
       this.setState({ formattedUserGeolocalization: this.state.userGeolocalization.lat + "," + this.state.userGeolocalization.lng });
     }
 
-    axios.get(properties.apiBaseUrl + '/all?query=' + this.state.keyword + '&pageNumber=' + pageNumber + '&nextpagetoken=' + this.state.nextpagetoken + '&countryCode=' + this.state.countryCode + '&latAndLong=' + this.state.formattedUserGeolocalization + '&section=')
+    let currentPage = (index != null) ?  index : this.state.pagenumber;
+    console.log("Pagina atual: "+currentPage);
+    
+    axios.get(properties.apiBaseUrl + '/all?query=' + this.state.keyword + '&pageNumber=' + currentPage + '&nextpagetoken=' + this.state.nextpagetoken + '&countryCode=' + this.state.countryCode + '&latAndLong=' + this.state.formattedUserGeolocalization + '&section=')
       .then(({ data }) => {
-        console.log(data);
-        this.setState({ allContents: data, allContentsAreLoaded: true, genericContentsIsBeingDetailed: false });
+        
+        var arrayTmp = (index != null) ? [] : this.state.allContents;
+        arrayTmp = arrayTmp.concat(data); 
+        console.log(arrayTmp);   
+
+        this.setState({ allContents: arrayTmp, allContentsAreLoaded: true, genericContentsIsBeingDetailed: false, pagenumber: this.state.pagenumber + 1  });
       });
   }
 
@@ -241,6 +270,17 @@ class Home extends Component {
 
       });
 
+  }
+
+  moreContentsAction = () => {
+
+    if(this.state.searchedContentType === "books"){
+      this.requestBooksApiWithPagination();
+    }else if(this.state.searchedContentType === "places"){
+      this.requestPlacesApiWithPagination();
+    }else if(this.state.searchedContentType === "all"){
+      this.requestAllApiWithPagination();
+    }
 
   }
 
@@ -326,7 +366,7 @@ class Home extends Component {
 
         <br /> <br />
 
-        <ResultsArea
+        <ResultsArea         
           searchedContentType={this.state.searchedContentType}
           books={this.state.books}
           booksAreLoaded={this.state.booksAreLoaded}
@@ -339,6 +379,7 @@ class Home extends Component {
           setTargetContentDetailed={this.setTargetContentDetailed}
           currentContentDetailedType={this.state.currentContentDetailedType}
           setCurrentContentDetailedType={this.setCurrentContentDetailedType}
+          moreContentsAction={this.moreContentsAction}
         />
 
 
