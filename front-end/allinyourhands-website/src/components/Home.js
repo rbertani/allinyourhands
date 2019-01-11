@@ -55,6 +55,7 @@ class Home extends Component {
       userGeolocalization: "",
       formattedUserGeolocalization: "",
       geolocalizationEnabled: false,
+      localizationAlreadyVerified: false,
       pagenumber: 1,
       nextpagetoken: '',
       countryCode: "pt",
@@ -82,6 +83,7 @@ class Home extends Component {
     this.returnToResultList = this.returnToResultList.bind(this);
     this.handleSnackClose = this.handleSnackClose.bind(this);
     this.handleGetPosition = this.handleGetPosition.bind(this);
+    this.verifyGeolocalizationStatus = this.verifyGeolocalizationStatus.bind(this);
     this.handleDialogGeoClickOpen = this.handleDialogGeoClickOpen.bind(this);
     this.handleDialogInputChange = this.handleDialogInputChange.bind(this);
     this.handleGeofailOkDialogAction = this.handleGeofailOkDialogAction.bind(this);
@@ -89,15 +91,10 @@ class Home extends Component {
     this.handleGetPosition();
    
   }
-
-  componentDidMount = () =>{
-    if (this.state.geolocalizationEnabled === false) { // não foi possível determinar a localização     
-      this.handleDialogGeoClickOpen();
-    }
-  }
-
-
+ 
   handleGetPosition = () => {
+
+    console.log("Tentando obter a localização...");
 
     if (navigator.geolocation) {
 
@@ -114,6 +111,8 @@ class Home extends Component {
 
     }
 
+    console.log("geolocalizationEnabled:  "+this.state.geolocalizationEnabled);
+   
   };
 
   setSearchedContentType = (contentType) => {
@@ -136,16 +135,23 @@ class Home extends Component {
     this.setState({ address: event.target.value });
   }
 
+  verifyGeolocalizationStatus = () => {
+    if (this.state.geolocalizationEnabled === false && this.state.localizationAlreadyVerified == false) { // não foi possível determinar a localização     
+      this.handleDialogGeoClickOpen();
+      console.log("---> Dialog opened!");
+    }
+  }
+
   handleDialogGeoClickOpen = () => {   
     this.setState({ localizationDetectFailDialogOpen: true });
   };
 
   handleDialogGeoClose = () => {
-    this.setState({ localizationDetectFailDialogOpen: false });
+    this.setState({ localizationDetectFailDialogOpen: false, localizationAlreadyVerified: true });
   };
 
   handleGeofailOkDialogAction = () => {
-    if(this.state.address.trim !== ""){
+    if(this.state.address.trim() !== ""){
       this.requestGeolocalization();
       this.handleDialogGeoClose();
     }
@@ -157,7 +163,7 @@ class Home extends Component {
     event.preventDefault();
     this.setSearchedContentType("books");
     this.setTargetContentDetailed(false);
-
+  
     if (this.state.keyword !== '')
       this.requestBooksApiWithPagination(1);
 
@@ -177,6 +183,8 @@ class Home extends Component {
     event.preventDefault();
     this.setSearchedContentType("places");
     this.setTargetContentDetailed(false);
+
+    this.verifyGeolocalizationStatus();
 
     if (this.state.keyword !== '')
       this.requestPlacesApiWithPagination(1);
@@ -201,6 +209,8 @@ class Home extends Component {
     event.preventDefault();
     this.setSearchedContentType("all");
     this.setTargetContentDetailed(false);
+
+    this.verifyGeolocalizationStatus();
 
     if (this.state.keyword !== '')
       this.requestAllApiWithPagination(1);
@@ -271,7 +281,7 @@ class Home extends Component {
       <div className={classes.root}>
 
         <center>
-          <img src={logoImage} />
+          <img src={logoImage} alt="logo"/>
         </center>
 
 

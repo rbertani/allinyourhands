@@ -78,8 +78,7 @@ class App extends Component {
          videosActive={this.state.videosActive}
          songsActive={this.state.songsActive}
          weatherActive={this.state.weatherActive}
-         placesActive={this.state.placesActive}
-         
+         placesActive={this.state.placesActive}         
          />
 
     );
