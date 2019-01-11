@@ -411,17 +411,7 @@ public class ApiUrlMaker {
 		  return makeApiURL(baseURL, parameters);//.replaceAll("  ", " ").replaceAll(" ", "+"); // substituimos espa�os por "+" por um problema no request das APIs da clockworksms;
 	}
 		
-	
-	public  String makePlacesGeocodingURL(String address){
-		  String baseURL =  System.getProperty(AllInYourHandsConstants.PROPERTY_API_PLACES_GEOCODING_BASE_URL);  		  
-		  // os parametros desta API 
-		  Properties parameters = new Properties();
-		  parameters.setProperty("address",address); 
-		  parameters.setProperty("sensor", "false"); // setamos o sensor aqui para false pois executamos esta api do servidor e n�o de um cel
-		  parameters.setProperty("key", googleKeyReservBalancer());		  
-		 		  
-		  return makeApiURL(baseURL, parameters).replaceAll("  ", " ").replaceAll(" ", "+"); // substituimos espa�os por "+" por um problema no request das API do google
-	}
+
 	
 	public  String makePlacesGeonamesURL(){
 		  String baseURL =  System.getProperty(AllInYourHandsConstants.PROPERTY_API_PLACES_GEONAMES_BASE_URL);  		  

@@ -122,6 +122,27 @@ public class GeolocalizationController {
 
     }
 
+    @RequestMapping(path = "/geolocalization", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    public String getGeolocalization(@RequestParam("address") String address
+    ){
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        String geocodingUrlOrigin = makeGeocodingURL(address);
+        log.log(Level.INFO,"geocodingUrlOrigin: "+geocodingUrlOrigin);
+        String geocodingResponseOrigin  = "";
+
+        try {
+            geocodingResponseOrigin = ResponseFormater.formaterPlacesGeocodingAPI_response(restTemplate.getForObject(geocodingUrlOrigin, String.class));
+            log.log(Level.INFO, "geocodingResponseOrigin: " + geocodingResponseOrigin);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return geocodingResponseOrigin;
+
+    }
+
 
 
 
