@@ -38,19 +38,19 @@ class App extends Component {
     axios.get(properties.apiBaseUrl + `/status`)
       .then(response => {
 
-        if (response.data.statusAPIs.book != 1)
+        if (response.data.statusAPIs.book !== 1)
           this.setState({ booksActive: "none" });
       
-        if (response.data.statusAPIs.audio != 1)
+        if (response.data.statusAPIs.audio !== 1)
           this.setState({ songsActive: "none" });        
  
-        if (response.data.statusAPIs.weather != 1)
+        if (response.data.statusAPIs.weather !== 1)
           this.setState({ weatherActive: "none" });
        
-        if (response.data.statusAPIs.directions != 1)
+        if (response.data.statusAPIs.directions !== 1)
           this.setState({ placesActive: "none" });
         
-        if (response.data.statusAPIs.video != 1)
+        if (response.data.statusAPIs.video !== 1)
           this.setState({ videosActive: "none" });
        
 
@@ -62,7 +62,7 @@ class App extends Component {
 
     //console.log("----> convertEnabledValue called!!");
 
-    if (statusApiValue == "1") {
+    if (statusApiValue === "1") {
       return "block";
     }
     else return "none";
