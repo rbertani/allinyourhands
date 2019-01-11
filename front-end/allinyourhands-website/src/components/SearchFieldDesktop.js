@@ -48,6 +48,8 @@ class SearchFieldDesktop extends React.Component {
             anchorEl: null,
             geolizationDialogOpen: false
         }
+
+        
     }
 
     handleDialogGeoClickOpen = () => {
@@ -73,6 +75,7 @@ class SearchFieldDesktop extends React.Component {
         this.setState({ anchorEl: event.currentTarget });
     }
 
+   
     render() {
         const { classes, fullScreen } = this.props;
 
@@ -89,7 +92,15 @@ class SearchFieldDesktop extends React.Component {
                     variant="outlined"
                     style={{ width: 600, marginLeft: '35%' }}
                     type="search"
-                    autoFocus={true}
+                    autoFocus={true}  
+                    onKeyPress={(ev) => {
+                        console.log(`Pressed keyCode ${ev.key}`);
+                       // ev.preventDefault();
+                       
+                        if (ev.key === 'Enter') {
+                            this.props.requestAllApi(ev);
+                        }
+                    }}                  
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">
@@ -106,6 +117,7 @@ class SearchFieldDesktop extends React.Component {
                                     aria-label="Toggle password visibility"
                                     onClick={this.searchAction}
                                     color="primary"
+                                    style={{ display: this.props.videosActive }}
                                 >
                                     <VideoVintage />
                                 </IconButton>
@@ -114,6 +126,7 @@ class SearchFieldDesktop extends React.Component {
                                     aria-label="Toggle password visibility"
                                     onClick={this.props.requestBooksApi}
                                     color="primary"
+                                    style={{ display: this.props.booksActive }}
                                 >
                                     <BookOpenPageVariant />
                                 </IconButton>
@@ -125,7 +138,7 @@ class SearchFieldDesktop extends React.Component {
                                         <IconButton
                                             aria-label="Toggle password visibility"
                                             onClick={this.props.requestPlacesApi}
-                                            style={{ visibility: this.props.placesActive }}
+                                            style={{ display: this.props.placesActive }}
                                             color="primary"
                                         >
 
@@ -137,7 +150,7 @@ class SearchFieldDesktop extends React.Component {
                                         <IconButton
                                             aria-label="Toggle password visibility"
                                             onClick={this.handleDialogGeoClickOpen}
-                                            style={{ visibility: this.props.placesActive }}
+                                            style={{ display: this.props.placesActive }}
                                             color="secondary"
                                         >
 
@@ -151,6 +164,7 @@ class SearchFieldDesktop extends React.Component {
                                     aria-label="Toggle password visibility"
                                     onClick={this.searchAction}
                                     color="primary"
+                                    style={{ display: this.props.weatherActive }}
                                 >
                                     <WeatherPartlycloudy />
                                 </IconButton>

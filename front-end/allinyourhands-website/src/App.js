@@ -38,30 +38,21 @@ class App extends Component {
     axios.get(properties.apiBaseUrl + `/status`)
       .then(response => {
 
-        if (response.data.statusAPIs.book == 1)
-          this.setState({ booksActive: "visible" });
-        else
-          this.setState({ booksActive: "collapse" });
-
-        if (response.data.statusAPIs.audio == 1)
-          this.setState({ songsActive: "visible" });
-        else
-          this.setState({ songsActive: "collapse" });
+        if (response.data.statusAPIs.book != 1)
+          this.setState({ booksActive: "none" });
+      
+        if (response.data.statusAPIs.audio != 1)
+          this.setState({ songsActive: "none" });        
  
-        if (response.data.statusAPIs.weather == 1)
-          this.setState({ weatherActive: "visible" });
-        else
-          this.setState({ weatherActive: "collapse" });
-
-        if (response.data.statusAPIs.directions == 1)
-          this.setState({ placesActive: "visible" });
-        else
-          this.setState({ placesActive: "collapse" });
-
-        if (response.data.statusAPIs.video == 1)
-          this.setState({ videosActive: "visible" });
-        else
-          this.setState({ videosActive: "collapse" });
+        if (response.data.statusAPIs.weather != 1)
+          this.setState({ weatherActive: "none" });
+       
+        if (response.data.statusAPIs.directions != 1)
+          this.setState({ placesActive: "none" });
+        
+        if (response.data.statusAPIs.video != 1)
+          this.setState({ videosActive: "none" });
+       
 
       });
  

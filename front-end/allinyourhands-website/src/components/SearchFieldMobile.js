@@ -84,7 +84,7 @@ class SearchFieldMobile extends React.Component {
 
                                 <IconButton
                                     aria-label="Toggle password visibility"
-                                    onClick={this.props.requestAllApi}
+                                    onClick={this.searchAction}
                                 >
                                     <SearchIcon />
                                 </IconButton>
@@ -94,16 +94,19 @@ class SearchFieldMobile extends React.Component {
                                     open={Boolean(this.state.anchorEl)}
                                     onClose={this.handleClose}
                                 >
-                                    <MenuItem onClick={this.handleClose} style={{ visibility: this.props.videosActive }}> Vídeos <br /> <VideoVintage /></MenuItem>
+                                    <MenuItem onClick={this.handleClose} 
+                                               style={{ display: this.props.videosActive }}>
+                                                Vídeos <br /> <VideoVintage />
+                                    </MenuItem>
                                     <MenuItem onClick={this.props.requestBooksApi}
-                                        style={{ visibility: this.props.booksActive }}>
+                                        style={{ display: this.props.booksActive }}>
                                         Livros <br /><BookOpenPageVariant />
                                     </MenuItem>
                                     {this.props.geolocalizationEnabled ?
                                         (
 
                                             <MenuItem  onClick={this.props.requestPlacesApi}
-                                                style={{ visibility: this.props.placesActive }}>
+                                                style={{ display: this.props.placesActive }}>
                                                 Lugares <br /><MapMarker />
                                             </MenuItem>
 
@@ -111,7 +114,7 @@ class SearchFieldMobile extends React.Component {
                                         (
 
                                             <MenuItem onClick={this.handleClose}
-                                                style={{ visibility: this.props.placesActive }}
+                                                style={{ display: this.props.placesActive }}
                                                 onClick={this.handleDialogGeoClickOpen}
                                             >
                                                 Lugares <br /><MapMarker color="secondary" />
@@ -119,6 +122,11 @@ class SearchFieldMobile extends React.Component {
 
                                         )
                                     }
+
+                                    <MenuItem onClick={this.props.requestAllApi}
+                                              >
+                                                Tudo <br /> <SearchIcon />
+                                    </MenuItem>
 
                                 </Menu>
 

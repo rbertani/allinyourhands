@@ -77,7 +77,7 @@ class ResultsArea extends Component {
   
                     {this.props.places.map(place => {
                           const { id, name, address, distance, postalCode, imagePreviewURL, categoryName } = place;
-          
+                                    
                           return (
                             <Grid item xs={6} md={3}>
                               <ResultItem
