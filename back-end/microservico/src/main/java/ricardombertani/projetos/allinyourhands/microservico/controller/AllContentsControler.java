@@ -87,7 +87,9 @@ public class AllContentsControler {
                 tmpObject.put("id" , ((JSONObject)places.get(i)).get("id") );
                 tmpObject.put("type" , "places" );
                 tmpObject.put("title" , ((JSONObject)places.get(i)).get("name")  + "<br />"+((JSONObject)places.get(i)).get("address") );
-                tmpObject.put("description" ,"Categoria: " + "<br />" + "Phone: " + "<br />" + ((JSONObject)places.get(i)).get("phone") + "<br />" + ((JSONObject)places.get(i)).get("categoryName") +"CEP: " + "<br />" + ((JSONObject)places.get(i)).get("postalCode") + "<br />" + ((JSONObject)places.get(i)).get("distance"));
+                tmpObject.put("description" ,"<br />Categoria: " +((JSONObject)places.get(i)).get("categoryName")+ "<br />CEP: " +((JSONObject)places.get(i)).get("postalCode")+"<br />Distancia: " +
+                        ((JSONObject)places.get(i)).get("distance"));
+
                 tmpObject.put("image" , ((JSONObject)places.get(i)).getString("imagePreviewURL") );
 
                 placesList.add(tmpObject);
