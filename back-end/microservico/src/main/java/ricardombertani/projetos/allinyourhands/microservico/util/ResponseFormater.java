@@ -300,6 +300,157 @@ public class ResponseFormater {
 		return booksVolumeCollection;
 	}
 
+
+	public static Book formaterBooksDetailAPI_response(String response, String resultsPerPage){ // resposta em JSON
+
+		JSONObject jsonBookObject = new JSONObject();
+		Book book = new Book();
+
+		try {
+
+
+					jsonBookObject = new JSONObject(response);
+
+					book.setId( isFieldNotNull(jsonBookObject,"id")?(String)getFieldObject(jsonBookObject,"id","string"):"" );
+					book.setEtag( isFieldNotNull(jsonBookObject,"etag")?(String)getFieldObject(jsonBookObject,"etag","string"):"" );
+
+					// Informacoes do Volume
+					JSONObject volumeInfoJsonObject = isFieldNotNull(jsonBookObject,"volumeInfo")?(JSONObject)getFieldObject(jsonBookObject,"volumeInfo",""):null;
+					JSONArray authors =  isFieldNotNull(volumeInfoJsonObject,"authors")?(JSONArray)getFieldObject(volumeInfoJsonObject,"authors","jsonarray"):null;
+					String authorsFormated = "";
+					if(authors != null){
+						for(int j = 0; j < authors.length(); j++){
+							if(j < (authors.length() - 1))
+								authorsFormated += (String)authors.get(j) + "; ";
+							else authorsFormated += (String)authors.get(j);
+						}
+					}
+
+					boolean textReadingMode = false;
+					boolean imageReadingMode = false;
+
+					// obtendo atributos que determinarao de livro pode ser lido via navegador (se a leitura esta disponivel)
+					JSONObject readingModes = isFieldNotNull(volumeInfoJsonObject,"readingModes")?(JSONObject)getFieldObject(volumeInfoJsonObject,"readingModes",""):null;
+					if(readingModes != null){
+						textReadingMode = isFieldNotNull(readingModes,"text")?(Boolean)getFieldObject(readingModes,"text","boolean"):false;
+						imageReadingMode = isFieldNotNull(readingModes,"image")?(Boolean)getFieldObject(readingModes,"image","boolean"):false;
+					}
+
+					int pageCount =  isFieldNotNull(volumeInfoJsonObject,"pageCount")?(Integer)getFieldObject(volumeInfoJsonObject,"pageCount","int"):0;
+					JSONArray categories =  isFieldNotNull(volumeInfoJsonObject,"categories")?(JSONArray)getFieldObject(volumeInfoJsonObject,"categories","jsonarray"):null;
+					String categoriesFormated = "";
+					if(categories != null){
+						for(int j = 0; j < categories.length(); j++){
+							if(j < (categories.length() - 1))
+								categoriesFormated += (String)categories.get(j) + "; ";
+							else categoriesFormated += (String)categories.get(j);
+						}
+					}
+
+					JSONObject imageLinks =  isFieldNotNull(volumeInfoJsonObject,"imageLinks")?(JSONObject)getFieldObject(volumeInfoJsonObject,"imageLinks",""):null;
+
+					ImageLink imageLink = new ImageLink();
+					if(imageLinks != null){
+						imageLink.setSmallThumbnail( isFieldNotNull(imageLinks,"smallThumbnail")?(String)getFieldObject(imageLinks,"smallThumbnail","string"):"" );
+						imageLink.setThumbnail( isFieldNotNull(imageLinks,"thumbnail")?(String)getFieldObject(imageLinks,"thumbnail","string"):""  );
+						imageLink.setMedium( isFieldNotNull(imageLinks,"medium")?(String)getFieldObject(imageLinks,"medium","string"):"" );
+						imageLink.setLarge( isFieldNotNull(imageLinks,"large")?(String)getFieldObject(imageLinks,"large","string"):""  );
+						imageLink.setExtraLarge(  isFieldNotNull(imageLinks,"extraLarge")?(String)getFieldObject(imageLinks,"extraLarge","string"):""  );
+					}
+
+
+
+					book.setVolumeInfo( new VolumeInfo( isFieldNotNull(volumeInfoJsonObject,"title")?(String)getFieldObject(volumeInfoJsonObject,"title","string"):"",
+							isFieldNotNull(volumeInfoJsonObject,"subtitle")?(String)getFieldObject(volumeInfoJsonObject,"subtitle","string"):"",
+							authorsFormated,
+							pageCount,
+							isFieldNotNull(volumeInfoJsonObject,"publisher")?(String)getFieldObject(volumeInfoJsonObject,"publisher","string"):"",
+							isFieldNotNull(volumeInfoJsonObject,"publishedDate")?(String)getFieldObject(volumeInfoJsonObject,"publishedDate","string"):"",
+							isFieldNotNull(volumeInfoJsonObject,"description")?(String)getFieldObject(volumeInfoJsonObject,"description","string"):"",
+							categoriesFormated,
+							imageLink
+					));
+
+					String accessViewStatusValue = "";
+					String viewabilityValue = "";
+					JSONObject accessInfoObject = isFieldNotNull(jsonBookObject,"accessInfo")?(JSONObject)getFieldObject(jsonBookObject,"accessInfo",""):null;
+					if(accessInfoObject != null){
+						/*book.setWebReaderLink( isFieldNotNull(accessInfoObject,"webReaderLink")?(String)getFieldObject(accessInfoObject,"webReaderLink","string"):"" );
+						if(!book.getWebReaderLink().equals("")){
+							book.setWebReaderLink( book.getWebReaderLink().replaceAll("f=false", "f=true"));
+						}*/
+
+						JSONObject pdf = isFieldNotNull(accessInfoObject,"pdf")?(JSONObject)getFieldObject(accessInfoObject,"pdf",""):null;
+						boolean pdfIsAvailable = isFieldNotNull(pdf,"isAvailable")?(Boolean)getFieldObject(pdf,"isAvailable","boolean"):false;
+						if(pdfIsAvailable){
+							String acsTokenLink = isFieldNotNull(pdf,"acsTokenLink")?(String)getFieldObject(pdf,"acsTokenLink","string"):"";
+							book.setPdfDownloadLink(acsTokenLink);
+							book.setPdfFile(false);
+						}
+
+						accessViewStatusValue = isFieldNotNull(accessInfoObject,"accessViewStatus")?(String)getFieldObject(accessInfoObject,"accessViewStatus","string"):"";
+						book.setAccessViewStatus( accessViewStatusValue );
+
+						if(book.getAccessViewStatus().equals("FULL")){
+							//book.setViewability( "FULL"/*isFieldNotNull(accessInfoObject,"viewability")?(String)getFieldObject(accessInfoObject,"viewability","string"):""*/);
+							book.setFull(true);
+
+						}
+						else{
+							book.setFull(false);
+						}
+
+						viewabilityValue = isFieldNotNull(accessInfoObject,"viewability")?(String)getFieldObject(accessInfoObject,"viewability","string"):"";
+					}
+
+					String previewLink = isFieldNotNull(volumeInfoJsonObject,"previewLink")?(String)getFieldObject(volumeInfoJsonObject,"previewLink","string"):"";
+					if(!previewLink.equals("")){
+
+						log.log(Level.INFO,"\n--->previewLink: "+previewLink);
+						//tratar previewLink para montar o link de leitura embutido (trata-se de um c�digo html para apresenta��o
+						// apenas do conteudo do livro sem bordas)
+						String embeddedVersionBaseURL = previewLink.substring(0, previewLink.indexOf("?"));
+						//String hlTagValue = previewLink.substring(0, previewLink.indexOf("&hl="));
+						String idValue = ApiUrlMaker.getParametersFromUrl(previewLink).get("id");
+						if(idValue == null)
+							idValue = "";
+						String  hlValue = ApiUrlMaker.getParametersFromUrl(previewLink).get("hl");
+						if(hlValue == null){
+							hlValue = "";
+						}
+						embeddedVersionBaseURL += "?id="+idValue+"&hl="+hlValue+"&lpg=PP1&pg=PP1&output=embed";
+						//concatenar com:      e depois verificar o valor de hl e concatenar tb
+
+						// campo setado com o valor da base da url e do parametro h1 (solu��o encontrada para o portalWeb conseguir recuperar o valor da base url e de h1 e poder montar o html embutido para a leitura de um livro)
+						book.setAccessViewStatus(embeddedVersionBaseURL+"#"+hlValue);
+
+						book.setWebReaderLink( "<html><header></header><body><iframe frameborder=\"0\" scrolling=\"yes\" style=\"border:0px\" src=\""+
+								embeddedVersionBaseURL+
+								"\" width=97% height=97%></iframe></body></html>");
+						book.setReaderLinkHtmlFormat(true); // indica que o link de leitura esta em html
+
+						if(!accessViewStatusValue.equals("NONE") && !viewabilityValue.equals("NO_PAGES") && (textReadingMode || imageReadingMode)){
+
+							log.log(Level.INFO,"\n--->This book[ "+book.getVolumeInfo().getTitle()+" ] can be read online! (AccessViewStatus: "+accessViewStatusValue+" Viewability: "+viewabilityValue+" txtReadMode: "+textReadingMode+" ImgReadMode: "+imageReadingMode);
+
+						}else{
+							log.log(Level.INFO,"\n--->This book can't be read online! We don't consider this book [ "+book.getVolumeInfo().getTitle()+" ]! AccessViewStatus: "+accessViewStatusValue+" Viewability: "+viewabilityValue);
+						}
+
+					}
+
+
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+
+
+		return book;
+	}
+
 	public static String formaterPlacesGeocodingAPI_response(String response){
 
 		JSONObject jsonObject = null;

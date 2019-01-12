@@ -8,13 +8,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import ricardombertani.projetos.allinyourhands.apidata.places.SuggestionCollection;
 import ricardombertani.projetos.allinyourhands.microservico.util.ApiUrlMaker;
 import ricardombertani.projetos.allinyourhands.microservico.util.ResponseFormater;
-
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 @RestController
 @RequestMapping(path = "/rest/v1/videos")
@@ -45,7 +44,8 @@ public class VideoController {
         Properties parameters = new Properties();
         parameters.setProperty("part","snippet");  // valor default (pode ser alterado, mas funciona bem assim)
         parameters.setProperty("q",text);
-        parameters.setProperty("key",  ApiUrlMaker.googleKeyReservBalancer(
+        parameters.setProperty("key",
+                ApiUrlMaker.googleKeyReservBalancer(
                 System.getenv("google_keyreserv_selector"),
                 System.getenv("google_general_key"),
                 System.getenv("google_general_key_reserv1"),

@@ -22,16 +22,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<project.youtube.version>v3-rev8-1.12.0-beta</project.youtube.version>
-		<project.http.version>1.12.0-beta</project.http.version>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>google-api-services</id>
-			<url>http://google-api-client-libraries.appspot.com/mavenrepo</url>
-		</repository>
-	</repositories>
 
 	<dependencies>
 		<dependency>
@@ -77,18 +69,7 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- YouTube Data V3 support -->
-		<dependency>
-			<groupId>com.google.apis</groupId>
-			<artifactId>google-api-services-youtube</artifactId>
-			<version>${project.youtube.version}</version>
-		</dependency>
 
-		<dependency>
-			<groupId>com.google.http-client</groupId>
-			<artifactId>google-http-client-jackson2</artifactId>
-			<version>${project.http.version}</version>
-		</dependency>
 	</dependencies>
 
 

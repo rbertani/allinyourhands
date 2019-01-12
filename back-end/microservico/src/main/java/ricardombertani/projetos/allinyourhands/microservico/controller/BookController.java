@@ -10,6 +10,7 @@ import ricardombertani.projetos.allinyourhands.apidata.book.BooksVolumeCollectio
 import ricardombertani.projetos.allinyourhands.microservico.util.ApiUrlMaker;
 import ricardombertani.projetos.allinyourhands.microservico.util.ResponseFormater;
 
+import javax.ws.rs.PathParam;
 import java.io.File;
 import java.util.List;
 import java.util.Properties;
@@ -17,7 +18,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping(path = "/rest/v1/books")
 public class BookController {
 
     private static Logger log = Logger.getLogger(BookController.class.getName());
@@ -28,7 +28,7 @@ public class BookController {
     private Environment env;
 
 
-    @RequestMapping(method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(path = "/rest/v1/books", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     public List<Book> getBooks(@RequestParam("keyword") String keyword, @RequestParam("pagenumber") String pagenumber, @RequestParam("countryCode") String countryCode ) {
 
         ApiUrlMaker apiUrlMaker = new ApiUrlMaker();
@@ -42,6 +42,23 @@ public class BookController {
         BooksVolumeCollection booksVolumeCollection = ResponseFormater.formaterBooks1API_response(result,env.getProperty("books.resultsperpage"));
 
         return booksVolumeCollection.getBooks();
+
+    }
+
+    @RequestMapping(path = "/rest/v1/books/{bookID}", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    public Book getBook(@PathVariable("bookID") String bookID ) {
+
+        ApiUrlMaker apiUrlMaker = new ApiUrlMaker();
+        String requestedApiUrl = makeBookDetailAPIURL(bookID);
+
+        log.log(Level.INFO,"Requested Book API... URL: "+requestedApiUrl);
+
+        RestTemplate restTemplate = new RestTemplate();
+        String result = restTemplate.getForObject(requestedApiUrl, String.class);
+
+        Book book = ResponseFormater.formaterBooksDetailAPI_response(result,env.getProperty("books.resultsperpage"));
+
+        return book;
 
     }
 
@@ -69,6 +86,27 @@ public class BookController {
         //"maxResults", no caso de 40 em 40.
 
         return ApiUrlMaker.makeApiURL(env.getProperty("books.baseUrl"), parameters);
+
+    }
+
+    public String makeBookDetailAPIURL(String bookID){
+
+        // os parametros desta API
+        Properties parameters = new Properties();
+
+        parameters.setProperty("key",
+                ApiUrlMaker.googleKeyReservBalancer(
+                        System.getenv("google_keyreserv_selector"),
+                        System.getenv("google_general_key"),
+                        System.getenv("google_general_key_reserv1"),
+                        System.getenv("google_general_key_reserv2"),
+                        System.getenv("google_general_key_reserv3")
+                )
+
+        );
+
+
+        return ApiUrlMaker.makeApiURL(env.getProperty("books.baseUrl")+"/"+bookID, parameters);
 
     }
 
