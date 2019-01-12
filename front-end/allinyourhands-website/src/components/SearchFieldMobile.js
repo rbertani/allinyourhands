@@ -58,8 +58,26 @@ class SearchFieldMobile extends React.Component {
 
     };
 
-    searchAction = (event) => {
+    openSearchMenu = (event) => {
         this.setState({ anchorEl: event.currentTarget });
+    }
+
+    requestBooks = (event) => {
+        
+        this.props.requestBooksApi(event);
+        this.setState({ anchorEl: null });
+    }
+
+    requestPlaces = (event) => {
+        
+        this.props.requestPlacesApi(event);
+        this.setState({ anchorEl: null });
+    }
+
+    requestAll = (event) => {
+        
+        this.props.requestAllApi(event);
+        this.setState({ anchorEl: null });
     }
 
     render() {
@@ -84,7 +102,7 @@ class SearchFieldMobile extends React.Component {
 
                                 <IconButton
                                     aria-label="Toggle password visibility"
-                                    onClick={this.searchAction}
+                                    onClick={this.openSearchMenu}
                                 >
                                     <SearchIcon />
                                 </IconButton>
@@ -98,14 +116,14 @@ class SearchFieldMobile extends React.Component {
                                                style={{ display: this.props.videosActive }}>
                                                 Vídeos <br /> <VideoVintage />
                                     </MenuItem>
-                                    <MenuItem onClick={this.props.requestBooksApi}
+                                    <MenuItem onClick={this.requestBooks}
                                         style={{ display: this.props.booksActive }}>
                                         Livros <br /><BookOpenPageVariant />
                                     </MenuItem>
                                     {this.props.geolocalizationEnabled ?
                                         (
 
-                                            <MenuItem  onClick={this.props.requestPlacesApi}
+                                            <MenuItem  onClick={this.requestPlaces}
                                                 style={{ display: this.props.placesActive }}>
                                                 Lugares <br /><MapMarker />
                                             </MenuItem>
@@ -123,7 +141,7 @@ class SearchFieldMobile extends React.Component {
                                         )
                                     }
 
-                                    <MenuItem onClick={this.props.requestAllApi}
+                                    <MenuItem onClick={this.requestAll}
                                               >
                                                 Tudo <br /> <SearchIcon />
                                     </MenuItem>

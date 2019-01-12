@@ -50,8 +50,9 @@ class ResultsArea extends Component {
                         const { id, volumeInfo, webReaderLink } = book;
 
                         return (
-                          <Grid item xs={6} md={3}>
-                            <ResultItem
+                          <Grid item xs={6} md={3} key={id}>
+                            <ResultItem                             
+                              itemID={id}
                               searchedContentType={this.props.searchedContentType}
                               titulo={volumeInfo.title}
                               imagemCard={volumeInfo.imageLink.thumbnail}
@@ -81,8 +82,9 @@ class ResultsArea extends Component {
                             const { id, name, address, distance, postalCode, imagePreviewURL, categoryName } = place;
 
                             return (
-                              <Grid item xs={6} md={3}>
-                                <ResultItem
+                              <Grid item xs={6} md={3}  key={id}>
+                                <ResultItem                                 
+                                  itemID={id}
                                   searchedContentType={this.props.searchedContentType}
                                   titulo={<div dangerouslySetInnerHTML={{ __html: name + "<br />" + address }} />}
                                   imagemCard={imagePreviewURL}
@@ -110,8 +112,9 @@ class ResultsArea extends Component {
                                 const { id, type, title, description, image, htmlContent } = genericContent;
 
                                 return (
-                                  <Grid item xs={6} md={3}>
-                                    <ResultItem
+                                  <Grid item xs={6} md={3}  key={id}>
+                                    <ResultItem                                     
+                                      itemID={id}
                                       searchedContentType={this.props.searchedContentType}
                                       currentContentType={type}
                                       titulo={<div dangerouslySetInnerHTML={{ __html: title }} />}

@@ -117,10 +117,7 @@ class ResultItem extends React.Component {
           <CardContent>
             <Typography component="p">{this.props.titulo}</Typography>
           </CardContent>
-          <CardActions className={classes.actions} disableActionSpacing>
-            <IconButton aria-label="Add to favorites">
-              <FavoriteIcon />
-            </IconButton>
+          <CardActions className={classes.actions} disableActionSpacing>           
             <IconButton aria-label="Share">
               <ShareIcon />
             </IconButton>

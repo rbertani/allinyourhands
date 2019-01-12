@@ -90,7 +90,7 @@ class SearchFieldDesktop extends React.Component {
                     onChange={this.handleChange('keyword')}
                     margin="normal"
                     variant="outlined"
-                    style={{ width: 600, marginLeft: '35%' }}
+                    style={{ width: 600, marginLeft: '25%' }}
                     type="search"
                     autoFocus={true}  
                     onKeyPress={(ev) => {

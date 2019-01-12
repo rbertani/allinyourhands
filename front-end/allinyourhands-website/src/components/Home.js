@@ -8,6 +8,14 @@ import SearchFieldMobile from './SearchFieldMobile';
 import SearchFieldDesktop from './SearchFieldDesktop';
 import ResultsArea from './ResultsArea';
 import logoImage from '../images/lupa.jpg'
+import { Picture } from 'react-responsive-picture';
+import poweredDesktop from '../images/powered_by_google/desktop/powered_by_google_on_white.png';
+import poweredAndroid1 from '../images/powered_by_google/android/res/drawable-hdpi/powered_by_google_on_white.png';
+import poweredAndroid2 from '../images/powered_by_google/android/res/drawable-ldpi/powered_by_google_on_white.png'
+import poweredAndroid3 from '../images/powered_by_google/android/res/drawable-mdpi/powered_by_google_on_white.png'
+import poweredFoursquare from '../images/powered-by-foursquare-blue.png';
+import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 import {
   BrowserView,
   MobileView
@@ -74,6 +82,7 @@ class Home extends Component {
     this.setCurrentContentDetailedType = this.setCurrentContentDetailedType.bind(this);
     this.handleQuery = this.handleQuery.bind(this);
     this.requestBooksApi = this.requestBooksApi.bind(this);
+    this.requestBookDetailApi = this.requestBookDetailApi.bind(this);
     this.requestPlacesApi = this.requestPlacesApi.bind(this);
     this.requestAllApi = this.requestAllApi.bind(this);
     this.requestGeolocalization = this.requestGeolocalization.bind(this);
@@ -90,9 +99,9 @@ class Home extends Component {
     this.moreContentsAction = this.moreContentsAction.bind(this);
 
     this.handleGetPosition();
-   
+
   }
- 
+
   handleGetPosition = () => {
 
     console.log("Tentando obter a localização...");
@@ -112,8 +121,8 @@ class Home extends Component {
 
     }
 
-    console.log("geolocalizationEnabled:  "+this.state.geolocalizationEnabled);
-   
+    console.log("geolocalizationEnabled:  " + this.state.geolocalizationEnabled);
+
   };
 
   setSearchedContentType = (contentType) => {
@@ -143,7 +152,7 @@ class Home extends Component {
     }
   }
 
-  handleDialogGeoClickOpen = () => {   
+  handleDialogGeoClickOpen = () => {
     this.setState({ localizationDetectFailDialogOpen: true });
   };
 
@@ -152,40 +161,55 @@ class Home extends Component {
   };
 
   handleGeofailOkDialogAction = () => {
-    if(this.state.address.trim() !== ""){
+    if (this.state.address.trim() !== "") {
       this.requestGeolocalization();
       this.handleDialogGeoClose();
     }
   }
-  
+
   requestBooksApi = (event) => {
 
     event.preventDefault();
     this.setSearchedContentType("books");
     this.setTargetContentDetailed(false);
-  
-    if (this.state.keyword !== ''){      
+
+    if (this.state.keyword !== '') {
       this.requestBooksApiWithPagination(1);
-      this.setState({pagenumber : 1});
+      this.setState({ pagenumber: 1 });
+
     }
 
   }
 
   requestBooksApiWithPagination = (index) => {
 
-    let currentPage = (index != null) ?  index : this.state.pagenumber;
+    let currentPage = (index != null) ? index : this.state.pagenumber;
 
-    console.log("Pagina atual: "+currentPage);
+    console.log("Pagina atual: " + currentPage);
 
     axios.get(properties.apiBaseUrl + `/books?keyword=` + this.state.keyword + '&pagenumber=' + currentPage + '&countryCode=' + this.state.countryCode)
       .then(({ data }) => {
-        
+
         var arrayTmp = (index != null) ? [] : this.state.books;
-        arrayTmp = arrayTmp.concat(data); 
-        console.log(arrayTmp);       
-       
+        arrayTmp = arrayTmp.concat(data);
+        console.log(arrayTmp);
+
         this.setState({ books: arrayTmp, booksAreLoaded: true, bookIsBeingReaded: false, pagenumber: this.state.pagenumber + 1 });
       });
+  }
+
+  requestBookDetailApi = (bookID) => {
+
+    this.setSearchedContentType("books");
+    this.setTargetContentDetailed(true);
+
+    axios.get(properties.apiBaseUrl + '/books/' + bookID)
+      .then(({ data }) => {
+
+        this.setState({ currentBookHtml: data.webReaderLink, booksAreLoaded: true, bookIsBeingReaded: true, currentContentDetailedType: "books" });
+      });
+
+
   }
 
   requestPlacesApi = (event) => {
@@ -196,29 +220,29 @@ class Home extends Component {
 
     this.verifyGeolocalizationStatus();
 
-    if (this.state.keyword !== ''){
+    if (this.state.keyword !== '') {
       this.requestPlacesApiWithPagination(1);
-      this.setState({pagenumber : 1});
+      this.setState({ pagenumber: 1 });
     }
 
   }
 
   requestPlacesApiWithPagination = (index) => {
-   
-    if(this.state.formattedUserGeolocalization === ""){    
+
+    if (this.state.formattedUserGeolocalization === "") {
       this.setState({ formattedUserGeolocalization: this.state.userGeolocalization.lat + "," + this.state.userGeolocalization.lng });
     }
 
-    let currentPage = (index != null) ?  index : this.state.pagenumber;
+    let currentPage = (index != null) ? index : this.state.pagenumber;
 
-    console.log("Pagina atual: "+currentPage);
+    console.log("Pagina atual: " + currentPage);
 
     axios.get(properties.apiBaseUrl + `/places?query=` + this.state.keyword + '&offsetPlaces=' + currentPage + '&countryCode=' + this.state.countryCode + '&latAndLong=' + this.state.formattedUserGeolocalization + '&section=')
       .then(({ data }) => {
-        
+
         var arrayTmp = (index != null) ? [] : this.state.places;
-        arrayTmp = arrayTmp.concat(data); 
-        console.log(arrayTmp);     
+        arrayTmp = arrayTmp.concat(data);
+        console.log(arrayTmp);
 
         this.setState({ places: arrayTmp, placesAreLoaded: true, placesIsBeingDetailed: false, pagenumber: this.state.pagenumber + 1 });
       });
@@ -232,30 +256,30 @@ class Home extends Component {
 
     this.verifyGeolocalizationStatus();
 
-    if (this.state.keyword !== ''){
+    if (this.state.keyword !== '') {
       this.requestAllApiWithPagination(1);
-      this.setState({pagenumber : 1});
+      this.setState({ pagenumber: 1 });
     }
 
   }
 
   requestAllApiWithPagination = (index) => {
 
-    if(this.state.formattedUserGeolocalization === ""){    
+    if (this.state.formattedUserGeolocalization === "") {
       this.setState({ formattedUserGeolocalization: this.state.userGeolocalization.lat + "," + this.state.userGeolocalization.lng });
     }
 
-    let currentPage = (index != null) ?  index : this.state.pagenumber;
-    console.log("Pagina atual: "+currentPage);
-    
+    let currentPage = (index != null) ? index : this.state.pagenumber;
+    console.log("Pagina atual: " + currentPage);
+
     axios.get(properties.apiBaseUrl + '/all?query=' + this.state.keyword + '&pageNumber=' + currentPage + '&nextpagetoken=' + this.state.nextpagetoken + '&countryCode=' + this.state.countryCode + '&latAndLong=' + this.state.formattedUserGeolocalization + '&section=')
       .then(({ data }) => {
-        
-        var arrayTmp = (index != null) ? [] : this.state.allContents;
-        arrayTmp = arrayTmp.concat(data); 
-        console.log(arrayTmp);   
 
-        this.setState({ allContents: arrayTmp, allContentsAreLoaded: true, genericContentsIsBeingDetailed: false, pagenumber: this.state.pagenumber + 1  });
+        var arrayTmp = (index != null) ? [] : this.state.allContents;
+        arrayTmp = arrayTmp.concat(data);
+        console.log(arrayTmp);
+
+        this.setState({ allContents: arrayTmp, allContentsAreLoaded: true, genericContentsIsBeingDetailed: false, pagenumber: this.state.pagenumber + 1 });
       });
   }
 
@@ -264,8 +288,8 @@ class Home extends Component {
       .then(({ data }) => {
         console.log(data);
 
-        if(data !== ""){
-          this.setState({ formattedUserGeolocalization: data, geolocalizationEnabled: true });          
+        if (data !== "") {
+          this.setState({ formattedUserGeolocalization: data, geolocalizationEnabled: true });
         }
 
       });
@@ -274,11 +298,11 @@ class Home extends Component {
 
   moreContentsAction = () => {
 
-    if(this.state.searchedContentType === "books"){
+    if (this.state.searchedContentType === "books") {
       this.requestBooksApiWithPagination();
-    }else if(this.state.searchedContentType === "places"){
+    } else if (this.state.searchedContentType === "places") {
       this.requestPlacesApiWithPagination();
-    }else if(this.state.searchedContentType === "all"){
+    } else if (this.state.searchedContentType === "all") {
       this.requestAllApiWithPagination();
     }
 
@@ -321,7 +345,7 @@ class Home extends Component {
       <div className={classes.root}>
 
         <center>
-          <img src={logoImage} alt="logo"/>
+          <img src={logoImage} alt="logo" />
         </center>
 
 
@@ -345,28 +369,27 @@ class Home extends Component {
           </Grid>
         </MobileView>
 
-        <BrowserView>
-          <SearchFieldDesktop
-            keyword={this.state.keyword}
-            handleQuery={this.handleQuery}
-            booksActive={this.props.booksActive}
-            videosActive={this.props.videosActive}
-            songsActive={this.props.songsActive}
-            weatherActive={this.props.weatherActive}
-            placesActive={this.props.placesActive}
-            geolocalizationEnabled={this.state.geolocalizationEnabled}
-            handleGetPosition={this.handleGetPosition}
-
-            requestBooksApi={this.requestBooksApi}
-            requestPlacesApi={this.requestPlacesApi}
-            requestAllApi={this.requestAllApi}
-          />
+        <BrowserView>          
+            <SearchFieldDesktop
+              keyword={this.state.keyword}
+              handleQuery={this.handleQuery}
+              booksActive={this.props.booksActive}
+              videosActive={this.props.videosActive}
+              songsActive={this.props.songsActive}
+              weatherActive={this.props.weatherActive}
+              placesActive={this.props.placesActive}
+              geolocalizationEnabled={this.state.geolocalizationEnabled}
+              handleGetPosition={this.handleGetPosition}
+              requestBooksApi={this.requestBooksApi}
+              requestPlacesApi={this.requestPlacesApi}
+              requestAllApi={this.requestAllApi}
+            />         
         </BrowserView>
 
 
         <br /> <br />
 
-        <ResultsArea         
+        <ResultsArea
           searchedContentType={this.state.searchedContentType}
           books={this.state.books}
           booksAreLoaded={this.state.booksAreLoaded}
@@ -382,65 +405,110 @@ class Home extends Component {
           moreContentsAction={this.moreContentsAction}
         />
 
+        <br /> <br />
+        
+        <center>
+          <Typography>Site desenvolvido por Ricardo Mitollo Bertani</Typography>
+        </center> 
 
-        <Dialog
-          fullScreen={fullScreen}
-          open={this.state.localizationDetectFailDialogOpen}
-          onClose={this.handleDialogGeoClose}
-          aria-labelledby="responsive-dialog-title2"
-        >
-          <DialogTitle id="responsive-dialog-title2">{"Não conseguimos te localizar"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Para que um de nossos serviços funcione corretamente precisamos saber sua localização, mas não conseguimos detectá-labelledby
-              automaticamente. Você poderia nos informar seu endereço (ou algum ponto de referência próximo)?
-            </DialogContentText>
-            <TextField
-                    id="outlined-name"
-                    label="O que você busca?"
-                    className={classes.textField}
-                    value={this.props.keyword}
-                    onChange={this.handleDialogInputChange}
-                    margin="normal"
-                    variant="outlined"
-                    autoFocus={true}
-                    fullWidth={true}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
+        <Divider variant="middle" />
+        <br /> <br />
 
-                                <IconButton
-                                    aria-label="Toggle password visibility"
-                                    onClick={this.searchAction}
-                                >
-                                    <SearchIcon />
-                                </IconButton>
-                                
-                            </InputAdornment>
-                        ),
-                    }}
-                />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleGeofailOkDialogAction} color="primary">
-              <ThumbUp /> Ok, Pode Seguir
-            </Button>
-            <Button onClick={this.handleDialogGeoClose} color="primary">
-               <ThumbDownOutline /> Não quero informar
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <BrowserView>
+          <Grid container spacing={12}>
+
+                <Grid item xs={2}></Grid>
+                <Grid item xs={4}>
+                  <Picture src={poweredDesktop, poweredAndroid1, poweredAndroid2, poweredAndroid3} />
+                </Grid>
+
+                <Grid item xs={4}>
+                  <Picture src={poweredFoursquare} />
+                </Grid>
+                <Grid item xs={2}></Grid>
+              
+              
+          </Grid>
+        </BrowserView>
+
+        <MobileView>
+            <Grid container spacing={12}>
+
+                <Grid item xs={4}>
+                  <Picture src={poweredDesktop, poweredAndroid1, poweredAndroid2, poweredAndroid3} />
+                </Grid>
+
+              </Grid>
+              <br /> <br />
+              <Grid container spacing={12}>
+
+                <Grid item xs={4}>
+                  <Picture src={poweredFoursquare} />
+                </Grid>
+
+              </Grid>
+         </MobileView>
 
         
 
-      </div>
 
-    );
-  }
-}
+            <Dialog
+              fullScreen={fullScreen}
+                open={this.state.localizationDetectFailDialogOpen}
+                onClose={this.handleDialogGeoClose}
+                aria-labelledby="responsive-dialog-title2"
+              >
+            <DialogTitle id="responsive-dialog-title2">{"Não conseguimos te localizar"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Para que um de nossos serviços funcione corretamente precisamos saber sua localização, mas não conseguimos detecta-la
+                automaticamente. Você poderia nos informar seu endereço (ou algum ponto de referência próximo)?
+            </DialogContentText>
+              <TextField
+                id="outlined-name"
+                label="O que você busca?"
+                className={classes.textField}
+                value={this.props.keyword}
+                onChange={this.handleDialogInputChange}
+                margin="normal"
+                variant="outlined"
+                autoFocus={true}
+                fullWidth={true}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
 
+                      <IconButton
+                        aria-label="Toggle password visibility"
+                        onClick={this.searchAction}
+                      >
+                        <SearchIcon />
+                      </IconButton>
+
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleGeofailOkDialogAction} color="primary">
+                <ThumbUp /> Ok, Pode Seguir
+            </Button>
+              <Button onClick={this.handleDialogGeoClose} color="primary">
+                <ThumbDownOutline /> Não quero informar
+            </Button>
+            </DialogActions>
+        </Dialog>
+
+
+      </div >
+
+        );
+      }
+    }
+    
 Home.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(Home);
+          classes: PropTypes.object.isRequired,
+      };
+      
+      export default withStyles(styles)(Home);
