@@ -86,7 +86,7 @@ class ResultsArea extends Component {
                                   searchedContentType={this.props.searchedContentType}
                                   titulo={<div dangerouslySetInnerHTML={{ __html: name + "<br />" + address }} />}
                                   imagemCard={imagePreviewURL}
-                                  descricao={<div dangerouslySetInnerHTML={{ __html: "<br />Categoria: " + categoryName + "<br />CEP: " + postalCode + "<br />Distancia: " + distance }} />}
+                                  descricao={<div dangerouslySetInnerHTML={{ __html: ((categoryName !== "null") ? "<br />Categoria: " + categoryName : "")  + ((postalCode !== "") ? "<br />CEP: " + postalCode : "")+ "<br />Distancia: " + distance }} />}
                                   informacoesAdicionais=""
                                   setTargetContentDetailed={this.props.setTargetContentDetailed}
                                   setCurrentContentDetailedType={this.props.setCurrentContentDetailedType}
